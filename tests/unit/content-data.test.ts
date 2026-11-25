@@ -1,0 +1,204 @@
+import { describe, expect, it } from 'vitest'
+import sources from '../../content/data/sources.json'
+import cities from '../../content/data/cities.json'
+import universities from '../../content/data/universities.json'
+import programs from '../../content/data/programs.json'
+import admissionCycles from '../../content/data/admission-cycles.json'
+import scholarships from '../../content/data/scholarships.json'
+import { getApplicationState } from '@/lib/data/admission'
+import { localize } from '@/lib/data/format'
+import { hasConfirmedProgramDuration } from '@/lib/data/duration'
+import { getProgramDisplayDetails } from '@/lib/data/program-details'
+import { bundleSchema } from '@/lib/data/schema'
+import { selectPublishedData } from '@/lib/data/publication'
+
+const PUBLISHED_AS_OF = '2026-10-19'
+const ACTIONABLE_APPLICATION_STATES = new Set([
+  'open',
+  'upcoming',
+  'rolling',
+  'dates-published',
+])
+
+const content = bundleSchema.parse({
+  sources,
+  cities,
+  universities,
+  programs,
+  admissionCycles,
+  scholarships,
+})
+const published = selectPublishedData(content, PUBLISHED_AS_OF)
+
+describe('published content data', () => {
+  it('publishes the expanded institution and official program-identity layer', () => {
+    expect(content.cities.length).toBeGreaterThanOrEqual(35)
+    expect(content.universities.length).toBeGreaterThanOrEqual(120)
+    expect(content.programs.length).toBeGreaterThanOrEqual(280)
+    expect(content.scholarships.length).toBeGreaterThanOrEqual(20)
+
+    expect(published.cities.length).toBeGreaterThanOrEqual(35)
+    expect(published.universities.length).toBeGreaterThanOrEqual(119)
+    expect(published.programs.length).toBeGreaterThanOrEqual(240)
+    expect(published.programs.filter(
+      (program) => program.verificationScope === 'identity' || program.verificationScope === 'facts',
+    ).length).toBeGreaterThanOrEqual(240)
+
+    const publishedCycleIds = new Set(published.admissionCycles.map((cycle) => cycle.id))
+    const quarantinedCycles = content.admissionCycles.filter(
+      (cycle) => cycle.status === 'stale' || cycle.reviewAfter < PUBLISHED_AS_OF,
+    )
+    const actionableCycles = published.admissionCycles.filter((cycle) => (
+      ACTIONABLE_APPLICATION_STATES.has(getApplicationState(cycle, PUBLISHED_AS_OF))
+    ))
+
+    expect(quarantinedCycles.length).toBeGreaterThan(0)
+    expect(quarantinedCycles.every((cycle) => !publishedCycleIds.has(cycle.id))).toBe(true)
+    // A school need not have an open intake every day. Availability is content,
+    // while current evidence and an honest application state are the contract.
+    for (const cycle of actionableCycles) {
+      expect(cycle.status).toBe('verified')
+      expect(cycle.reviewAfter >= PUBLISHED_AS_OF).toBe(true)
+      expect(cycle.verifiedAt <= PUBLISHED_AS_OF).toBe(true)
+      expect(cycle.sourceIds.length).toBeGreaterThan(0)
+    }
+  })
+
+  it('separates verified identities from complete program and cycle facts', () => {
+    const officialProgramSources = new Map(
+      published.sources
+        .filter((source) => source.official && source.kind === 'program')
+        .map((source) => [source.id, source]),
+    )
+
+    for (const program of published.programs) {
+      expect(program.teachingLanguages).not.toContain('To be confirmed')
+      expect(program.sourceIds.some(
+        (id) => officialProgramSources.get(id)?.url === program.programUrl,
+      )).toBe(true)
+      if (program.verificationScope === 'identity') {
+        expect(program.details).toBeUndefined()
+        expect(program.durationMonths).toBeNull()
+        expect(program.languageRequirements).toHaveLength(0)
+        continue
+      }
+      if (program.verificationScope === 'facts') {
+        expect(program.details).toBeUndefined()
+        expect(
+          program.durationMonths !== null
+          || program.teachingLanguages.length > 0
+          || program.languageRequirements.length > 0
+          || program.applyUrl !== null,
+        ).toBe(true)
+        continue
+      }
+      const details = getProgramDisplayDetails(program, PUBLISHED_AS_OF)
+      expect(details, program.id).toBeDefined()
+      expect(hasConfirmedProgramDuration(program), program.id).toBe(true)
+      expect(details?.eligibility.length, program.id).toBeGreaterThan(0)
+      expect(details?.applicationMaterials.length, program.id).toBeGreaterThan(0)
+      expect(program.programUrl).not.toBe(program.applyUrl)
+      // A null/omitted maximum represents a fixed duration; only ranged programs need a maximum.
+      if (program.durationMonths !== null) {
+        expect(program.durationMonthsMax ?? program.durationMonths).toBeGreaterThanOrEqual(program.durationMonths)
+      }
+    }
+
+    for (const cycle of published.admissionCycles) {
+      expect(published.programs.some((program) => program.id === cycle.programId)).toBe(true)
+      expect(cycle.evidenceBasis).toMatch(/^(cycle-specific|recurring-official-rule)$/)
+      if (cycle.factScope === 'dates-only') {
+        expect(cycle.tuitionCny).toBeNull()
+        expect(cycle.applicationFeeCny).toBeNull()
+        if (cycle.dateStatus === 'not-announced') {
+          expect(cycle.opensOn).toBeNull()
+          expect(cycle.closesOn).toBeNull()
+        } else {
+          expect(cycle.dateStatus).toMatch(/^(published|rolling)$/)
+        }
+        continue
+      }
+      if (cycle.factScope === 'partial') {
+        expect(
+          cycle.tuitionCny !== null || cycle.applicationFeeCny !== null,
+        ).toBe(true)
+        continue
+      }
+      expect(cycle.tuitionCny).not.toBeNull()
+      expect(cycle.tuitionPeriod).toBeTruthy()
+      expect(cycle.tuitionStatus).toMatch(/^(confirmed|reference)$/)
+      expect(cycle.applicationFeeCny).not.toBeNull()
+    }
+
+    const fudanStableIdentity = published.programs.find(
+      (program) => program.id === 'program-fudan-university-chinese-language-program-language',
+    )
+    expect(fudanStableIdentity).toBeDefined()
+    const publishedFudanCycles = published.admissionCycles.filter(
+      (cycle) => cycle.programId === fudanStableIdentity?.id,
+    )
+    expect(publishedFudanCycles).toHaveLength(1)
+    expect(publishedFudanCycles[0]).toMatchObject({ intake: 'spring', academicYear: '2026-2027', tuitionStatus: 'reference' })
+
+    const staleFeeReference = content.admissionCycles.find(
+      (cycle) => cycle.id === 'cycle-2026-fudan-university-chinese-language-program-language-fee-reference',
+    )
+    expect(staleFeeReference).toMatchObject({
+      programId: fudanStableIdentity?.id,
+      status: 'stale',
+      dateStatus: 'not-announced',
+      opensOn: null,
+      closesOn: null,
+      tuitionStatus: 'reference',
+    })
+    expect(staleFeeReference?.tuitionCny).not.toBeNull()
+    expect(staleFeeReference).not.toHaveProperty('notes')
+    expect(publishedFudanCycles.some(cycle => cycle.id === staleFeeReference?.id)).toBe(false)
+  })
+
+  it('provides sourced names with nonempty display fallbacks in six locales', () => {
+    const names = [
+      ...content.cities.map((item) => item.name),
+      ...content.universities.map((item) => item.name),
+      ...content.programs.map((item) => item.name),
+      ...content.scholarships.map((item) => item.name),
+    ]
+
+    for (const name of names) {
+      expect(Object.values(name).some(value => value?.trim())).toBe(true)
+      if (name.zh !== undefined) expect(name.zh.trim()).not.toBe('')
+      for (const locale of ['en', 'zh', 'ru', 'de', 'fr', 'es'] as const) {
+        const display = localize(name, locale)
+        expect(display.trim()).not.toBe('')
+        expect(display).not.toMatch(/translation pending/i)
+      }
+    }
+  })
+
+  it('uses secure official links for every application path', () => {
+    const urls = [
+      ...content.universities.flatMap(
+        (item) => [item.officialUrl, item.admissionsUrl],
+      ),
+      ...content.programs.flatMap(
+        (item) => [item.programUrl, item.applyUrl],
+      ),
+      ...content.scholarships.map((item) => item.applicationUrl),
+    ].filter((url): url is string => typeof url === 'string')
+
+    expect(urls.length).toBeGreaterThan(0)
+    for (const url of urls) expect(url).toMatch(/^https:\/\//)
+  })
+
+  it('keeps unannounced dates and fees null instead of presenting estimates as facts', () => {
+    const unannounced = content.admissionCycles.filter(
+      (cycle) => cycle.dateStatus === 'not-announced',
+    )
+    expect(unannounced.length).toBeGreaterThan(0)
+
+    for (const cycle of unannounced) {
+      expect(cycle.opensOn).toBeNull()
+      expect(cycle.closesOn).toBeNull()
+    }
+  })
+})

@@ -1,0 +1,82 @@
+import { expect, test } from '@playwright/test'
+import {
+  LATEST_RELEASE_ANNOUNCEMENT_ID,
+  RELEASE_ANNOUNCEMENT_STORAGE_KEY,
+} from '../../src/i18n/release-announcement'
+
+const rankingKeys = ['qsRankMax', 'theRankMax', 'usNewsRankMax', 'arwuRankMax'] as const
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(({ key, id }) => window.localStorage.setItem(key, id), {
+    key: RELEASE_ANNOUNCEMENT_STORAGE_KEY,
+    id: LATEST_RELEASE_ANNOUNCEMENT_ID,
+  })
+})
+
+for (const route of ['universities', 'programs', 'scholarships']) {
+  test(`${route} submits four ranking filters and preserves removable browser history`, async ({ page }, testInfo) => {
+    await page.goto(`/en/${route}`, { waitUntil: 'domcontentloaded' })
+    const form = page.getByRole('search')
+    for (const key of rankingKeys) {
+      const field = form.locator(`[role="combobox"][name="${key}"]`)
+      await expect(field).toBeVisible()
+      await field.click()
+      await page.getByRole('option', { name: 'Top 100', exact: true }).click()
+    }
+    await form.getByRole('button', { name: 'Apply filters', exact: true }).click()
+    await page.waitForURL((url) => rankingKeys.every((key) => url.searchParams.get(key) === '100'))
+    const apiRoute = route === 'universities' ? 'institutions' : route
+    const response = await page.request.get(`/api/v1/directory/${apiRoute}?${rankingKeys.map(key => `${key}=100`).join('&')}`)
+    expect(response.ok()).toBe(true)
+    const filtered = await response.json()
+    if (filtered.data.length === 0) {
+      await expect(page.locator('.record-card')).toHaveCount(0)
+      await expect(page.getByText(`No ${route} match these filters.`, { exact: true })).toBeVisible()
+    } else {
+      await expect(page.locator('.record-card').first()).toBeVisible()
+    }
+    if (route === 'universities') {
+      await form.locator('[role="combobox"][name="qsRankMax"]').scrollIntoViewIfNeeded()
+      await page.screenshot({ path: `.tmp/ranking-filters-${testInfo.project.name}.png`, fullPage: false })
+    }
+    const qsChip = page.getByRole('link', { name: /Remove filter: QS world ranking/ })
+    await expect(qsChip).toBeVisible()
+    await qsChip.click()
+    await page.waitForURL((url) => !url.searchParams.has('qsRankMax'))
+    for (const key of rankingKeys.slice(1)) expect(new URL(page.url()).searchParams.get(key)).toBe('100')
+    await page.goBack({ waitUntil: 'domcontentloaded' })
+    for (const key of rankingKeys) await expect(form.locator(`[role="combobox"][name="${key}"]`)).toHaveAttribute('value', '100')
+    await expect(qsChip).toBeVisible()
+  })
+}
+
+test('institution API returns linked evidence for all four combined ranking filters', async ({ request }) => {
+  const response = await request.get('/api/v1/directory/institutions?limit=100&qsRankMax=100&theRankMax=100&usNewsRankMax=100&arwuRankMax=100')
+  expect(response.ok()).toBe(true)
+  const body = await response.json()
+  // Evidence can legitimately expire. Compare the combined filter with the
+  // current public evidence instead of requiring a permanently nonempty result.
+  const institutions: Array<{ id: string; rankings?: Array<{ system: string; rankMax: number }> }> = []
+  let cursor: string | null = null
+  do {
+    const params = new URLSearchParams({ limit: '100' })
+    if (cursor) params.set('cursor', cursor)
+    const page = await request.get(`/api/v1/directory/institutions?${params}`)
+    expect(page.ok()).toBe(true)
+    const all = await page.json()
+    institutions.push(...all.data)
+    cursor = all.meta.nextCursor ?? null
+  } while (cursor)
+  const expected = institutions.filter(institution => ['arwu', 'qs', 'the', 'usnews']
+    .every(system => institution.rankings?.some(ranking => ranking.system === system && ranking.rankMax <= 100)))
+  expect(body.data.map((item: { id: string }) => item.id).sort())
+    .toEqual(expected.map(item => item.id).sort())
+  for (const institution of body.data) {
+    expect(institution.rankings.map((ranking: { system: string }) => ranking.system).sort())
+      .toEqual(['arwu', 'qs', 'the', 'usnews'])
+    for (const ranking of institution.rankings) {
+      expect(ranking.rankMax).toBeLessThanOrEqual(100)
+      expect(ranking.sourceUrl).toMatch(/^https:\/\//)
+    }
+  }
+})

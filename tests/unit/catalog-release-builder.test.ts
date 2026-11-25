@@ -1,0 +1,343 @@
+import { DatabaseSync } from 'node:sqlite'
+import { createHash } from 'node:crypto'
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { describe, expect, it } from 'vitest'
+import { classifyProgramField, programFieldTaxonomy } from '../../src/lib/data/fields'
+import { getDataReleaseDate } from '../../src/lib/data/release'
+import { buildLegacyRelease, readLegacyBundle } from '../../scripts/catalog/build-release'
+
+function applyMigrations(database: DatabaseSync, today?: string) {
+  if (today && !/^\d{4}-\d{2}-\d{2}$/.test(today)) throw new Error('invalid_test_clock')
+  const directory = join(process.cwd(), 'infra', 'd1', 'catalog', 'migrations')
+  for (const file of readdirSync(directory).filter(name => name.endsWith('.sql')).sort()) {
+    const sql = readFileSync(join(directory, file), 'utf8')
+    // SQLite's native clock is independent of JavaScript fake timers. Evaluate
+    // the unchanged freshness predicates at the fixture's explicit release day,
+    // retaining relative modifiers such as the 30-day deadline grace period.
+    database.exec(today ? sql
+      .replaceAll("date('now', '+8 hours'", `date('${today}'`)
+      .replaceAll("date('now')", `date('${today}')`) : sql)
+  }
+}
+
+describe('legacy JSON release builder', () => {
+  it('builds an exact compatibility envelope and idempotent D1 release', () => {
+    const bundle = readLegacyBundle()
+    // This branch needs a current scholarship with no application URL. Real
+    // scholarships can expire, so make that condition explicit in the local fixture.
+    const fixtureDate = getDataReleaseDate(bundle)
+    bundle.sources.push({
+      id: 'source-test-no-application', url: 'https://example.edu.cn/scholarship',
+      title: 'Synthetic scholarship evidence', publisher: 'Test fixture', kind: 'scholarship',
+      language: 'en', official: true, accessedAt: fixtureDate,
+    })
+    bundle.scholarships.push({
+      id: 'scholarship-test-no-application', slug: 'test-no-application',
+      name: { en: 'Synthetic scholarship with unannounced application' }, providerType: 'university',
+      universityIds: [], programIds: [], coverage: {
+        tuition: 'unknown', accommodation: 'unknown', insurance: 'unknown', stipendCnyPerMonth: null,
+      },
+      deadline: null, applicationUrl: null, summary: null,
+      sourceIds: ['source-test-no-application'], verifiedAt: fixtureDate,
+      reviewAfter: fixtureDate, status: 'verified',
+    })
+    // Current SQL views must be exercised by explicit test evidence. Adding an
+    // identity can advance the release date after every real programme expires.
+    const projectionSourceId = 'source-test-current-projection'
+    bundle.sources.push({
+      id: projectionSourceId, url: 'https://example.edu.cn/catalogue',
+      title: 'Synthetic catalogue evidence', publisher: 'Test fixture', kind: 'program',
+      language: 'en', official: true, accessedAt: fixtureDate,
+    })
+    const projectionAudit = {
+      sourceIds: [projectionSourceId], verifiedAt: fixtureDate,
+      reviewAfter: fixtureDate, status: 'verified' as const,
+    }
+    bundle.cities.push({
+      id: 'city-test-current-projection', slug: 'test-current-projection',
+      name: { en: 'Synthetic city' }, province: null, region: 'north',
+      coordinates: null, overview: null, climate: null, foodHighlights: [], sights: [],
+      ...projectionAudit,
+    })
+    bundle.universities.push({
+      id: 'uni-test-current-projection', slug: 'test-current-projection',
+      name: { en: 'Synthetic university' }, cityId: 'city-test-current-projection',
+      region: 'north', officialUrl: 'https://example.edu.cn', admissionsUrl: null,
+      summary: { en: 'Synthetic current university summary' }, featured: false,
+      ...projectionAudit,
+    })
+    bundle.programs.push({
+      id: 'program-test-current-projection', slug: 'test-current-projection',
+      universityId: 'uni-test-current-projection', name: { en: 'Synthetic Computer Science' },
+      degreeLevel: 'bachelor', discipline: 'engineering', teachingLanguages: ['en'],
+      durationMonths: 48, programUrl: 'https://example.edu.cn/catalogue',
+      applyUrl: null, languageRequirements: [], ...projectionAudit,
+    })
+    const expiredDate = new Date(Date.parse(`${fixtureDate}T00:00:00.000Z`) - 86_400_000).toISOString().slice(0, 10)
+    bundle.programs.push({
+      ...bundle.programs.at(-1)!, id: 'program-test-expired-projection', slug: 'test-expired-projection',
+      verifiedAt: expiredDate, reviewAfter: expiredDate,
+    })
+    const artifacts = buildLegacyRelease(bundle)
+    const envelope = JSON.parse(artifacts.envelope)
+    expect(envelope.data).toEqual(bundle)
+    expect(envelope.meta.release.recordCounts.programs).toBe(bundle.programs.length)
+    expect(artifacts.sql).not.toContain('BEGIN TRANSACTION')
+    expect(artifacts.sql).not.toContain("SET release_status = 'retired'")
+    expect(artifacts.sql).not.toContain('UPDATE release_pointer SET current_release_id')
+    expect(artifacts.sql).toContain('INSERT OR IGNORE INTO release_activation_requests')
+    expect(artifacts.release.id).toMatch(/^legacy-v3-/u)
+    expect(artifacts.r2Key).toContain(artifacts.release.id)
+    expect(artifacts.contentSha256).toBe(
+      createHash('sha256').update(Buffer.from(artifacts.envelope, 'utf8')).digest('hex'),
+    )
+
+    const database = new DatabaseSync(':memory:')
+    applyMigrations(database, fixtureDate)
+    database.exec(artifacts.sql)
+    database.exec(artifacts.sql)
+    const release = database.prepare('SELECT release_id, release_status, schema_version, content_sha256 FROM current_release').get() as Record<string, unknown>
+    expect(release).toEqual({
+      release_id: artifacts.release.id,
+      release_status: 'active',
+      schema_version: 3,
+      content_sha256: artifacts.contentSha256,
+    })
+    const counts = database.prepare(`
+      SELECT
+        (SELECT count(*) FROM institutions WHERE release_id = ?) AS universities,
+        (SELECT count(*) FROM programs WHERE release_id = ?) AS programs,
+        (SELECT count(*) FROM program_cycles WHERE release_id = ?) AS cycles,
+        (SELECT count(*) FROM scholarships WHERE release_id = ?) AS scholarships
+    `).get(artifacts.release.id, artifacts.release.id, artifacts.release.id, artifacts.release.id) as Record<string, number>
+    expect(counts).toEqual({
+      universities: bundle.universities.length,
+      programs: bundle.programs.length,
+      cycles: bundle.admissionCycles.length,
+      scholarships: bundle.scholarships.length,
+    })
+
+    const scholarshipWithoutApplication = bundle.scholarships.find((item) => (
+      item.applicationUrl === null
+      && item.status === 'verified'
+      && item.reviewAfter >= artifacts.release.dataDate
+    ))
+    expect(scholarshipWithoutApplication).toBeTruthy()
+    const scholarshipSource = bundle.sources.find((source) =>
+      source.official && scholarshipWithoutApplication!.sourceIds.includes(source.id)
+    )
+    expect(scholarshipSource).toBeTruthy()
+    expect(database.prepare(`
+      SELECT
+        scholarship.official_url AS scholarship_url,
+        provider.official_url AS provider_url
+      FROM scholarships AS scholarship
+      JOIN organizations AS provider
+        ON provider.release_id = scholarship.release_id
+       AND provider.organization_id = scholarship.provider_organization_id
+      WHERE scholarship.release_id = ? AND scholarship.scholarship_id = ?
+    `).get(artifacts.release.id, scholarshipWithoutApplication!.id)).toEqual({
+      scholarship_url: scholarshipSource!.url,
+      provider_url: scholarshipSource!.url,
+    })
+    expect(database.prepare(`
+      SELECT field_status, value_json
+      FROM record_field_status
+      WHERE release_id = ? AND record_id = ? AND field_path = 'applicationUrl'
+    `).get(artifacts.release.id, scholarshipWithoutApplication!.id)).toEqual({
+      field_status: 'officially_not_announced',
+      value_json: null,
+    })
+    const programFieldCodes = programFieldTaxonomy('en').map((field) => field.key)
+    expect(programFieldCodes).toHaveLength(17)
+    const disciplineDimensions = new Set(
+      (database.prepare(`
+        SELECT code FROM disciplines WHERE release_id = ? ORDER BY code
+      `).all(artifacts.release.id) as Array<{ code: string }>).map((item) => item.code),
+    )
+    for (const code of programFieldCodes) expect(disciplineDimensions.has(code)).toBe(true)
+    for (const legacyCode of [
+      'engineering',
+      'business',
+      'medicine',
+      'chinese-education',
+      'humanities',
+      'law-ir',
+      'science',
+      'art-design',
+      'other',
+    ]) expect(disciplineDimensions.has(legacyCode)).toBe(true)
+
+    const projectedDisciplines = database.prepare(`
+      SELECT program_id, discipline_code
+      FROM program_disciplines
+      WHERE release_id = ?
+      ORDER BY program_id
+    `).all(artifacts.release.id) as Array<{ program_id: string; discipline_code: string }>
+    expect(projectedDisciplines).toHaveLength(bundle.programs.length)
+    expect(projectedDisciplines.every((item) =>
+      programFieldCodes.includes(item.discipline_code as (typeof programFieldCodes)[number])
+    )).toBe(true)
+
+    const disciplineFacts = database.prepare(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(field_status = 'known') AS known
+      FROM record_field_status
+      WHERE release_id = ? AND field_path = 'discipline'
+    `).get(artifacts.release.id) as { total: number; known: number }
+    expect(disciplineFacts.total).toBe(bundle.programs.length)
+    expect(disciplineFacts.known).toBeGreaterThan(0)
+
+    const currentDiscipline = database.prepare(`
+      SELECT program_id, discipline_code
+      FROM current_program_disciplines
+      WHERE program_id = ?
+    `).get('program-test-current-projection') as { program_id: string; discipline_code: string }
+    expect(currentDiscipline).toBeTruthy()
+    const sourceProgram = bundle.programs.find(
+      (program) => program.id === currentDiscipline.program_id,
+    )
+    expect(sourceProgram).toBeTruthy()
+    expect(currentDiscipline.discipline_code).toBe(classifyProgramField(sourceProgram!))
+    expect(database.prepare(`
+      SELECT field_status, value_json
+      FROM current_record_fields
+      WHERE record_id = ? AND field_path = 'discipline'
+    `).get(currentDiscipline.program_id)).toEqual({
+      field_status: 'known',
+      value_json: JSON.stringify(currentDiscipline.discipline_code),
+    })
+    expect(database.prepare(`
+      SELECT program_id FROM current_program_disciplines WHERE program_id = ?
+    `).get('program-test-expired-projection')).toBeUndefined()
+    expect(database.prepare(`
+      SELECT program_id FROM program_disciplines WHERE release_id = ? AND program_id = ?
+    `).get(artifacts.release.id, 'program-test-expired-projection')).toBeTruthy()
+
+    const summaryFacts = database.prepare(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(field_status = 'known') AS known
+      FROM record_field_status
+      WHERE release_id = ? AND field_path = 'summary'
+        AND record_id IN (
+          SELECT institution_id FROM institutions WHERE release_id = ?
+        )
+    `).get(artifacts.release.id, artifacts.release.id) as { total: number; known: number }
+    expect(summaryFacts.total).toBe(bundle.universities.length)
+    expect(summaryFacts.known).toBeGreaterThan(0)
+
+    const currentSummary = database.prepare(`
+      SELECT localized.record_id, localized.locale, localized.text_value
+      FROM current_localized_content AS localized
+      JOIN current_institutions AS institution
+        ON institution.release_id = localized.release_id
+       AND institution.institution_id = localized.record_id
+      WHERE localized.field_name = 'summary'
+      AND localized.record_id = 'uni-test-current-projection'
+      ORDER BY localized.locale
+      LIMIT 1
+    `).get() as { record_id: string; locale: string; text_value: string }
+    expect(currentSummary.text_value.length).toBeGreaterThan(0)
+    const summaryUniversity = bundle.universities.find(
+      (university) => university.id === currentSummary.record_id,
+    )
+    expect(summaryUniversity).toBeTruthy()
+    expect(Object.values(summaryUniversity!.summary!)).toContain(currentSummary.text_value)
+    expect(database.prepare(`
+      SELECT field_status, value_json
+      FROM current_record_fields
+      WHERE record_id = ? AND field_path = 'summary'
+    `).get(currentSummary.record_id)).toEqual({
+      field_status: 'known',
+      value_json: JSON.stringify(summaryUniversity!.summary),
+    })
+
+    const otherProgram = database.prepare(`
+      SELECT program_type, degree_level
+      FROM programs
+      WHERE release_id = ? AND program_id = ?
+    `).get(
+      artifacts.release.id,
+      'program-renmin-university-of-china-finance-junior-visiting-program-other',
+    ) as Record<string, unknown>
+    expect(otherProgram).toEqual({ program_type: 'other', degree_level: null })
+    database.close()
+  }, 15_000)
+
+  it('keeps the current release when validation or row-count checks fail', () => {
+    const artifacts = buildLegacyRelease(readLegacyBundle())
+    const database = new DatabaseSync(':memory:')
+    applyMigrations(database)
+    database.exec(artifacts.sql)
+
+    const zeroCounts = JSON.stringify({
+      sources: 0,
+      cities: 0,
+      universities: 0,
+      programs: 0,
+      admissionCycles: 0,
+      scholarships: 0,
+    })
+    const hash = 'a'.repeat(64)
+    const addRelease = database.prepare(`
+      INSERT INTO catalog_releases (
+        release_id, data_version, schema_version, release_status,
+        source_pipeline_run_id, data_date, generated_at, content_sha256,
+        counts_json, created_at, validated_at
+      ) VALUES (?, ?, 1, ?, 'test', '2026-07-21', '2026-07-21T00:00:00.000Z', ?, ?,
+        '2026-07-21T00:00:00.000Z', ?)
+    `)
+    const activate = database.prepare(`
+      INSERT INTO release_activation_requests (
+        request_id, release_id, expected_content_sha256,
+        expected_counts_json, actor, requested_at
+      ) VALUES (?, ?, ?, ?, 'test', '2026-07-21T00:00:00.000Z')
+    `)
+    const addCompatibility = database.prepare(`
+      INSERT INTO release_compatibility_artifacts (
+        release_id, artifact_format, artifact_key, content_sha256,
+        byte_length, created_at
+      ) VALUES (?, 'studyinchina.frontend.bundle.v1',
+        'releases/' || ? || '/compat-envelope.json', ?, 2,
+        '2026-07-21T00:00:00.000Z')
+    `)
+
+    addRelease.run('unvalidated-release', 2, 'ready', hash, zeroCounts, null)
+    addCompatibility.run('unvalidated-release', 'unvalidated-release', hash)
+    expect(() => activate.run('activate-unvalidated', 'unvalidated-release', hash, zeroCounts))
+      .toThrow(/ready and validated/)
+
+    const mismatchedCounts = JSON.stringify({
+      sources: 0,
+      cities: 0,
+      universities: 1,
+      programs: 0,
+      admissionCycles: 0,
+      scholarships: 0,
+    })
+    addRelease.run(
+      'count-mismatch-release',
+      3,
+      'ready',
+      hash,
+      mismatchedCounts,
+      '2026-07-21T00:00:00.000Z',
+    )
+    addCompatibility.run('count-mismatch-release', 'count-mismatch-release', hash)
+    expect(() => activate.run(
+      'activate-count-mismatch',
+      'count-mismatch-release',
+      hash,
+      mismatchedCounts,
+    )).toThrow(/row counts/)
+
+    const current = database.prepare('SELECT release_id FROM current_release').get() as { release_id: string }
+    expect(current.release_id).toBe(artifacts.release.id)
+    expect(database.prepare('SELECT count(*) AS count FROM release_activation_requests').get())
+      .toEqual({ count: 1 })
+    database.close()
+  }, 30_000)
+})

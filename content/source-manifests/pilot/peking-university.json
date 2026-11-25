@@ -1,0 +1,193 @@
+{
+  "version": 2,
+  "institutionId": "uni-peking-university",
+  "catalogStatus": "existing",
+  "manifestStatus": "in_progress",
+  "checkedAt": "2026-07-20",
+  "officialHosts": ["isd.pku.edu.cn","www.isd.pku.edu.cn","www.studyatpku.com"],
+  "sourceBindings": [
+    {"sourceId":"pku-intl-admissions-home","purpose":"discovery","resourceKey":"resource:46eec5776405abb252eb1c2a4a6dcf6a21b2d8b4ed247b08803b50fe6ffe1303"},
+    {"sourceId":"pku-2026-undergraduate-catalog","purpose":"entity_index","resourceKey":"resource:547ae78b5c311c5d6fd73ab51eb15b60c9219015b7fcb8abdf4547429f2cbdad"},
+    {"sourceId":"pku-2026-masters-catalog","purpose":"entity_index","resourceKey":"resource:aa779495e4e212162637df9bac91f768379b7f07a722d61cef65da751619dad9"},
+    {"sourceId":"pku-2026-doctoral-catalog","purpose":"entity_index","resourceKey":"resource:aa779495e4e212162637df9bac91f768379b7f07a722d61cef65da751619dad9"},
+    {"sourceId":"pku-non-degree-downloads","purpose":"entity_index","resourceKey":"resource:ff93562f15613925181652508059cca52fc97f4418e19fb137c0d8777840aa1f"},
+    {"sourceId":"pku-2026-graduate-guide","purpose":"fact_sheet","resourceKey":"resource:aa779495e4e212162637df9bac91f768379b7f07a722d61cef65da751619dad9"},
+    {"sourceId":"pku-2026-graduate-fees","purpose":"fact_sheet","resourceKey":"resource:6c4c484213ce13e682f77692958d78e9d4c51aa18fda8e658f8664953bdd6560"},
+    {"sourceId":"pku-application-portal","purpose":"application_endpoint","resourceKey":"resource:57b2f3d41cb7ee5435270cd31ab73a42e8e3498032541bf93a73bed53298b898"},
+    {"sourceId":"pku-2026-university-scholarships","purpose":"entity_detail","resourceKey":"resource:ae668f4047b064ad6dc11faae2546a6583d8141a6a2bc0165f5607a28280bdb2"},
+    {"sourceId":"pku-2026-government-scholarships","purpose":"entity_detail","resourceKey":"resource:ae668f4047b064ad6dc11faae2546a6583d8141a6a2bc0165f5607a28280bdb2"},
+    {"sourceId":"pku-admissions-contacts","purpose":"fact_sheet","resourceKey":"resource:355bacac6a613e76ad252217b6634e4e7bc4f5f6eac275410a3d1c2ba5c01315"},
+    {"sourceId":"pku-admissions-catalog-anchor","purpose":"discovery","resourceKey":"resource:422550177e222eda47c3c98ae19da623ca8fac4afadc73dc353cc320cb0607b9"}
+  ],
+  "sources": [
+    {
+      "version": 1, "id": "pku-intl-admissions-home", "institutionId": "uni-peking-university", "entityType": "university", "sourceCategory": "international_admissions_home",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-admissions-home-v1", "fields": [{ "path": "admissionsSections", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-undergraduate-catalog", "institutionId": "uni-peking-university", "entityType": "program-cycle", "sourceCategory": "undergraduate_catalog",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=818", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-masters-catalog", "institutionId": "uni-peking-university", "entityType": "program-cycle", "sourceCategory": "masters_catalog",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=730", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-doctoral-catalog", "institutionId": "uni-peking-university", "entityType": "program-cycle", "sourceCategory": "doctoral_catalog",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=730", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-non-degree-downloads", "institutionId": "uni-peking-university", "entityType": "program", "sourceCategory": "non_degree_catalog",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/downloads.php", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-graduate-guide", "institutionId": "uni-peking-university", "entityType": "program-cycle", "sourceCategory": "current_guide",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=730", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-current-guide-v1", "fields": [{ "path": "guide", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-graduate-fees", "institutionId": "uni-peking-university", "entityType": "program-cycle", "sourceCategory": "fees",
+      "officialUrl": "https://isd.pku.edu.cn/userfiles/editor/202512011607206111.pdf", "allowedHosts": ["isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 20000, "maxBytes": 10485760, "accept": "application/pdf,text/html;q=0.9,*/*;q=0.1", "documentConversion": "auto" }, "robots": { "mode": "enforce" },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-fees-v1", "fields": [{ "path": "fees", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-application-portal", "institutionId": "uni-peking-university", "entityType": "university", "sourceCategory": "application_portal",
+      "officialUrl": "https://www.studyatpku.com/", "allowedHosts": ["www.studyatpku.com"], "enabled": false,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,*/*;q=0.1" }, "robots": { "mode": "blocked" },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-application-portal-v1", "fields": [{ "path": "applicationUrl", "type": "string", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-university-scholarships", "institutionId": "uni-peking-university", "entityType": "scholarship-cycle", "sourceCategory": "university_scholarship",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=819", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-2026-government-scholarships", "institutionId": "uni-peking-university", "entityType": "scholarship-cycle", "sourceCategory": "government_scholarship",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/detail.php?id=819", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-government-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-admissions-contacts", "institutionId": "uni-peking-university", "entityType": "university", "sourceCategory": "contacts",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/about.php", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-contacts-v1", "fields": [{ "path": "contacts", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "pku-admissions-catalog-anchor", "institutionId": "uni-peking-university", "entityType": "university", "sourceCategory": "catalog_anchor",
+      "officialUrl": "https://www.isd.pku.edu.cn/en/admission.php", "allowedHosts": ["www.isd.pku.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-catalog-anchor-v1", "fields": [{ "path": "catalogLinks", "type": "string-array", "required": true, "critical": true }] }
+    }
+  ],
+  "coverage": [
+    { "sourceCategory": "international_admissions_home", "status": "registered", "sourceIds": ["pku-intl-admissions-home"] },
+    { "sourceCategory": "undergraduate_catalog", "status": "registered", "sourceIds": ["pku-2026-undergraduate-catalog"] },
+    { "sourceCategory": "masters_catalog", "status": "registered", "sourceIds": ["pku-2026-masters-catalog"] },
+    { "sourceCategory": "doctoral_catalog", "status": "registered", "sourceIds": ["pku-2026-doctoral-catalog"] },
+    { "sourceCategory": "non_degree_catalog", "status": "registered", "sourceIds": ["pku-non-degree-downloads"] },
+    { "sourceCategory": "current_guide", "status": "registered", "sourceIds": ["pku-2026-graduate-guide"] },
+    { "sourceCategory": "dates_deadlines", "status": "discovery_pending", "note": "Dates are embedded in current guides; no distinct current official HTTPS dates page was confirmed." },
+    { "sourceCategory": "fees", "status": "registered", "sourceIds": ["pku-2026-graduate-fees"] },
+    { "sourceCategory": "eligibility_language", "status": "discovery_pending", "note": "Eligibility is embedded in current guides; no distinct current official HTTPS page was confirmed." },
+    { "sourceCategory": "application_portal", "status": "source_unavailable", "sourceIds": ["pku-application-portal"], "note": "The official entrance is an authenticated interactive portal. Collection remains blocked because the system never logs in, handles CAPTCHA, or bypasses access controls." },
+    { "sourceCategory": "university_scholarship", "status": "registered", "sourceIds": ["pku-2026-university-scholarships"] },
+    { "sourceCategory": "faculty_scholarship", "status": "discovery_pending", "note": "No centralized current faculty-level scholarship page was confirmed in this pilot review." },
+    { "sourceCategory": "government_scholarship", "status": "registered", "sourceIds": ["pku-2026-government-scholarships"] },
+    { "sourceCategory": "program_detail", "status": "discovery_pending", "note": "Program-level pages will be discovered from the registered catalog anchor in a later crawl." },
+    { "sourceCategory": "contacts", "status": "registered", "sourceIds": ["pku-admissions-contacts"] },
+    { "sourceCategory": "catalog_anchor", "status": "registered", "sourceIds": ["pku-admissions-catalog-anchor"] }
+  ],
+  "catalogReconciliation": {
+    "scope": "representative_international_programs",
+    "status": "in_progress",
+    "entries": [
+      {
+        "sourceId": "pku-intl-admissions-home",
+        "officialKey": "program-peking-university-chinese-literature-bachelor",
+        "officialName": "Chinese Language and Literature",
+        "entityType": "program",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-intl-admissions-home",
+        "officialKey": "program-peking-university-international-relations-master",
+        "officialName": "International Relations",
+        "entityType": "program",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "sch-gap-pku-depth-beijing-government-scholarship",
+        "officialName": "Beijing Government Scholarship for International Students at PKU",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "sch-gap-pku-depth-cgs-advanced-graduate",
+        "officialName": "Chinese Government Scholarship — Advanced Graduate Program at PKU",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "sch-gap-pku-depth-cs-international-phd-full-support",
+        "officialName": "School of Computer Science International PhD Full Financial Support",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "sch-gap-pku-depth-international-chinese-language-teachers-scholarship",
+        "officialName": "International Chinese Language Teachers Scholarship at PKU",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "sch-gap-pku-depth-law-international-student-scholarship",
+        "officialName": "PKU Law International Student Scholarship",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-government-scholarships",
+        "officialKey": "sch-gap-pku-depth-yenching-fellowship",
+        "officialName": "Yenching Fellowship",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "pku-2026-university-scholarships",
+        "officialKey": "scholarship-peking-university-international-student",
+        "officialName": "Peking University Scholarship for International Students",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      }
+    ],
+    "note": "V2 migration preserves the 2026-07-20 source audit. 9 exact-URL or same-host/same-category catalog relationships are queued for evidence review; all other identities and full-directory reconciliation remain unresolved."
+  }
+}

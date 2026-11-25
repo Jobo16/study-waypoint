@@ -1,0 +1,78 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { GET } from '@/app/api/v1/programs/compare/route'
+import { getData } from '@/lib/data/load'
+
+beforeEach(() => {
+  // Input IDs and the API must share the checked-in evidence's evaluation day.
+  vi.useFakeTimers({ toFake: ['Date'] })
+  vi.setSystemTime(new Date('2026-10-28T04:00:00Z'))
+})
+afterEach(() => vi.useRealTimers())
+
+describe('program comparison API', () => {
+  it('resolves an official ID and a collected ID in one request and leaves source-only application facts unknown', async () => {
+    const officialId = getData().programs[0].id
+    const response = await GET(new Request(`https://example.test/api/v1/programs/compare?view=all&ids=${officialId},cucas-3284,unknown-id`))
+    expect(response.status).toBe(200)
+    const result = await response.json()
+    expect(result.data.items[0].program.id).toBe(officialId)
+    expect(result.data.collectedItems).toMatchObject([{ savedId: 'cucas-3284',
+      record: { id: 'cucas-3284', name: 'Advertising', official: false, admissionYear: null } }])
+    expect(result.data.missingIds).toEqual(['unknown-id'])
+    expect(result.data.collectedItems[0]).not.toHaveProperty('currentCycle')
+  })
+  it('returns at most four lightweight records in requested order', async () => {
+    const ids = getData().programs.slice(0, 4).map((program) => program.id)
+    const response = await GET(new Request(
+      `https://example.test/api/v1/programs/compare?ids=${encodeURIComponent(ids.join(','))}`,
+    ))
+    const payload = await response.json() as {
+      data: {
+        items: Array<{
+          program: { id: string; university: { id: string }; fieldMeta: Record<string, unknown> }
+          currentCycle: unknown
+          linkedScholarshipCount: number
+        }>
+        missingIds: string[]
+      }
+    }
+
+    expect(response.status).toBe(200)
+    expect(payload.data.items.map((item) => item.program.id)).toEqual(ids)
+    expect(payload.data.missingIds).toEqual([])
+    expect(payload.data.items.every((item) => (
+      item.program.university.id.length > 0
+      && typeof item.linkedScholarshipCount === 'number'
+      && Object.keys(item.program.fieldMeta).length > 0
+    ))).toBe(true)
+    expect(JSON.stringify(payload).length).toBeLessThan(150_000)
+  })
+
+  it('deduplicates ids and reports records that are no longer public', async () => {
+    const id = getData().programs[0]!.id
+    const response = await GET(new Request(
+      `https://example.test/api/v1/programs/compare?ids=${id},${id},prog-missing-record`,
+    ))
+    const payload = await response.json() as {
+      data: { items: Array<{ program: { id: string } }>; missingIds: string[] }
+    }
+
+    expect(response.status).toBe(200)
+    expect(payload.data.items.map((item) => item.program.id)).toEqual([id])
+    expect(payload.data.missingIds).toEqual(['prog-missing-record'])
+  })
+
+  it('rejects empty, malformed, or oversized comparisons without caching', async () => {
+    for (const query of [
+      '',
+      '?ids=bad%20id',
+      '?ids=prog-1,prog-2,prog-3,prog-4,prog-5',
+    ]) {
+      const response = await GET(new Request(
+        `https://example.test/api/v1/programs/compare${query}`,
+      ))
+      expect(response.status).toBe(400)
+      expect(response.headers.get('cache-control')).toBe('no-store')
+    }
+  })
+})

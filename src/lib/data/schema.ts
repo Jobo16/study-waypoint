@@ -1,0 +1,152 @@
+import { z } from 'zod'
+import { annualCycleIdentityKey, parseAdmissionYear, TEACHING_LANGUAGES } from './cycle-scope'
+import { broadRegions, normalizeRegionAlias } from './regions'
+
+const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((value) => {
+  const parsed = new Date(`${value}T00:00:00Z`)
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value
+}, 'Invalid calendar date')
+const httpsUrl = z.url().refine((value) => {
+  try { return new URL(value).protocol === 'https:' } catch { return false }
+}, 'URL must use HTTPS')
+const localizedText = z.object({
+  en: z.string().min(1).optional(), zh: z.string().min(1).optional(), ru: z.string().min(1).optional(),
+  de: z.string().min(1).optional(), es: z.string().min(1).optional(), fr: z.string().min(1).optional(), ar: z.string().min(1).optional(), pt: z.string().min(1).optional(),
+}).refine((value) => Object.values(value).some(Boolean), 'At least one localized value is required')
+const status = z.enum(['draft', 'verified', 'stale', 'archived'])
+const audit = z.object({ sourceIds: z.array(z.string().min(1)).min(1), verifiedAt: date, reviewAfter: date, status })
+const region = z.preprocess(normalizeRegionAlias, z.enum(broadRegions))
+const DAY_MS = 24 * 60 * 60 * 1000
+const daysBetween = (start: string, end: string) => (
+  (new Date(`${end}T00:00:00Z`).getTime() - new Date(`${start}T00:00:00Z`).getTime()) / DAY_MS
+)
+const programDetailsSchema = z.object({
+  faculty: localizedText,
+  overview: localizedText,
+  qualification: localizedText,
+  studyMode: z.enum(['full-time', 'part-time', 'hybrid']),
+  languagePolicy: localizedText,
+  curriculumHighlights: z.array(localizedText).min(2),
+  eligibility: z.array(localizedText).min(1),
+  applicationMaterials: z.array(localizedText).min(2),
+  campus: localizedText.optional(),
+})
+// Partial official information is distinct from the complete details contract.
+// Absent siblings carry no factual claim; every present value is reviewed separately.
+export const programSupplementaryDetailsSchema = z.object({
+  faculty: localizedText.optional(),
+  overview: localizedText.optional(),
+  qualification: localizedText.optional(),
+  languagePolicy: localizedText.optional(),
+  curriculumHighlights: z.array(localizedText).min(1).optional(),
+  eligibility: z.array(localizedText).min(1).optional(),
+  applicationMaterials: z.array(localizedText).min(1).optional(),
+  campus: localizedText.optional(),
+}).strict().refine(value => Object.values(value).some(item => item !== undefined), 'Supplementary details must contain a fact')
+
+export const sourceSchema = z.object({ id: z.string().min(1), url: httpsUrl, title: z.string().min(1), publisher: z.string().min(1), kind: z.enum(['university', 'program', 'admissions', 'scholarship', 'government', 'city', 'other']), language: z.enum(['zh', 'en', 'ru', 'other']), official: z.boolean(), accessedAt: date })
+export const citySchema = audit.extend({ id: z.string().min(1), slug: z.string().regex(/^[a-z0-9-]+$/), name: localizedText, province: localizedText.nullable(), region: region.nullable(), coordinates: z.object({ lat: z.number().min(-90).max(90), lng: z.number().min(-180).max(180) }).nullable(), overview: localizedText.nullable(), climate: localizedText.nullable(), foodHighlights: z.array(localizedText), sights: z.array(localizedText) })
+export const universityRankingSchema = z.object({
+  system: z.enum(['qs', 'the', 'usnews', 'arwu']),
+  year: z.number().int().min(2000).max(2100),
+  editionLabel: z.string().min(1).max(30).optional(),
+  rankMin: z.number().int().positive(),
+  rankMax: z.number().int().positive(),
+  rankLabel: z.string().min(1).max(30),
+  sourceUrl: httpsUrl,
+  checkedAt: date,
+  reviewAfter: date.optional(),
+}).superRefine((value, context) => {
+  if (value.rankMax < value.rankMin) context.addIssue({ code: 'custom', message: 'Ranking upper bound precedes lower bound' })
+  if (value.reviewAfter && value.reviewAfter < value.checkedAt) context.addIssue({ code: 'custom', message: 'Ranking review date precedes checked date' })
+})
+function rankingSourceHost(value: string): string | null {
+  try { return new URL(value).hostname.toLowerCase().replace(/^www\./u, '') } catch { return null }
+}
+export const universitySchema = audit.extend({ id: z.string().min(1), slug: z.string().regex(/^[a-z0-9-]+$/), name: localizedText, cityId: z.string().min(1), region: region.nullable(), officialUrl: httpsUrl, admissionsUrl: httpsUrl.nullable(), summary: localizedText.nullable(), featured: z.boolean(), rankings: z.array(universityRankingSchema).optional() }).superRefine((university, context) => {
+  const officialHost = rankingSourceHost(university.officialUrl)
+  if (!officialHost) return
+  // English and department sites can be sibling hosts of the same university.
+  const universityHost = officialHost.endsWith('.edu.cn') ? officialHost.split('.').slice(-3).join('.') : officialHost
+  const seen = new Set<string>()
+  for (const [index, ranking] of (university.rankings ?? []).entries()) {
+    const host = rankingSourceHost(ranking.sourceUrl)
+    if (!host) continue
+    const publisher = { qs: 'topuniversities.com', the: 'timeshighereducation.com', usnews: 'usnews.com', arwu: 'shanghairanking.com' }[ranking.system]
+    if (host !== publisher && !host.endsWith(`.${publisher}`) && host !== universityHost && !host.endsWith(`.${universityHost}`)) context.addIssue({ code: 'custom', path: ['rankings', index, 'sourceUrl'], message: 'Ranking requires its publisher or this university official source' })
+    const key = `${ranking.system}:${ranking.year}`
+    if (seen.has(key)) context.addIssue({ code: 'custom', path: ['rankings', index], message: 'Duplicate ranking system and edition' })
+    seen.add(key)
+  }
+})
+export const programSchema = audit.extend({ id: z.string().min(1), slug: z.string().regex(/^[a-z0-9-]+$/), universityId: z.string().min(1), name: localizedText, degreeLevel: z.enum(['bachelor', 'master', 'doctorate', 'language', 'foundation', 'other']), discipline: z.enum(['engineering', 'business', 'medicine', 'chinese-education', 'humanities', 'law-ir', 'science', 'art-design', 'other']), teachingLanguages: z.array(z.string().min(1)), durationMonths: z.number().int().positive().max(120).nullable(), durationMonthsMax: z.number().int().positive().max(120).nullable().optional(), durationText: localizedText.refine(value => Object.values(value).every(text => text === undefined || text.trim().length > 0), 'Official duration text must be nonblank').optional(), programUrl: httpsUrl, applyUrl: httpsUrl.nullable(), languageRequirements: z.array(z.object({ test: z.enum(['HSK', 'IELTS', 'TOEFL', 'other']), minimum: z.string().nullable() })), verificationScope: z.enum(['identity', 'facts', 'complete']).optional(), details: programDetailsSchema.optional(), supplementaryDetails: programSupplementaryDetailsSchema.optional() }).superRefine((value, context) => {
+  if (value.durationMonthsMax !== null && value.durationMonthsMax !== undefined && (value.durationMonths === null || value.durationMonthsMax < value.durationMonths)) context.addIssue({ code: 'custom', message: 'Maximum duration must be at least the minimum duration' })
+  if (value.status !== 'verified') return
+  const placeholderLanguage = /confirm|tbd|unknown|not[- ]announced/i
+  if (value.teachingLanguages.some((language) => placeholderLanguage.test(language))) context.addIssue({ code: 'custom', message: 'Verified programs require confirmed teaching languages' })
+  if (value.verificationScope === 'identity') return
+  if (!value.details) return
+  if (value.durationMonths === null && !Object.values(value.durationText ?? {}).some(text => text?.trim())) context.addIssue({ code: 'custom', message: 'Complete verified programs require a confirmed duration' })
+  if (!value.applyUrl) context.addIssue({ code: 'custom', message: 'Complete verified programs require an official application URL' })
+  if (value.applyUrl && value.programUrl === value.applyUrl) context.addIssue({ code: 'custom', message: 'Complete verified programs require a distinct official application URL' })
+  if (value.teachingLanguages.length === 0) context.addIssue({ code: 'custom', message: 'Complete verified programs require confirmed teaching languages' })
+  if (value.languageRequirements.length === 0) context.addIssue({ code: 'custom', message: 'Verified programs require an explicit language requirement or no-prerequisite statement' })
+})
+export const admissionCycleSchema = audit.extend({ teachingLanguage: z.enum(TEACHING_LANGUAGES).optional(), applicationRound: z.string().trim().min(1).max(120).optional(), languageRequirements: programSchema.shape.languageRequirements.nullable().optional(), eligibility: z.array(localizedText).min(1).nullable().optional(), applicationMaterials: z.array(localizedText).min(1).nullable().optional(), applyUrl: httpsUrl.nullable().optional(), id: z.string().min(1), programId: z.string().min(1), academicYear: z.string().refine(value => parseAdmissionYear(value) !== null, 'Admission year must be YYYY or a consecutive YYYY-YYYY range'), intake: z.enum(['spring', 'autumn', 'other']), opensOn: date.nullable(), closesOn: date.nullable(), dateStatus: z.enum(['published', 'rolling', 'not-announced', 'previous-cycle-reference']), tuitionCny: z.number().nonnegative().nullable(), tuitionPeriod: z.enum(['program', 'semester', 'academic-year', 'month', 'other']).nullable().optional(), tuitionStatus: z.enum(['confirmed', 'reference']).nullable().optional(), tuitionSchedule: localizedText.optional(), evidenceBasis: z.enum(['cycle-specific', 'recurring-official-rule']).optional(), factScope: z.enum(['dates-only', 'partial', 'complete']).optional(), applicationFeeCny: z.number().nonnegative().nullable(), notes: localizedText.optional() }).superRefine((value, context) => {
+  if (value.opensOn && value.closesOn && value.opensOn > value.closesOn) context.addIssue({ code: 'custom', message: 'opensOn must be before closesOn' })
+  if (value.dateStatus === 'published' && !value.opensOn && !value.closesOn) context.addIssue({ code: 'custom', message: 'Published cycles require at least one official application date' })
+  if (value.status === 'verified' && (value.factScope ?? 'complete') === 'complete' && value.dateStatus === 'published' && (value.tuitionCny === null || value.applicationFeeCny === null)) context.addIssue({ code: 'custom', message: 'Published verified cycles require tuition and application fee values' })
+  if (value.status === 'verified' && value.tuitionCny !== null && !value.tuitionPeriod) context.addIssue({ code: 'custom', message: 'Verified tuition requires an explicit billing period' })
+  if (value.status === 'verified' && value.tuitionCny !== null && !value.tuitionStatus) context.addIssue({ code: 'custom', message: 'Verified tuition requires a confidence status' })
+  if (value.status === 'verified' && !value.evidenceBasis) context.addIssue({ code: 'custom', message: 'Verified cycles require an explicit evidence basis' })
+  if (value.dateStatus === 'not-announced' && (value.opensOn || value.closesOn)) context.addIssue({ code: 'custom', message: 'Not-announced cycles must keep dates null' })
+})
+export const scholarshipSchema = audit.extend({ id: z.string().min(1), slug: z.string().regex(/^[a-z0-9-]+$/), name: localizedText, providerType: z.enum(['csc', 'university', 'province', 'city', 'other']), universityIds: z.array(z.string()), programIds: z.array(z.string()), coverage: z.object({ tuition: z.enum(['full', 'partial', 'none', 'unknown']), accommodation: z.enum(['full', 'partial', 'none', 'unknown']), insurance: z.union([z.boolean(), z.literal('unknown')]), stipendCnyPerMonth: z.number().nonnegative().nullable() }), deadline: date.nullable(), applicationUrl: httpsUrl.nullable(), summary: localizedText.nullable(), eligibility: z.array(localizedText).min(1).optional() })
+
+export const bundleSchema = z.object({
+  sources: z.array(sourceSchema), cities: z.array(citySchema), universities: z.array(universitySchema), programs: z.array(programSchema), admissionCycles: z.array(admissionCycleSchema), scholarships: z.array(scholarshipSchema),
+}).superRefine((bundle, context) => {
+  const duplicateCheck = (items: { id: string }[], label: string) => {
+    const seen = new Set<string>()
+    for (const item of items) {
+      if (seen.has(item.id)) context.addIssue({ code: 'custom', message: `Duplicate ${label} id: ${item.id}` })
+      seen.add(item.id)
+    }
+  }
+  duplicateCheck(bundle.sources, 'source'); duplicateCheck(bundle.cities, 'city'); duplicateCheck(bundle.universities, 'university'); duplicateCheck(bundle.programs, 'program'); duplicateCheck(bundle.admissionCycles, 'cycle'); duplicateCheck(bundle.scholarships, 'scholarship')
+  const duplicateSlugCheck = (items: { slug: string }[], label: string) => {
+    const seen = new Set<string>()
+    for (const item of items) { if (seen.has(item.slug)) context.addIssue({ code: 'custom', message: `Duplicate ${label} slug: ${item.slug}` }); seen.add(item.slug) }
+  }
+  duplicateSlugCheck(bundle.cities, 'city'); duplicateSlugCheck(bundle.universities, 'university'); duplicateSlugCheck(bundle.programs, 'program'); duplicateSlugCheck(bundle.scholarships, 'scholarship')
+  const sourceIds = new Set(bundle.sources.map((item) => item.id)); const officialSourceIds = new Set(bundle.sources.filter((item) => item.official).map((item) => item.id)); const officialProgramSources = new Map(bundle.sources.filter((item) => item.official && item.kind === 'program').map((item) => [item.id, item])); const cityIds = new Set(bundle.cities.map((item) => item.id)); const universityIds = new Set(bundle.universities.map((item) => item.id)); const programIds = new Set(bundle.programs.map((item) => item.id))
+  const auditItems = [...bundle.cities, ...bundle.universities, ...bundle.programs, ...bundle.admissionCycles, ...bundle.scholarships]
+  for (const item of auditItems) {
+    if (item.reviewAfter < item.verifiedAt) context.addIssue({ code: 'custom', message: `reviewAfter precedes verifiedAt on ${item.id}` })
+    for (const id of item.sourceIds) if (!sourceIds.has(id)) context.addIssue({ code: 'custom', message: `Unknown source id ${id} on ${item.id}` })
+  }
+  for (const item of bundle.universities) if (!cityIds.has(item.cityId)) context.addIssue({ code: 'custom', message: `Unknown city ${item.cityId} on ${item.id}` })
+  for (const item of bundle.programs) if (!universityIds.has(item.universityId)) context.addIssue({ code: 'custom', message: `Unknown university ${item.universityId} on ${item.id}` })
+  for (const item of bundle.programs) if (item.status === 'verified' && !item.sourceIds.some((id) => officialProgramSources.get(id)?.url === item.programUrl)) context.addIssue({ code: 'custom', message: `Verified program lacks a matching program-level official source on ${item.id}` })
+  const auditedCycleProgramIds = new Set(bundle.admissionCycles.filter((item) => item.status === 'verified' || item.status === 'stale').map((item) => item.programId))
+  for (const item of bundle.programs) if (item.status === 'verified' && item.details && !auditedCycleProgramIds.has(item.id)) context.addIssue({ code: 'custom', message: `Complete verified program lacks an audited admission cycle on ${item.id}` })
+  for (const item of bundle.admissionCycles) if (!programIds.has(item.programId)) context.addIssue({ code: 'custom', message: `Unknown program ${item.programId} on ${item.id}` })
+  const cycleKeys = new Set<string>()
+  for (const item of bundle.admissionCycles) {
+    const key = annualCycleIdentityKey(item.programId, item.academicYear, item.intake, item)
+    if (cycleKeys.has(key)) context.addIssue({ code: 'custom', message: `Duplicate admission cycle key: ${key}` })
+    cycleKeys.add(key)
+  }
+  const monthlyReviewItems = [...bundle.programs, ...bundle.admissionCycles, ...bundle.scholarships]
+  for (const item of monthlyReviewItems) {
+    if (item.status === 'verified' && daysBetween(item.verifiedAt, item.reviewAfter) > 31) {
+      context.addIssue({ code: 'custom', message: `Verified dynamic record exceeds the 31-day review window on ${item.id}` })
+    }
+  }
+  for (const item of bundle.scholarships) {
+    for (const id of item.universityIds) if (!universityIds.has(id)) context.addIssue({ code: 'custom', message: `Unknown university ${id} on ${item.id}` })
+    for (const id of item.programIds) if (!programIds.has(id)) context.addIssue({ code: 'custom', message: `Unknown program ${id} on ${item.id}` })
+  }
+  const dynamicFacts = [...bundle.admissionCycles.filter((item) => item.opensOn || item.closesOn || item.tuitionCny !== null || item.applicationFeeCny !== null), ...bundle.scholarships.filter((item) => item.deadline || item.coverage.tuition !== 'unknown' || item.coverage.accommodation !== 'unknown' || item.coverage.insurance !== 'unknown' || item.coverage.stipendCnyPerMonth !== null)]
+  for (const item of dynamicFacts) if (!item.sourceIds.some((id) => officialSourceIds.has(id))) context.addIssue({ code: 'custom', message: `Dynamic fact lacks an official source on ${item.id}` })
+})

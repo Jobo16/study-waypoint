@@ -1,0 +1,90 @@
+import type { D1Database, QueueMessageBatch, QueueProducer } from '../../publisher/src/types'
+import type { MaintenanceRecordTarget } from '../../../scripts/maintenance/field-contracts'
+
+export type ReconciliationTargetsUpload = { manifestSha256: string; bodySha256: string; byteLength: number; expectedRevision: number; uploadKey: string }
+export type MaintenanceMessage = { version: 1; jobId: string;seedSha256?:string;targetRefreshSha256?:string;bootstrapUploadSha256?:string;bootstrapSeedSha256?:string;discoveryManifestSha256?:string;discoveryOffset?:number;reconciliationTargetsUpload?:ReconciliationTargetsUpload;scopeUpgradeSha256?:string;refill?:{dispatchToken:string;epochSha256:string} }
+export type MaintenanceBatch = QueueMessageBatch<MaintenanceMessage>
+export interface BucketObject { text(): Promise<string>; arrayBuffer(): Promise<ArrayBuffer>; size?: number;etag?:string }
+export interface Bucket {
+  get(key: string): Promise<BucketObject | null>
+  list?(options: { prefix: string; limit: number }): Promise<{ objects: Array<{ key: string }>; truncated: boolean; cursor?: string }>
+  delete?(key: string): Promise<void>
+  put(key: string, body: string | ArrayBuffer | Uint8Array|ReadableStream<Uint8Array>, options?: { onlyIf?: { etagDoesNotMatch?: string;etagMatches?:string }; httpMetadata?: { contentType?: string } }): Promise<unknown>
+}
+export interface DurableStorage {
+  get<T>(key: string): Promise<T | undefined>
+  put<T>(key: string, value: T): Promise<void>
+  delete(key: string): Promise<boolean>
+  transaction<T>(body: (txn: DurableStorage) => Promise<T>): Promise<T>
+  list?<T>(options: { startAfter?: string; limit: number }): Promise<Map<string, T>>
+  getAlarm?(): Promise<number | null>
+  setAlarm?(scheduledTime: number): Promise<void>
+  deleteAlarm?(): Promise<void>
+}
+export interface DurableState { storage: DurableStorage }
+export interface DurableNamespace { idFromName(name: string): unknown; get(id: unknown): { fetch(request: Request): Promise<Response> } }
+export type MaintenanceEnv = {
+  PIPELINE_DB: D1Database; SNAPSHOTS_BUCKET: Bucket;
+  MAINTENANCE_QUEUE: QueueProducer<MaintenanceMessage>; MODEL_ADMISSION: DurableNamespace;
+  REFILL_COORDINATOR?: DurableNamespace;
+  MAINTENANCE_ADMIN_TOKEN?: string; MINIMAX_SUBSCRIPTION_KEY?: string;
+  MINIMAX_FLASH_CANARY?: string;
+  CLOUDFLARE_BILLING_READ_TOKEN?: string;
+  MODEL_STATE_MIGRATION_ID?: string; MODEL_STATE_MIGRATION_ROLE?: string;
+  MODEL_STATE_MIGRATION_SOURCE_ACCOUNT_ID?: string; MODEL_STATE_MIGRATION_TARGET_ACCOUNT_ID?: string;
+  MAINTENANCE_ENABLED?: string; MINIMAX_MODEL?: string; MINIMAX_ANTHROPIC_BASE?: string;
+  /** Separate opt-in for subscription translation and bilingual review. */
+  TRANSLATION_ADMISSION_ENABLED?: string;
+  NATIVE_HEAD_RECONCILIATION_REQUIRED?: string;
+  SCOPE_REGISTRY_SHA256?: string; SCOPE_SCHOOL_COUNT?: string; MINIMAX_CREDIT_FALLBACK_DISABLED?: string;
+  USER_AGENT?: string; FETCH_CONCURRENCY?: string;
+  /** Exact integer 1..16; absent/malformed values retain the four-call ceiling. */
+  MODEL_CONCURRENCY?: string;
+  /** Exact 8/16/32/64; every other value preserves the eight-job default. */
+  TICK_JOB_LIMIT?: string;
+  /** Opt-in continuous dispatch, independent of the existing model reservation ledger. */
+  CONTINUOUS_REFILL_ENABLED?: string;
+  /** Literal 4/8/16 opts in to a larger stage pilot; every other value keeps two. */
+  REFILL_MODEL_LIMIT?: string;
+  /** Only fresh, versioned jobs may use smaller model batches. */
+  MODEL_BATCH_CONTRACT_VERSION?: string;
+}
+export type Control = {
+  singleton: number; scope_sha256: string; input_catalog_sha256: string; seed_sha256: string;
+  legacy_guard_sha256: string; enabled: number; models_enabled: number; seed_complete: number; targets_complete:number;canary_json:string; revision: number; updated_at: string
+  seed_offset:number;seed_total:number;seed_plan_sha256:string|null
+}
+export type SourceRow = {
+  source_id: string; url: string; allowed_hosts_json: string; category: string;
+  categories_json?:string
+  enabled: number; interval_hours: number; due_at: string; last_attempt_at: string | null;
+  last_success_at: string | null; raw_sha256: string | null; canonical_sha256: string | null;
+  snapshot_key: string | null; etag: string | null; failures: number; error_code: string | null
+  discovery_depth:number
+}
+export type JobRow = {
+  job_id: string; source_id: string; stage: 'capture' | 'extract' | 'award' | 'maintain';
+  status: 'queued' | 'running' | 'retry' | 'done' | 'held' | 'unknown';
+  priority: number; due_at: string; created_at: string; updated_at: string; attempt: number;
+  lease_token: string | null; lease_until: string | null;
+  snapshot_sha256: string | null; snapshot_key: string | null; error_code: string | null
+  target_ids_json:string|null
+}
+export type SchoolRow = { university_id: string; name_json: string; seed_json: string }
+export type RecordTarget = MaintenanceRecordTarget
+export type LegacyGuard = {
+  id: string; universityId: string | null; sourceId: string | null; recordId: string | null;
+  fields: string[] | '*'; state: 'stop' | 'unknown' | 'consumed'; artifactSha256: string; reason: string
+  snapshotSha256?:string|null
+}
+export type ModelRequest = {
+  reservationKey: string; sourceId: string; universityIds: string[]; snapshotSha256: string;
+  pass: 'primary' | 'independent-review'; payload: string; lane: 'maintenance' | 'expansion'; recordIds?: string[]
+}
+export type ModelResult = {
+  attemptId: string; output: unknown; artifactKey: string; artifactSha256: string; reused: boolean
+  modelProfile?: import('./flash-canary').FlashAudit
+}
+export class MaintenanceError extends Error {
+  constructor(readonly code: string, readonly retryAfter: number | null = null) { super(code) }
+}

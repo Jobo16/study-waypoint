@@ -1,0 +1,493 @@
+import { describe, expect, it } from 'vitest'
+import type { DataBundle } from '@/lib/data/types'
+import { InvalidCursorError } from '@/lib/catalog-api/cursor'
+import { selectCatalogApiData } from '@/lib/catalog-api/projection'
+import { selectDiscoveryData } from '@/lib/data/discovery'
+import { identityFingerprint } from '@/lib/data/identity-acceptance'
+import {
+  CatalogApiService,
+  InvalidSearchQueryError,
+  releaseFromBundle,
+} from '@/lib/catalog-api/service'
+
+const text = (en: string, zh = en, ru = en) => ({ en, zh, ru })
+
+function fixture(): DataBundle {
+  return {
+    sources: [{
+      id: 'source-1',
+      url: 'https://example.edu/admissions',
+      title: 'Official admissions',
+      publisher: 'Example University',
+      kind: 'admissions',
+      language: 'en',
+      official: true,
+      accessedAt: '2026-07-20',
+    }],
+    cities: [{
+      id: 'city-1', slug: 'beijing', name: text('Beijing'), province: text('Beijing'), region: 'north',
+      coordinates: { lat: 39.9, lng: 116.4 }, overview: text('Capital'), climate: text('Seasonal'),
+      foodHighlights: [text('Food')], sights: [text('Sight')], sourceIds: ['source-1'],
+      verifiedAt: '2026-07-20', reviewAfter: '2026-10-20', status: 'verified',
+    }],
+    universities: [{
+      id: 'uni-1', slug: 'example-university', name: text('Example University'), cityId: 'city-1', region: 'north',
+      officialUrl: 'https://example.edu', admissionsUrl: 'https://example.edu/admissions', summary: text('Example'),
+      featured: true, sourceIds: ['source-1'], verifiedAt: '2026-07-20', reviewAfter: '2026-10-20', status: 'verified',
+    }],
+    programs: [{
+      id: 'program-1', slug: 'computer-science', universityId: 'uni-1', name: text('Computer Science'),
+      degreeLevel: 'bachelor', discipline: 'engineering', teachingLanguages: ['English'], durationMonths: 48,
+      programUrl: 'https://example.edu/program', applyUrl: 'https://example.edu/apply', languageRequirements: [],
+      sourceIds: ['source-1'], verifiedAt: '2026-07-20', reviewAfter: '2026-08-20', status: 'verified',
+    }],
+    admissionCycles: [{
+      id: 'cycle-1', programId: 'program-1', academicYear: '2026-2027', intake: 'autumn',
+      opensOn: '2026-01-01', closesOn: '2026-08-01', dateStatus: 'published', tuitionCny: 30000,
+      tuitionPeriod: 'academic-year', tuitionStatus: 'confirmed', evidenceBasis: 'cycle-specific', applicationFeeCny: null,
+      sourceIds: ['source-1'], verifiedAt: '2026-07-20', reviewAfter: '2026-08-20', status: 'verified',
+    }],
+    scholarships: [{
+      id: 'scholarship-1', slug: 'example-scholarship', name: text('Example Scholarship'), providerType: 'university',
+      universityIds: ['uni-1'], programIds: ['program-1'], coverage: { tuition: 'full', accommodation: 'unknown', insurance: true, stipendCnyPerMonth: null },
+      deadline: null, applicationUrl: 'https://example.edu/scholarship', summary: text('Funding'), sourceIds: ['source-1'],
+      verifiedAt: '2026-07-20', reviewAfter: '2026-08-20', status: 'verified',
+    }],
+  }
+}
+
+describe('CatalogApiService', () => {
+  it('keeps scoped stale identities and duplicate-slug cursor order when projecting a program page', () => {
+    const bundle = fixture(), today = '2026-07-20'
+    const base = bundle.programs[0]
+    bundle.programs = [
+      { ...base, id: 'b', slug: 'same', name: text('Computer Science', '计算机科学', 'UNREVIEWED_SENTINEL'), status: 'stale', reviewAfter: '2026-07-19' },
+      { ...base, id: 'c', slug: 'z-last' },
+      { ...base, id: 'a', slug: 'same' },
+      { ...base, id: 'orphan', universityId: 'missing' },
+    ]
+    const stale = bundle.programs[0]
+    const directory = selectDiscoveryData(bundle, today, [{
+      entityType: 'program', recordId: stale.id, identitySha256: identityFingerprint('program', stale),
+      sourceIds: stale.sourceIds, acceptedAt: '2026-07-20T00:00:00.000Z', reviewer: 'pagination-fixture',
+      receiptPath: 'fixture.json', receiptSha256: 'a'.repeat(64), verifiedName: { en: 'Computer Science' },
+    }])
+    const service = new CatalogApiService(directory, releaseFromBundle(directory, today), today)
+    const query = { q: 'Computer', view: 'directory' as const, limit: 1 }
+    const first = service.listPrograms(query)
+    const second = service.listPrograms({ ...query, cursor: first.meta.nextCursor! })
+    const third = service.listPrograms({ ...query, cursor: second.meta.nextCursor! })
+    expect([first, second, third].flatMap(page => page.data.map(item => item.id))).toEqual(['a', 'b', 'c'])
+    expect(third.meta.nextCursor).toBeNull()
+    expect(second.data[0].name).toEqual({ en: 'Computer Science' })
+    expect(second.data[0].durationMonths).toBeNull()
+    expect(second.data[0].fieldMeta.durationMonths.status).toBe('stale')
+    expect(service.listPrograms({ ...query, language: 'English', limit: 10 }).data.map(item => item.id)).toEqual(['a', 'c'])
+  })
+
+  it('retains scholarship filters, stale field redaction, and duplicate-slug pagination', () => {
+    const bundle = fixture(), today = '2026-07-20', base = bundle.scholarships[0]
+    bundle.scholarships = [
+      { ...base, id: 'b', slug: 'same', status: 'stale', reviewAfter: '2026-07-19' },
+      { ...base, id: 'c', slug: 'z-last' },
+      { ...base, id: 'a', slug: 'same' },
+      { ...base, id: 'excluded', slug: 'aaa', providerType: 'csc' },
+    ]
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, today), today)
+    const query = { q: 'Example', provider: 'university', limit: 1 }
+    const first = service.listScholarships(query)
+    const second = service.listScholarships({ ...query, cursor: first.meta.nextCursor! })
+    const third = service.listScholarships({ ...query, cursor: second.meta.nextCursor! })
+    expect([first, second, third].flatMap(page => page.data.map(item => item.id))).toEqual(['a', 'b', 'c'])
+    expect(third.meta.nextCursor).toBeNull()
+    expect(second.data[0].summary).toBeNull()
+    expect(second.data[0].fieldMeta.summary.status).toBe('stale')
+    expect(service.listScholarships({ ...query, program: 'program-1', limit: 10 }).data.map(item => item.id)).toEqual(['a', 'c'])
+  })
+
+  it('returns filters, source metadata, and explicit unknown fact statuses', () => {
+    const bundle = fixture()
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, '2026-07-20'), '2026-07-20')
+    const programs = service.listPrograms({ type: 'degree', language: 'english', tuitionMax: 35000 })
+    expect(programs.data).toHaveLength(1)
+    expect(programs.data[0].fieldMeta.durationMonths.status).toBe('known')
+    const cycles = service.getProgramCycles('computer-science')
+    expect(cycles?.data[0].fieldMeta.applicationFeeCny.status).toBe('officially_not_announced')
+    const scholarships = service.listScholarships({ institution: 'example-university' })
+    expect(scholarships.data[0].fieldMeta['coverage.accommodation'].status).toBe('officially_not_announced')
+    expect(scholarships.data[0].applicationUrl).toBe('https://example.edu/scholarship')
+    expect(scholarships.data[0].fieldMeta.applicationUrl.status).toBe('known')
+  })
+
+  it('keeps reference tuition out of current amount filters without hiding program identity', () => {
+    const bundle = fixture()
+    bundle.admissionCycles[0]!.tuitionStatus = 'reference'
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+    expect(service.listPrograms({ tuitionMax: 35_000 }).data).toHaveLength(0)
+    expect(service.listPrograms().data).toHaveLength(1)
+  })
+
+  it('accepts the applicant-facing Chinese field and multilingual Chinese-program search aliases', () => {
+
+    const bundle = fixture()
+    bundle.programs.push({
+      ...bundle.programs[0],
+      id: 'program-mtcsol',
+      slug: 'international-chinese-language-education',
+      name: text('International Chinese Language Education', '国际中文教育', 'Международное преподавание китайского языка'),
+      degreeLevel: 'master',
+      discipline: 'chinese-education',
+    })
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, '2026-07-20'), '2026-07-20')
+
+    expect(service.listPrograms({ degree: 'master', discipline: 'chinese-language' }).data.map((program) => program.id))
+      .toEqual(['program-mtcsol'])
+    expect(service.listPrograms({ degree: 'master', q: 'MTCSOL' }).data.map((program) => program.id))
+      .toEqual(['program-mtcsol'])
+    expect(service.listPrograms({ degree: 'master', q: '国际中文教育' }).data.map((program) => program.id))
+      .toEqual(['program-mtcsol'])
+    expect(service.listPrograms({ degree: 'master', q: 'Международное преподавание китайского языка' }).data.map((program) => program.id))
+      .toEqual(['program-mtcsol'])
+  })
+
+  it('returns exact institution metadata, public disciplines, sorts, and query-bound cursors', () => {
+    const bundle = fixture()
+    bundle.cities.push({
+      ...bundle.cities[0],
+      id: 'city-2',
+      slug: 'shanghai',
+      name: text('Shanghai'),
+      province: text('Shanghai'),
+      region: 'east',
+    })
+    bundle.universities.push(
+      {
+        ...bundle.universities[0],
+        id: 'uni-2',
+        slug: 'alpha-university',
+        name: text('Alpha University'),
+        cityId: 'city-2',
+        region: 'east',
+        featured: false,
+      },
+      {
+        ...bundle.universities[0],
+        id: 'uni-3',
+        slug: 'zeta-university',
+        name: text('Zeta University'),
+        featured: false,
+      },
+    )
+    bundle.programs.push(
+      {
+        ...bundle.programs[0],
+        id: 'program-2',
+        slug: 'business-administration',
+        universityId: 'uni-2',
+        name: text('Business Administration'),
+        discipline: 'business',
+      },
+      {
+        ...bundle.programs[0],
+        id: 'program-3',
+        slug: 'mechanical-engineering',
+        universityId: 'uni-2',
+        name: text('Mechanical Engineering'),
+      },
+      {
+        ...bundle.programs[0],
+        id: 'program-4',
+        slug: 'data-science',
+        universityId: 'uni-3',
+        name: text('Data Science'),
+      },
+    )
+    bundle.scholarships.push(
+      {
+        ...bundle.scholarships[0],
+        id: 'scholarship-2',
+        slug: 'alpha-scholarship-a',
+        universityIds: ['uni-2'],
+        programIds: ['program-2'],
+      },
+      {
+        ...bundle.scholarships[0],
+        id: 'scholarship-3',
+        slug: 'alpha-scholarship-b',
+        universityIds: ['uni-2'],
+        programIds: ['program-3'],
+      },
+    )
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+
+    const defaults = service.listInstitutions()
+    expect(defaults.meta.total).toBe(3)
+    expect(defaults.meta.facets?.cities?.map((item) => item.value)).toEqual([
+      'beijing',
+      'shanghai',
+    ])
+    expect(defaults.data.find((item) => item.id === 'uni-1')?.disciplines)
+      .toEqual(['computing-data'])
+
+    expect(service.listInstitutions({ sort: 'name' }).data.map((item) => item.id))
+      .toEqual(['uni-2', 'uni-1', 'uni-3'])
+    expect(service.listInstitutions({ sort: 'programs-desc' }).data.map((item) => item.id))
+      .toEqual(['uni-2', 'uni-1', 'uni-3'])
+    expect(service.listInstitutions({ sort: 'scholarships-desc' }).data.map((item) => item.id))
+      .toEqual(['uni-2', 'uni-1', 'uni-3'])
+
+    const query = {
+      q: 'university',
+      city: 'beijing',
+      region: 'north',
+      discipline: 'computing-data',
+      sort: 'name' as const,
+      limit: 1,
+    }
+    const first = service.listInstitutions(query)
+    expect(first.data).toHaveLength(1)
+    expect(first.meta.total).toBe(2)
+    expect(first.meta.facets?.cities?.map((item) => item.value)).toEqual(['beijing'])
+    expect(first.meta.nextCursor).toBeTruthy()
+
+    const second = service.listInstitutions({
+      ...query,
+      cursor: first.meta.nextCursor ?? undefined,
+    })
+    expect(second.data).toHaveLength(1)
+    expect(second.data[0].id).not.toBe(first.data[0].id)
+
+    for (const changed of [
+      { ...query, q: 'example' },
+      { ...query, city: 'shanghai' },
+      { ...query, region: 'east' },
+      { ...query, discipline: 'business-economics' },
+      { ...query, sort: 'programs-desc' as const },
+    ]) {
+      expect(() => service.listInstitutions({
+        ...changed,
+        cursor: first.meta.nextCursor ?? undefined,
+      })).toThrow(InvalidCursorError)
+    }
+  })
+
+  it('searches institution names only with NFKC AND token-prefix semantics', () => {
+    const bundle = fixture()
+    bundle.universities[0] = {
+      ...bundle.universities[0]!,
+      summary: text('Stale Summary Canary'),
+      reviewAfter: '2026-07-19',
+      status: 'stale',
+    }
+    bundle.cities[0] = {
+      ...bundle.cities[0]!,
+      name: text('City Search Canary'),
+    }
+    bundle.programs[0] = {
+      ...bundle.programs[0]!,
+      name: text('Program Search Canary'),
+    }
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+
+    expect(service.listInstitutions({ q: 'Ｕｎｉ Ｅｘａ' }).data.map((item) => item.id))
+      .toEqual(['uni-1'])
+    for (const query of ['stale summary', 'city search', 'program search']) {
+      expect(service.listInstitutions({ q: query }).data).toEqual([])
+    }
+    expect(() => service.listInstitutions({ q: Array.from({ length: 21 }, () => 'term').join(' ') }))
+      .toThrow(InvalidSearchQueryError)
+    expect(() => service.listInstitutions({ q: '---' })).toThrow(InvalidSearchQueryError)
+  })
+  it('uses 24 as the institution page default and never returns more than 100 records', () => {
+    const bundle = fixture()
+    for (let index = 2; index <= 105; index += 1) {
+      bundle.universities.push({
+        ...bundle.universities[0],
+        id: `uni-${index}`,
+        slug: `university-${String(index).padStart(3, '0')}`,
+        name: text(`University ${index}`),
+        featured: false,
+      })
+    }
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+
+    const defaultPage = service.listInstitutions()
+    expect(defaultPage.data).toHaveLength(24)
+    expect(defaultPage.meta.total).toBe(105)
+    expect(defaultPage.meta.nextCursor).toBeTruthy()
+
+    const maximumPage = service.listInstitutions({ limit: 101 })
+    expect(maximumPage.data).toHaveLength(100)
+    expect(maximumPage.meta.total).toBe(105)
+    expect(maximumPage.meta.nextCursor).toBeTruthy()
+  })
+  it('uses stable opaque cursor pagination and rejects unknown cursors', () => {
+    const bundle = fixture()
+    bundle.universities.push({ ...bundle.universities[0], id: 'uni-2', slug: 'second-university' })
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, '2026-07-20'), '2026-07-20')
+    const first = service.listInstitutions({ limit: 1 })
+    expect(first.data).toHaveLength(1)
+    expect(first.meta.nextCursor).toBeTruthy()
+    const second = service.listInstitutions({ limit: 1, cursor: first.meta.nextCursor ?? undefined })
+    expect(second.data).toHaveLength(1)
+    expect(second.data[0].id).not.toBe(first.data[0].id)
+    expect(() => service.listInstitutions({ cursor: 'not-a-cursor' })).toThrow(InvalidCursorError)
+  })
+
+  it('never treats an unregistered fallback URL as official evidence', () => {
+    const bundle = fixture()
+    bundle.sources = []
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+    const program = service.getProgram('computer-science')?.data
+    expect(program?.programUrl).toBe('https://example.edu/program')
+    expect(program?.durationMonths).toBeNull()
+    expect(program?.fieldMeta.durationMonths.status).toBe('source_unavailable')
+  })
+
+  it('uses only explicit legacy programIds for program filters and comparison counts', () => {
+    const bundle = fixture()
+    bundle.programs.push({
+      ...bundle.programs[0],
+      id: 'program-2',
+      slug: 'software-engineering',
+      name: text('Software Engineering'),
+    })
+    bundle.scholarships.push(
+      {
+        ...bundle.scholarships[0],
+        id: 'scholarship-university-only',
+        slug: 'university-only-scholarship',
+        programIds: [],
+      },
+      {
+        ...bundle.scholarships[0],
+        id: 'scholarship-unscoped',
+        slug: 'unscoped-scholarship',
+        universityIds: [],
+        programIds: [],
+      },
+    )
+    const service = new CatalogApiService(
+      bundle,
+      releaseFromBundle(bundle, '2026-07-20'),
+      '2026-07-20',
+    )
+
+    expect(service.listPrograms({ scholarship: 'linked' }).data.map((item) => item.id))
+      .toEqual(['program-1'])
+    expect(service.listPrograms({ scholarship: 'example-scholarship' }).data.map((item) => item.id))
+      .toEqual(['program-1'])
+    expect(service.listPrograms({ scholarship: 'university-only-scholarship' }).data)
+      .toEqual([])
+    expect(service.listPrograms({ scholarship: 'unscoped-scholarship' }).data)
+      .toEqual([])
+
+    const compared = service.comparePrograms(['program-1', 'program-2']).data.items
+    expect(Object.fromEntries(compared.map((item) => [
+      item.program.id,
+      item.linkedScholarshipCount,
+    ]))).toEqual({
+      'program-1': 1,
+      'program-2': 0,
+    })
+
+    expect(service.listScholarships({ institution: 'example-university' }).data.map((item) => item.id))
+      .toEqual([
+        'scholarship-1',
+        'scholarship-university-only',
+      ])
+  })
+
+  it('withholds expired cycles while preserving a current program identity', () => {
+    const bundle = fixture()
+    bundle.programs[0]!.reviewAfter = '2026-09-20'
+    const cycle = bundle.admissionCycles[0]!
+    const notes = text('Apply before 31 August 2026. Tuition is CNY 30,000 and the application fee is CNY 600.')
+    Object.assign(cycle, { closesOn: '2026-08-31', applicationFeeCny: 600, notes })
+    const serviceFor = (today: string) => new CatalogApiService(
+      selectCatalogApiData(bundle, today),
+      releaseFromBundle(bundle, today),
+      today,
+    )
+    const currentService = serviceFor('2026-08-20')
+    const current = currentService.getProgramCycles('computer-science')?.data[0]
+    expect(current).toMatchObject({
+      id: 'cycle-1', programId: 'program-1', academicYear: '2026-2027', intake: 'autumn',
+      notes, closesOn: '2026-08-31', tuitionCny: 30000, applicationFeeCny: 600,
+      fieldMeta: { notes: { status: 'known' } },
+    })
+    expect(currentService.comparePrograms(['program-1']).data.items[0]?.currentCycle?.notes).toEqual(notes)
+
+    const expiredService = serviceFor('2026-08-21')
+    const expiredCycles = expiredService.getProgramCycles('computer-science')?.data
+    expect(expiredCycles).toEqual([])
+    expect(expiredService.getProgram('computer-science')?.data.id).toBe('program-1')
+    expect(expiredService.comparePrograms(['program-1']).data.items[0]?.currentCycle).toBeNull()
+    expect(cycle.notes).toEqual(notes)
+    expect(cycle.status).toBe('verified')
+  })
+
+  it('withholds cycle narratives explicitly marked stale before the review deadline', () => {
+    const bundle = fixture()
+    bundle.admissionCycles[0]!.notes = text('Applications are open; pay an application fee of CNY 600.')
+    bundle.admissionCycles[0]!.status = 'stale'
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, '2026-07-20'), '2026-07-20')
+    const cycle = service.getProgramCycles('computer-science')?.data[0]
+    expect(cycle?.notes).toBeNull()
+    expect(cycle?.fieldMeta.notes.status).toBe('stale')
+    expect(cycle?.id).toBe('cycle-1')
+  })
+
+  it('keeps confirmed identity but masks stale dynamic facts everywhere', () => {
+    const bundle = fixture()
+    const service = new CatalogApiService(bundle, releaseFromBundle(bundle, '2026-07-20'), '2026-11-01')
+    const institution = service.getInstitution('example-university')?.data
+    const program = service.getProgram('computer-science')?.data
+    const cycle = service.getProgramCycles('computer-science')?.data[0]
+    const scholarship = service.listScholarships().data[0]
+    const scholarshipCycle = service.getScholarshipCycles('example-scholarship')?.data[0]
+
+    expect(institution?.name.en).toBe('Example University')
+    expect(institution?.summary).toBeNull()
+    expect(institution?.disciplines).toEqual([])
+    expect(program?.name.en).toBe('Computer Science')
+    expect(program?.durationMonths).toBeNull()
+    expect(program?.teachingLanguages).toBeNull()
+    expect(program?.applyUrl).toBeNull()
+    expect(program?.fieldMeta.durationMonths.status).toBe('stale')
+    expect(cycle?.closesOn).toBeNull()
+    expect(cycle?.tuitionCny).toBeNull()
+    expect(cycle?.applicationState).toBe('not-announced')
+    expect(scholarship.coverage.tuition).toBeNull()
+    expect(scholarship.universityIds).toBeNull()
+    expect(scholarship.applicationUrl).toBeNull()
+    expect(scholarship.fieldMeta.applicationUrl.status).toBe('stale')
+    expect(scholarshipCycle?.deadline).toBeNull()
+    expect(scholarshipCycle?.academicYear).toBeNull()
+
+    expect(service.listInstitutions({ discipline: 'computing-data' }).data).toHaveLength(0)
+    expect(service.listPrograms({ language: 'english' }).data).toHaveLength(0)
+    expect(service.listPrograms({ tuitionMax: 35_000 }).data).toHaveLength(0)
+    expect(service.listScholarships({ institution: 'example-university' }).data).toHaveLength(0)
+  })
+})

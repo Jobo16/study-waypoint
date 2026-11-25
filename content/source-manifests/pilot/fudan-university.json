@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "institutionId": "uni-fudan-university",
+  "catalogStatus": "existing",
+  "manifestStatus": "in_progress",
+  "checkedAt": "2026-07-20",
+  "officialHosts": ["iso.fudan.edu.cn","istudent.fudan.edu.cn"],
+  "sourceBindings": [
+    {"sourceId":"fudan-intl-admissions-home","purpose":"discovery","resourceKey":"resource:697dd47b825698da54d9434464a8345440536d6da2dc2bf6612d36668ad80a3e"},
+    {"sourceId":"fudan-undergraduate-catalog","purpose":"entity_index","resourceKey":"resource:d15909bce77e3dd89cc61a9b5e4273fe77674c7442a65d269af0bc7a0b1089aa"},
+    {"sourceId":"fudan-masters-catalog","purpose":"entity_index","resourceKey":"resource:7f05269a50e2b48fc730764bab37bcc966e088c00c055bdcf6bfccf5a8469cf7"},
+    {"sourceId":"fudan-doctoral-catalog","purpose":"entity_index","resourceKey":"resource:7f05269a50e2b48fc730764bab37bcc966e088c00c055bdcf6bfccf5a8469cf7"},
+    {"sourceId":"fudan-non-degree-catalog","purpose":"entity_index","resourceKey":"resource:83cd3f9035af430d9de7141efb03ebe60e9ef16cd3537fdde23fd62e12f49962"},
+    {"sourceId":"fudan-2026-current-guide","purpose":"fact_sheet","resourceKey":"resource:2ddc0ac62d5fdf84dcaf786a086dbb0c9958f75d838352616927c5554448750b"},
+    {"sourceId":"fudan-application-portal","purpose":"application_endpoint","resourceKey":"resource:7b3f66e0c297fec42ae5104f8dc13891c4ace36fa035778eb7c2239c17b8df15"},
+    {"sourceId":"fudan-university-scholarship-index","purpose":"entity_index","resourceKey":"resource:e3f2b2e9a3909fc5bf6de58fa175c452c655603f57cd109abba6f13bbdf295fe"},
+    {"sourceId":"fudan-government-scholarship-index","purpose":"entity_index","resourceKey":"resource:f65f13d8834993039b3e8f2dcc759d8f33bfdab6ee4382b755455fb8153252ec"},
+    {"sourceId":"fudan-admissions-catalog-anchor","purpose":"discovery","resourceKey":"resource:697dd47b825698da54d9434464a8345440536d6da2dc2bf6612d36668ad80a3e"}
+  ],
+  "sources": [
+    {
+      "version": 1, "id": "fudan-intl-admissions-home", "institutionId": "uni-fudan-university", "entityType": "university", "sourceCategory": "international_admissions_home",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760, "accept": "text/html,application/xhtml+xml,*/*;q=0.1" }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-admissions-home-v1", "fields": [{ "path": "admissionsSections", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-undergraduate-catalog", "institutionId": "uni-fudan-university", "entityType": "program-cycle", "sourceCategory": "undergraduate_catalog",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/51327/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-masters-catalog", "institutionId": "uni-fudan-university", "entityType": "program-cycle", "sourceCategory": "masters_catalog",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/51328/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-doctoral-catalog", "institutionId": "uni-fudan-university", "entityType": "program-cycle", "sourceCategory": "doctoral_catalog",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/51328/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-non-degree-catalog", "institutionId": "uni-fudan-university", "entityType": "program", "sourceCategory": "non_degree_catalog",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/LanguageTraining/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-2026-current-guide", "institutionId": "uni-fudan-university", "entityType": "program-cycle", "sourceCategory": "current_guide",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/7b/e4/c51328a752612/page.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-current-guide-v1", "fields": [{ "path": "guide", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-application-portal", "institutionId": "uni-fudan-university", "entityType": "university", "sourceCategory": "application_portal",
+      "officialUrl": "https://istudent.fudan.edu.cn/apply/", "allowedHosts": ["istudent.fudan.edu.cn"], "enabled": false,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "blocked" },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-application-portal-v1", "fields": [{ "path": "applicationUrl", "type": "string", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-university-scholarship-index", "institutionId": "uni-fudan-university", "entityType": "scholarship", "sourceCategory": "university_scholarship",
+      "officialUrl": "https://iso.fudan.edu.cn/xsjxj/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-government-scholarship-index", "institutionId": "uni-fudan-university", "entityType": "scholarship", "sourceCategory": "government_scholarship",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/16210/list.htm", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-government-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "fudan-admissions-catalog-anchor", "institutionId": "uni-fudan-university", "entityType": "university", "sourceCategory": "catalog_anchor",
+      "officialUrl": "https://iso.fudan.edu.cn/isoenglish/", "allowedHosts": ["iso.fudan.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-catalog-anchor-v1", "fields": [{ "path": "catalogLinks", "type": "string-array", "required": true, "critical": true }] }
+    }
+  ],
+  "coverage": [
+    { "sourceCategory": "international_admissions_home", "status": "registered", "sourceIds": ["fudan-intl-admissions-home"] },
+    { "sourceCategory": "undergraduate_catalog", "status": "registered", "sourceIds": ["fudan-undergraduate-catalog"] },
+    { "sourceCategory": "masters_catalog", "status": "registered", "sourceIds": ["fudan-masters-catalog"] },
+    { "sourceCategory": "doctoral_catalog", "status": "registered", "sourceIds": ["fudan-doctoral-catalog"] },
+    { "sourceCategory": "non_degree_catalog", "status": "registered", "sourceIds": ["fudan-non-degree-catalog"] },
+    { "sourceCategory": "current_guide", "status": "registered", "sourceIds": ["fudan-2026-current-guide"] },
+    { "sourceCategory": "dates_deadlines", "status": "discovery_pending", "note": "Dates are embedded in current notices; no distinct current official HTTPS dates page was confirmed." },
+    { "sourceCategory": "fees", "status": "discovery_pending", "note": "Fee details are embedded or attached within guides; a stable directly parseable official fee source was not confirmed." },
+    { "sourceCategory": "eligibility_language", "status": "discovery_pending", "note": "Eligibility and language rules are embedded in guides; no distinct stable official page was confirmed." },
+    { "sourceCategory": "application_portal", "status": "source_unavailable", "sourceIds": ["fudan-application-portal"], "note": "The official application entrance is interactive and disabled because the ingestion worker has no browser-rendering or authenticated-session capability." },
+    { "sourceCategory": "university_scholarship", "status": "registered", "sourceIds": ["fudan-university-scholarship-index"] },
+    { "sourceCategory": "faculty_scholarship", "status": "discovery_pending", "note": "No centralized current faculty-level scholarship page was confirmed." },
+    { "sourceCategory": "government_scholarship", "status": "registered", "sourceIds": ["fudan-government-scholarship-index"] },
+    { "sourceCategory": "program_detail", "status": "discovery_pending", "note": "Program pages will be enumerated from the registered catalog anchors in a later discovery crawl." },
+    { "sourceCategory": "contacts", "status": "discovery_pending", "note": "A distinct stable official admissions contact page was not confirmed in this pilot review." },
+    { "sourceCategory": "catalog_anchor", "status": "registered", "sourceIds": ["fudan-admissions-catalog-anchor"] }
+  ],
+  "catalogReconciliation": {
+    "scope": "representative_international_programs",
+    "status": "in_progress",
+    "entries": [
+      {
+        "sourceId": "fudan-university-scholarship-index",
+        "officialKey": "sch-gap-chinese-scholarship-fudan-iclt-degree-programs-2026",
+        "officialName": "Fudan 2026 International Chinese Language Teachers Scholarship — Degree Programs",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "fudan-intl-admissions-home",
+        "officialKey": "scholarship-fudan-university-international-student",
+        "officialName": "Fudan University Scholarship for International Students",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked only to an official source on the same host and in the same category; exact page evidence and catalog completeness remain pending."
+      }
+    ],
+    "note": "V2 migration preserves the 2026-07-20 source audit. 2 exact-URL or same-host/same-category catalog relationships are queued for evidence review; all other identities and full-directory reconciliation remain unresolved."
+  }
+}

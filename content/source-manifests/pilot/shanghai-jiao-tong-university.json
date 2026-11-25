@@ -1,0 +1,108 @@
+{
+  "version": 2,
+  "institutionId": "uni-shanghai-jiao-tong-university",
+  "catalogStatus": "existing",
+  "manifestStatus": "in_progress",
+  "checkedAt": "2026-07-20",
+  "officialHosts": ["apply.sjtu.edu.cn","isc.sjtu.edu.cn"],
+  "sourceBindings": [
+    {"sourceId":"sjtu-intl-admissions-home","purpose":"discovery","resourceKey":"resource:2f73b4a857aa1819e3c881ff8bf06aaa812850575c9f85c834f8a0d0bc8e8c20"},
+    {"sourceId":"sjtu-2026-undergraduate-catalog","purpose":"entity_index","resourceKey":"resource:b9e8f8b5edd4ba9be7ea63cf8470586dde53d093b420f0844f0fd33d0eeb753c"},
+    {"sourceId":"sjtu-2026-masters-catalog","purpose":"entity_index","resourceKey":"resource:ecd26ba40b12df2ddfcc1bcb290ccddc8670bb0655b09196a4fdf01b1237d06b"},
+    {"sourceId":"sjtu-2026-doctoral-catalog","purpose":"entity_index","resourceKey":"resource:ecd26ba40b12df2ddfcc1bcb290ccddc8670bb0655b09196a4fdf01b1237d06b"},
+    {"sourceId":"sjtu-2026-current-guide","purpose":"fact_sheet","resourceKey":"resource:ecd26ba40b12df2ddfcc1bcb290ccddc8670bb0655b09196a4fdf01b1237d06b"},
+    {"sourceId":"sjtu-application-portal","purpose":"application_endpoint","resourceKey":"resource:dfa5a6f13325c7877e567fe62b28a036f30e9b6fd2aab7e273c15c83e0594d80"},
+    {"sourceId":"sjtu-graduate-university-scholarships","purpose":"entity_index","resourceKey":"resource:419eb9863e1ea949cb4c95826740b84bebcb70dc0958f3108a3748b66e2380c7"},
+    {"sourceId":"sjtu-shanghai-government-scholarship","purpose":"entity_index","resourceKey":"resource:871be5edf120e0c285b7e342341139c8212673aaab2e6551d47bf8172b1ba332"},
+    {"sourceId":"sjtu-admissions-catalog-anchor","purpose":"discovery","resourceKey":"resource:226e0556d4e7dc299dec97f59bff3d60dfd78b73690b349dc161ab29ac7d958f"}
+  ],
+  "sources": [
+    {
+      "version": 1, "id": "sjtu-intl-admissions-home", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "university", "sourceCategory": "international_admissions_home",
+      "officialUrl": "https://isc.sjtu.edu.cn/EN/", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-admissions-home-v1", "fields": [{ "path": "admissionsSections", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-2026-undergraduate-catalog", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "program-cycle", "sourceCategory": "undergraduate_catalog",
+      "officialUrl": "https://isc.sjtu.edu.cn/CN/content.aspx?flag=0&info_lb=205", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-2026-masters-catalog", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "program-cycle", "sourceCategory": "masters_catalog",
+      "officialUrl": "https://isc.sjtu.edu.cn/CN/content.aspx?flag=64&info_lb=101", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-2026-doctoral-catalog", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "program-cycle", "sourceCategory": "doctoral_catalog",
+      "officialUrl": "https://isc.sjtu.edu.cn/CN/content.aspx?flag=64&info_lb=101", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-2026-current-guide", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "program-cycle", "sourceCategory": "current_guide",
+      "officialUrl": "https://isc.sjtu.edu.cn/CN/content.aspx?flag=64&info_lb=101", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-current-guide-v1", "fields": [{ "path": "guide", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-application-portal", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "university", "sourceCategory": "application_portal",
+      "officialUrl": "https://apply.sjtu.edu.cn/", "allowedHosts": ["apply.sjtu.edu.cn"], "enabled": false,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "blocked" },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-application-portal-v1", "fields": [{ "path": "applicationUrl", "type": "string", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-graduate-university-scholarships", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "scholarship", "sourceCategory": "university_scholarship",
+      "officialUrl": "https://isc.sjtu.edu.cn/cn/content.aspx?flag=64&info_lb=107", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-shanghai-government-scholarship", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "scholarship", "sourceCategory": "government_scholarship",
+      "officialUrl": "https://isc.sjtu.edu.cn/cn/content.aspx?flag=64&info_lb=359", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-government-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "sjtu-admissions-catalog-anchor", "institutionId": "uni-shanghai-jiao-tong-university", "entityType": "university", "sourceCategory": "catalog_anchor",
+      "officialUrl": "https://isc.sjtu.edu.cn/", "allowedHosts": ["isc.sjtu.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-catalog-anchor-v1", "fields": [{ "path": "catalogLinks", "type": "string-array", "required": true, "critical": true }] }
+    }
+  ],
+  "coverage": [
+    { "sourceCategory": "international_admissions_home", "status": "registered", "sourceIds": ["sjtu-intl-admissions-home"] },
+    { "sourceCategory": "undergraduate_catalog", "status": "registered", "sourceIds": ["sjtu-2026-undergraduate-catalog"] },
+    { "sourceCategory": "masters_catalog", "status": "registered", "sourceIds": ["sjtu-2026-masters-catalog"] },
+    { "sourceCategory": "doctoral_catalog", "status": "registered", "sourceIds": ["sjtu-2026-doctoral-catalog"] },
+    { "sourceCategory": "non_degree_catalog", "status": "discovery_pending", "note": "No distinct current official HTTPS non-degree catalog was confirmed." },
+    { "sourceCategory": "current_guide", "status": "registered", "sourceIds": ["sjtu-2026-current-guide"] },
+    { "sourceCategory": "dates_deadlines", "status": "discovery_pending", "note": "Dates are embedded in current guides; no distinct current official dates page was confirmed." },
+    { "sourceCategory": "fees", "status": "discovery_pending", "note": "Fees are embedded in guides or attachments; no stable directly parseable fee page was confirmed." },
+    { "sourceCategory": "eligibility_language", "status": "discovery_pending", "note": "Eligibility and language requirements are embedded in guides; no distinct current page was confirmed." },
+    { "sourceCategory": "application_portal", "status": "source_unavailable", "sourceIds": ["sjtu-application-portal"], "note": "The official application entrance is an interactive portal and is disabled because the worker has no browser-rendering or authenticated-session capability." },
+    { "sourceCategory": "university_scholarship", "status": "registered", "sourceIds": ["sjtu-graduate-university-scholarships"] },
+    { "sourceCategory": "faculty_scholarship", "status": "discovery_pending", "note": "No centralized current faculty-level scholarship page was confirmed." },
+    { "sourceCategory": "government_scholarship", "status": "registered", "sourceIds": ["sjtu-shanghai-government-scholarship"] },
+    { "sourceCategory": "program_detail", "status": "discovery_pending", "note": "Program-level pages will be discovered from the registered catalog anchors." },
+    { "sourceCategory": "contacts", "status": "discovery_pending", "note": "A distinct stable official admissions contact page was not confirmed in this pilot review." },
+    { "sourceCategory": "catalog_anchor", "status": "registered", "sourceIds": ["sjtu-admissions-catalog-anchor"] }
+  ],
+  "catalogReconciliation": {
+    "scope": "representative_international_programs",
+    "status": "in_progress",
+    "entries": [
+      {
+        "sourceId": "sjtu-admissions-catalog-anchor",
+        "officialKey": "scholarship-shanghai-jiao-tong-university",
+        "officialName": "Shanghai Jiao Tong University Scholarship",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      }
+    ],
+    "note": "V2 migration preserves the 2026-07-20 source audit. 1 exact-URL or same-host/same-category catalog relationships are queued for evidence review; all other identities and full-directory reconciliation remain unresolved."
+  }
+}

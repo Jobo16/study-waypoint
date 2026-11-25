@@ -1,0 +1,147 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { GET as listPrograms } from '@/app/api/v1/programs/route'
+import { GET as getCurrentRelease } from '@/app/api/v1/releases/current/route'
+import { createCatalogRepository } from '@/lib/catalog'
+import { selectCatalogApiData } from '@/lib/catalog-api/projection'
+import { selectDetailedPublicPrograms } from '@/lib/data/public-program-quality'
+import * as catalogApiRuntime from '@/lib/catalog-api/runtime'
+import { CatalogApiService, releaseFromBundle } from '@/lib/catalog-api/service'
+import { getTodayDate } from '@/lib/data/freshness'
+
+afterEach(() => {
+  vi.restoreAllMocks()
+  vi.useRealTimers()
+})
+
+describe('catalog API routes', () => {
+  it('binds the scheduling digest to the normal live deployment and exposes only coverage hashes', async () => {
+    const normal = await (await getCurrentRelease(new Request('https://example.test/api/v1/releases/current'))).json()
+    const response = await getCurrentRelease(new Request('https://example.test/api/v1/releases/current?view=school-coverage'))
+    const { data } = await response.json()
+    expect(response.status).toBe(200)
+    expect(response.headers.get('cache-control')).toBe('no-store')
+    expect(data).toMatchObject({deploymentSha:normal.data.deploymentSha, directoryRevision:normal.data.directoryRevision,
+      evaluatedForDate:normal.data.evaluatedForDate, catalogBackend:'json'})
+    expect(Object.keys(data.coverage).sort()).toEqual(['inputCatalogSha256','scopeRegistrySha256','sha256'])
+    expect(Object.values(data.coverage).every(value => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value))).toBe(true)
+  }, 20_000)
+
+  it('serves only publication-gated records with cache policy and release metadata', async () => {
+    // The shared cache intentionally shrinks before Shanghai midnight. Keep
+    // this ordinary daytime contract independent of the CI runner's clock.
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-10-28T04:00:00Z'))
+    const response = await listPrograms(new Request('https://example.test/api/v1/programs?limit=1'))
+    const body = await response.json()
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get('cache-control')).toContain('s-maxage=300')
+    expect(body.data).toHaveLength(1)
+    expect(['verified', 'stale']).toContain(body.data[0].status)
+    if (body.data[0].status === 'stale') {
+      expect(body.data[0].durationMonths).toBeNull()
+      expect(body.data[0].applyUrl).toBeNull()
+      expect(body.data[0].fieldMeta.durationMonths.status).toBe('stale')
+    }
+    expect(body.data[0].fieldMeta.programUrl.officialUrl).toMatch(/^https:\/\//)
+    expect(body.meta.release.id).toMatch(/^json:/)
+  })
+
+  it('does not cache publication-gated records past Shanghai midnight', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-10-28T15:59:56Z'))
+    const response = await listPrograms(new Request('https://example.test/api/v1/programs?limit=1'))
+
+    expect(response.status).toBe(200)
+    expect(response.headers.get('cache-control')).toBe(
+      'public, max-age=4, s-maxage=4, stale-while-revalidate=0, must-revalidate',
+    )
+  })
+
+  it('exposes the linked-scholarship program filter through the compatibility API', async () => {
+    // Give this positive route fixture its own evidence window and scope.
+    // Canonical evidence may expire or roll over without changing this contract.
+    const today = '2026-09-28'
+    const bundle = structuredClone(await createCatalogRepository().getBundle())
+    const program = bundle.programs.find(item => item.status === 'verified' && item.verificationScope !== 'identity')!
+    const university = bundle.universities.find(item => item.id === program.universityId)!
+    const city = bundle.cities.find(item => item.id === university.cityId)!
+    for (const record of [program, university, city]) {
+      Object.assign(record, { status: 'verified', verifiedAt: today, reviewAfter: '2026-10-28' })
+    }
+    bundle.scholarships = [{
+      ...bundle.scholarships[0]!,
+      id: 'scholarship-route-fixture', slug: 'scholarship-route-fixture',
+      universityIds: [program.universityId], programIds: [program.id],
+      sourceIds: [...program.sourceIds],
+      status: 'verified', verifiedAt: today, reviewAfter: '2026-10-28', deadline: null,
+    }]
+    const published = selectCatalogApiData(bundle, today)
+    vi.spyOn(catalogApiRuntime, 'getCatalogApiService').mockResolvedValueOnce(
+      new CatalogApiService(published, releaseFromBundle(published, today), today),
+    )
+
+    const response = await listPrograms(new Request('https://example.test/api/v1/programs?scholarship=linked&limit=100'))
+    const body = await response.json() as { data: Array<{ id: string }> }
+
+    expect(response.status).toBe(200)
+    expect(body.data.map((record) => record.id)).toEqual([program.id])
+  })
+
+  it('rejects invalid pagination input without exposing an internal error', async () => {
+    const response = await listPrograms(new Request('https://example.test/api/v1/programs?limit=1000'))
+    const body = await response.json()
+
+    expect(response.status).toBe(400)
+    expect(body).toEqual({
+      error: { code: 'invalid_request', message: 'limit exceeds the maximum.' },
+    })
+  })
+
+  it('bounds query and cursor input before scanning the catalog', async () => {
+    const queryResponse = await listPrograms(new Request(`https://example.test/api/v1/programs?q=${'a'.repeat(201)}`))
+    expect(queryResponse.status).toBe(400)
+    const cursorResponse = await listPrograms(new Request(`https://example.test/api/v1/programs?cursor=${'a'.repeat(1025)}`))
+    expect(cursorResponse.status).toBe(400)
+  })
+
+  it('reports record counts for the current public release', async () => {
+    // Evaluate the checked-in evidence within its original review window.
+    // Production keeps using the real clock and may correctly publish zero.
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-10-28T04:00:00Z'))
+    const repository = createCatalogRepository()
+    const raw = await repository.getBundle()
+    const publicBundle = selectDetailedPublicPrograms(selectCatalogApiData(raw, getTodayDate()), getTodayDate(), raw)
+    const response = await getCurrentRelease(new Request('https://example.test/api/v1/releases/current'))
+    const body = await response.json()
+
+    expect(response.status).toBe(200)
+    expect(body.data.recordCounts.universities).toBeGreaterThan(0)
+    expect(body.data.recordCounts.programs).toBe(publicBundle.programs.length)
+    expect(body.data.recordCounts).toEqual(body.data.publicCounts)
+    expect(body.data.rawCounts.programs).toBeGreaterThanOrEqual(body.data.publicCounts.programs)
+    expect(body.data.dataCheckedThrough).toMatch(/^\d{4}-\d{2}-\d{2}$/u)
+    expect(body.data.evaluatedForDate).toBe(getTodayDate())
+    expect(body.data.activatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/u)
+    expect(body.data.catalogBackend).toBe('json')
+    expect(body.data.recordCounts.programs).toBeGreaterThan(0)
+  })
+
+  it('reports the immutable Vercel deployment SHA separately from release identity', async () => {
+    const previous = process.env.VERCEL_GIT_COMMIT_SHA
+    const sha = 'b'.repeat(40)
+    process.env.VERCEL_GIT_COMMIT_SHA = sha
+    try {
+      const response = await getCurrentRelease(new Request('https://example.test/api/v1/releases/current'))
+      const body = await response.json()
+      expect(response.status).toBe(200)
+      expect(body.data.deploymentSha).toBe(sha)
+      expect(body.meta.release.deploymentSha).toBe(sha)
+      expect(body.data.id).not.toBe(sha)
+      expect(body.data.dataDate).toMatch(/^\d{4}-\d{2}-\d{2}$/u)
+    } finally {
+      process.env.VERCEL_GIT_COMMIT_SHA = previous
+    }
+  })
+})

@@ -1,0 +1,289 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+import { describe, expect, it } from 'vitest'
+
+import admissionCycles from '../../content/data/admission-cycles.json'
+import cities from '../../content/data/cities.json'
+import programs from '../../content/data/programs.json'
+import scholarships from '../../content/data/scholarships.json'
+import sources from '../../content/data/sources.json'
+import universities from '../../content/data/universities.json'
+import { selectPublishedData } from '@/lib/data/publication'
+import { selectDiscoveryData } from '@/lib/data/discovery'
+import { identityAcceptanceLedgerSchema, identityFingerprint } from '@/lib/data/identity-acceptance'
+import { bundleSchema } from '@/lib/data/schema'
+
+const data = bundleSchema.parse({
+  sources,
+  cities,
+  universities,
+  programs,
+  admissionCycles,
+  scholarships,
+})
+
+const expandedProgramIds = [
+  'program-xmu-long-term-chinese-language-spring-2027',
+  'program-dhu-winter-chinese-2027',
+  'program-bfsu-general-chinese-training-spring-2027',
+  'program-uibe-international-foundation-spring-2027',
+  'program-xju-iclt-one-semester-spring-2027',
+  'program-snnu-iclt-one-semester-spring-2027',
+  'program-blcu-iclt-one-semester-spring-2027',
+  'program-dhu-iclt-one-semester-spring-2027',
+  'program-shu-iclt-one-semester-spring-2027',
+  'program-tianjin-university-one-semester-chinese-language-study-spring-language',
+  'program-nankai-iclt-one-semester-spring-2027',
+  'program-bfsu-iclt-one-semester-spring-2027',
+] as const
+
+const REVERIFIED_DHU_PROGRAM_ID = 'program-dhu-winter-chinese-2027'
+const REVERIFIED_DHU_SOURCE_IDS = [
+  'src-dhu-winter-chinese-2027',
+  'source-dhu-language-pedagogy-20261019',
+  'source-dhu-current-language-index-20261019',
+]
+// The newly reviewed awards intentionally omit links to these still-stale routes.
+// Keep their old fee assertions scoped to the original programme identities.
+const REVERIFIED_SCHOLARSHIPS = new Map([
+  ['scholarship-snnu-iclt-one-semester-spring-2027', {
+    universityId: 'uni-shaanxi-normal-university',
+    historicalProgramId: 'program-snnu-iclt-one-semester-spring-2027',
+    sourceId: 'source-snnu-iclt-spring2027-fresh-20261019',
+  }],
+  ['scholarship-blcu-iclt-one-semester-spring-2027', {
+    universityId: 'uni-beijing-language-and-culture-university',
+    historicalProgramId: 'program-blcu-iclt-one-semester-spring-2027',
+    sourceId: 'source-blcu-iclt-spring2027-fresh-20261019',
+  }],
+])
+
+describe('current future program expansion on 2026-07-28', () => {
+  it('retains twelve grounded historical identities without publishing expired reviews', () => {
+    const published = selectPublishedData(data, '2026-10-19')
+    const publishedIds = new Set(published.programs.map((item) => item.id))
+
+    for (const id of expandedProgramIds) {
+      const program = data.programs.find((item) => item.id === id)
+      expect(program, id).toBeDefined()
+      if (id === REVERIFIED_DHU_PROGRAM_ID) {
+        expect(program?.status, id).toBe('verified')
+        expect(program?.verifiedAt, id).toBe('2026-10-19')
+        expect(program?.reviewAfter, id).toBe('2026-10-26')
+        expect(program?.sourceIds, id).toEqual(REVERIFIED_DHU_SOURCE_IDS)
+        expect(publishedIds.has(id), id).toBe(true)
+        expect(selectPublishedData(data, '2026-10-27').programs.some((item) => item.id === id))
+          .toBe(false)
+      } else {
+        expect(program?.status, id).toBe('stale')
+        expect(publishedIds.has(id), id).toBe(false)
+        expect(program?.name.ru).toBeTruthy()
+      }
+      expect(
+        data.sources.some(
+          (source) => source.official
+            && source.kind === 'program'
+            && source.url === program?.programUrl
+            && program.sourceIds.includes(source.id),
+        ),
+        id,
+      ).toBe(true)
+      expect(program?.name.en).toBeTruthy()
+      expect(program?.name.zh).toBeTruthy()
+    }
+  })
+
+  it('publishes three newly represented universities and Urumqi map data', () => {
+    const expected = new Map([
+      ['uni-xinjiang-university', 'city-urumqi'],
+      ['uni-shaanxi-normal-university', 'city-xian'],
+      ['uni-beijing-language-and-culture-university', 'city-beijing'],
+    ])
+
+    for (const [id, cityId] of expected) {
+      const university = data.universities.find((item) => item.id === id)
+      expect(university?.cityId).toBe(cityId)
+      expect(university?.name.en).toBeTruthy()
+      expect(university?.name.zh).toBeTruthy()
+      expect(university?.name.ru).toBeTruthy()
+    }
+
+    const urumqi = data.cities.find((item) => item.id === 'city-urumqi')
+    expect(urumqi?.coordinates).toEqual({ lat: 43.8256, lng: 87.6168 })
+    expect(urumqi?.region).toBe('northwest')
+  })
+
+  it('keeps exact fees and future deadlines for paid language programs', () => {
+    const xmu = data.admissionCycles.find(
+      (item) => item.id === 'cycle-xmu-long-term-chinese-language-spring-2027',
+    )
+    expect(xmu).toMatchObject({
+      closesOn: '2026-12-30',
+      tuitionCny: 13000,
+      tuitionPeriod: 'semester',
+      // The official page calls CNY 400 an enrolment fee, not an application fee.
+      applicationFeeCny: null,
+      factScope: 'partial',
+      evidenceBasis: 'cycle-specific',
+    })
+
+    const dhu = data.admissionCycles.find(
+      (item) => item.id === 'cycle-dhu-winter-chinese-2027',
+    )
+    expect(dhu).toMatchObject({
+      // July 10 is the brochure publication date, not an announced opening date.
+      opensOn: null,
+      closesOn: '2026-11-30',
+      tuitionCny: 3600,
+      tuitionPeriod: 'program',
+      applicationFeeCny: 600,
+      evidenceBasis: 'cycle-specific',
+      verifiedAt: '2026-10-19',
+      sourceIds: REVERIFIED_DHU_SOURCE_IDS,
+    })
+  })
+
+  it('labels annual-rule dates as recurring evidence instead of cycle-specific claims', () => {
+    const bfsu = data.admissionCycles.find(
+      (item) => item.id === 'cycle-bfsu-general-chinese-training-spring-2027',
+    )
+    expect(bfsu).toMatchObject({
+      closesOn: '2026-12-15',
+      tuitionCny: 12000,
+      applicationFeeCny: 800,
+      evidenceBasis: 'recurring-official-rule',
+    })
+    expect(bfsu?.notes?.en).toContain('each year')
+
+    const uibe = data.admissionCycles.find(
+      (item) => item.id === 'cycle-uibe-international-foundation-spring-2027',
+    )
+    expect(uibe).toMatchObject({
+      opensOn: '2026-10-01',
+      closesOn: '2026-12-31',
+      tuitionCny: 15600,
+      applicationFeeCny: 660,
+      evidenceBasis: 'recurring-official-rule',
+    })
+    expect(uibe?.notes?.en).toContain('may close earlier')
+  })
+
+  it('models directions inside one ICLT program per university', () => {
+    const cases = [
+      ['uni-xinjiang-university', 'Chinese Philosophy'],
+      ['uni-shaanxi-normal-university', 'Chinese Philosophy'],
+      ['uni-beijing-language-and-culture-university', 'Chinese Language and Literature'],
+      ['uni-shanghai-university', 'Traditional Chinese Medicine'],
+      ['uni-tianjin-university', 'Taiji Culture'],
+      ['uni-nankai-university', 'Chinese History'],
+    ] as const
+
+    for (const [universityId, expectedDirection] of cases) {
+      const items = data.programs.filter(
+        (item) => item.universityId === universityId
+          && item.name.en?.startsWith('International Chinese Language Teachers Scholarship'),
+      )
+      expect(items).toHaveLength(1)
+      const cycle = data.admissionCycles.find((item) => item.programId === items[0].id)
+      expect(cycle?.notes?.en).toContain(expectedDirection)
+    }
+  })
+
+  it('retains accepted award identities while hiding expired funding facts and preserving historical coverage separately from list-price tuition', () => {
+    const today = '2026-10-24'
+    const ledger = identityAcceptanceLedgerSchema.parse(JSON.parse(readFileSync(
+      resolve('content/data/identity-acceptances.json'), 'utf8',
+    )))
+    const before = JSON.stringify(data.scholarships)
+    const directory = selectDiscoveryData(data, today, ledger.entries)
+    const currentIds = new Set(selectPublishedData(data, today).scholarships.map(item => item.id))
+    const octoberScholarshipIds = new Set([
+      'scholarship-xmu-iclt-one-semester-spring-2027',
+      'scholarship-xju-iclt-one-semester-spring-2027',
+      'scholarship-snnu-iclt-one-semester-spring-2027',
+      'scholarship-blcu-iclt-one-semester-spring-2027',
+      'scholarship-dhu-iclt-one-semester-spring-2027',
+      'scholarship-shu-iclt-one-semester-spring-2027',
+      'scholarship-tianjin-university-one-semester-chinese-language-study-spring-language',
+      'scholarship-nankai-iclt-one-semester-spring-2027',
+    ])
+    const futureScholarships = data.scholarships.filter(
+      (item) => octoberScholarshipIds.has(item.id),
+    )
+    expect(futureScholarships).toHaveLength(octoberScholarshipIds.size)
+
+    const bfsu = data.scholarships.find(
+      (item) => item.id === 'scholarship-bfsu-iclt-one-semester-spring-2027',
+    )
+    expect(bfsu?.deadline).toBe('2026-12-30')
+
+    for (const item of [...futureScholarships, bfsu!]) {
+      expect(item.reviewAfter < today, item.id).toBe(true)
+      expect(currentIds.has(item.id), item.id).toBe(false)
+      // Original official funding terms remain in the historical record. They
+      // neither become a current award offer nor imply zero list-price tuition.
+      expect(item.coverage).toEqual({
+        tuition: 'full',
+        accommodation: 'full',
+        insurance: true,
+        stipendCnyPerMonth: 2500,
+      })
+      const reverified = REVERIFIED_SCHOLARSHIPS.get(item.id)
+      const identity = directory.scholarships.find(candidate => candidate.id === item.id)
+      if (reverified) {
+        expect(item.status, item.id).toBe('stale')
+        expect(item.verifiedAt, item.id).toBe('2026-10-19')
+        expect(item.reviewAfter, item.id).toBe('2026-10-22')
+        expect(item.universityIds, item.id).toEqual([reverified.universityId])
+        expect(item.programIds, item.id).toEqual([])
+        expect(item.sourceIds, item.id).toContain(reverified.sourceId)
+        const acceptance = ledger.entries.find(entry => entry.entityType === 'scholarship' && entry.recordId === item.id)
+        expect(acceptance, item.id).toMatchObject({ identitySha256: identityFingerprint('scholarship', item) })
+        expect(identity, item.id).toMatchObject({ id: item.id, slug: item.slug, name: item.name, status: 'stale',
+          verifiedAt: item.verifiedAt, reviewAfter: item.reviewAfter,
+          coverage: { tuition: 'unknown', accommodation: 'unknown', insurance: 'unknown', stipendCnyPerMonth: null },
+          deadline: null, applicationUrl: null, summary: null, programIds: [],
+          discovery: { identityAcceptedAt: acceptance?.acceptedAt, currentFacts: false, currentFieldPaths: [] } })
+        expect(identity?.eligibility, item.id).toBeUndefined()
+      } else {
+        // An old raw identity without a review receipt is not automatically
+        // admitted to the public directory when its factual review expires.
+        expect(identity, item.id).toBeUndefined()
+      }
+      const originalProgramId = reverified?.historicalProgramId ?? item.programIds[0]
+      const cycle = data.admissionCycles.find(
+        (candidate) => candidate.programId === originalProgramId,
+      )
+      expect(cycle, item.id).toBeDefined()
+      if (item.id === 'scholarship-xmu-iclt-one-semester-spring-2027') {
+        expect(cycle?.tuitionCny).toBe(13000)
+      } else {
+        expect(cycle?.tuitionCny).toBeNull()
+      }
+    }
+    expect(JSON.stringify(data.scholarships)).toBe(before)
+  })
+
+  it('preserves the existing Tianjin cycle identity while enriching its facts', () => {
+    const cycles = data.admissionCycles.filter(
+      (item) => item.programId
+        === 'program-tianjin-university-one-semester-chinese-language-study-spring-language',
+    )
+    expect(cycles).toHaveLength(1)
+    expect(cycles[0].id).toBe('cycle-2026-de698abe4893')
+    expect(cycles[0].opensOn).toBe('2026-03-01')
+    expect(cycles[0].closesOn).toBe('2026-10-31')
+  })
+
+  it('uses the harvest manifest count instead of a fixed R2 object total', () => {
+    const workflow = readFileSync(
+      resolve('.github/workflows/official-catalog-harvest.yml'),
+      'utf8',
+    )
+    expect(workflow).toContain('expected_upload_count')
+    expect(workflow).toContain('from the manifest')
+    expect(workflow).not.toContain('-ne 64')
+    expect(workflow).not.toContain('exactly 64 verified')
+  })
+})

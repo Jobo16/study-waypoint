@@ -1,0 +1,191 @@
+import type {
+  AdmissionCycle,
+  City,
+  Program,
+  Scholarship,
+  University,
+} from '@/lib/data/types'
+
+export type FactStatus =
+  | 'known'
+  | 'officially_not_announced'
+  | 'not_applicable'
+  | 'source_unavailable'
+  | 'conflict'
+  | 'stale'
+
+export type FieldMeta = {
+  status: FactStatus
+  officialUrl: string
+  sourceTitle: string
+  checkedAt: string
+  conflictingSources?: string[]
+  location?: { kind: 'page' | 'paragraph'; number: number }
+    | { kind: 'text'; start: number; end: number; unit: 'UTF-16' | 'Unicode'; excerpt: string }
+    | { kind: 'html'; path: string }
+}
+
+export type OfficialSourceLink = {
+  url: string
+  title: string
+  checkedAt: string
+}
+
+export type ReleaseRecordCounts = {
+  sources: number
+  cities: number
+  universities: number
+  programs: number
+  admissionCycles: number
+  scholarships: number
+}
+
+export type ReleaseInfo = {
+  directoryRevision?: string
+  directoryCounts?: { universities: number; programs: number; scholarships: number }
+  currentFactsCounts?: { universities: number; programs: number; admissionCycles: number; scholarships: number }
+  currentOpportunityCounts?: { programs: number; admissionCycles: number; scholarships: number }
+  schoolCoverageCounts?: { cohort: number; directory: number; withDirectoryPrograms: number; withCurrentOpportunities: number }
+  id: string
+  dataDate: string
+  generatedAt: string
+  // Deprecated compatibility alias of publicCounts.
+  recordCounts: ReleaseRecordCounts
+  rawCounts: ReleaseRecordCounts
+  publicCounts: ReleaseRecordCounts
+  dataCheckedThrough: string
+  evaluatedForDate: string
+  activatedAt: string
+  catalogBackend: 'json' | 'shadow' | 'd1'
+  deploymentSha: string | null
+}
+
+export type ProgramType =
+  | 'degree'
+  | 'language'
+  | 'foundation'
+  | 'exchange'
+  | 'visiting'
+  | 'short_term'
+
+  | 'other'
+export type InstitutionRecord = Omit<University, 'summary'> & {
+  summary: University['summary'] | null
+  disciplines: string[]
+  city: Pick<City, 'id' | 'slug' | 'name' | 'province' | 'region'> | null
+  programCount: number
+  scholarshipCount: number
+  officialSources: OfficialSourceLink[]
+  fieldMeta: Record<string, FieldMeta>
+}
+
+export type ProgramRecord = Omit<
+  Program,
+  | 'discipline'
+  | 'teachingLanguages'
+  | 'durationMonths'
+  | 'durationMonthsMax'
+  | 'applyUrl'
+  | 'languageRequirements'
+  | 'details'
+> & {
+  discipline: Program['discipline'] | null
+  teachingLanguages: Program['teachingLanguages'] | null
+  durationMonths: Program['durationMonths']
+  durationMonthsMax: Program['durationMonthsMax'] | null
+  applyUrl: Program['applyUrl'] | null
+  languageRequirements: Program['languageRequirements'] | null
+  details: Program['details'] | null
+  programType: ProgramType
+  university: Pick<University, 'id' | 'slug' | 'name' | 'rankings'>
+  officialSources: OfficialSourceLink[]
+  fieldMeta: Record<string, FieldMeta>
+}
+
+export type AdmissionCycleRecord = Omit<
+  AdmissionCycle,
+  | 'opensOn'
+  | 'closesOn'
+  | 'dateStatus'
+  | 'tuitionCny'
+  | 'tuitionPeriod'
+  | 'tuitionStatus'
+  | 'evidenceBasis'
+  | 'applicationFeeCny'
+  | 'notes'
+> & {
+  opensOn: AdmissionCycle['opensOn']
+  closesOn: AdmissionCycle['closesOn']
+  dateStatus: AdmissionCycle['dateStatus'] | null
+  tuitionCny: AdmissionCycle['tuitionCny']
+  tuitionPeriod: AdmissionCycle['tuitionPeriod'] | null
+  tuitionStatus: AdmissionCycle['tuitionStatus'] | null
+  evidenceBasis: AdmissionCycle['evidenceBasis'] | null
+  applicationFeeCny: AdmissionCycle['applicationFeeCny']
+  notes?: AdmissionCycle['notes'] | null
+  applicationState:
+    | 'open'
+    | 'upcoming'
+    | 'closed'
+    | 'rolling'
+    | 'dates-published'
+    | 'not-announced'
+    | 'previous-cycle'
+  officialSources: OfficialSourceLink[]
+  fieldMeta: Record<string, FieldMeta>
+}
+
+export type ScholarshipRecord = Omit<
+  Scholarship,
+  'universityIds' | 'programIds' | 'coverage' | 'deadline' | 'summary'
+> & {
+  universityIds: Scholarship['universityIds'] | null
+  programIds: Scholarship['programIds'] | null
+  coverage: {
+    tuition: Exclude<Scholarship['coverage']['tuition'], 'unknown'> | null
+    accommodation: Exclude<Scholarship['coverage']['accommodation'], 'unknown'> | null
+    insurance: Exclude<Scholarship['coverage']['insurance'], 'unknown'> | null
+    stipendCnyPerMonth: number | null
+  }
+  deadline: Scholarship['deadline']
+  summary: Scholarship['summary'] | null
+  officialSources: OfficialSourceLink[]
+  fieldMeta: Record<string, FieldMeta>
+}
+
+export type ScholarshipCycleRecord = {
+  id: string
+  scholarshipId: string
+  academicYear: string | null
+  intake: string | null
+  opensOn: string | null
+  closesOn: string | null
+  deadline: string | null
+  legacy: boolean
+  officialSources: OfficialSourceLink[]
+  fieldMeta: Record<string, FieldMeta>
+}
+
+export type ApiFacetOption = {
+  value: string
+  name: City['name']
+}
+
+export type ApiMeta = {
+  release: ReleaseInfo
+  pageSize?: number
+  nextCursor?: string | null
+  total?: number
+  facets?: {
+    cities?: ApiFacetOption[]
+  }
+  notice: string
+}
+
+export type ApiEnvelope<T> = {
+  data: T
+  meta: ApiMeta
+}
+
+export const AUTOMATED_COLLECTION_NOTICE =
+  '信息由自动化系统收录并定期更新；申请条件、费用与截止日期以学校或奖学金官方网站实际情况为准。'

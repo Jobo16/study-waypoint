@@ -1,0 +1,287 @@
+import { control,enqueueDue,seed,setControls,status,validateSeed,type Seed } from './repository'
+import type { BucketObject,MaintenanceEnv } from './types'
+import { MaintenanceError } from './types'
+import { backendState as backendCode,backendErrorKind } from './backend-errors'
+import { canonical,digest,HASH,nowIso,record } from './util'
+import { scopeUpgradeLineage, isPinnedScopeTransition } from './scope-config'
+import { resumePendingScopeUpgrade } from './scope-upgrade'
+import { nativeReconciliationGate } from './native-reconciliation-guard'
+import { readBackgroundBudgetGate } from '../../shared/background-budget'
+import { drainBudgetQueueHolds, type BudgetHoldDrain } from './budget-queue-hold'
+import { continuousRefillEnabled, readRefillStatus, wakeRefill } from './refill-client'
+
+const POINTER='maintenance/bootstrap-pending/initial.v1.json'
+const UPLOAD_POINTER='maintenance/bootstrap-pending/upload.v1.json'
+const LATEST='maintenance/runtime/latest.v1.json'
+const FIRST_ELIGIBLE='maintenance/runtime/first-eligible.v1.json'
+const QUOTA_WAIT='maintenance/runtime/d1-quota-wait.v1.json'
+const STATUS_AGGREGATES='maintenance/runtime/status-aggregates.v1.json'
+const DAY=86400000
+function getTodayDate(date:Date){const parts=new Intl.DateTimeFormat('en',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date),values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return`${values.year}-${values.month}-${values.day}`}
+type Activation={canaryUniversityIds:string[];modelsEnabled:true}
+type BootstrapPointer={format:'studyinchina.pending-bootstrap';version:1;envelopeKey:string;envelopeSha256:string;seedSha256:string;scopeRegistrySha256:string;activation:Activation}
+type UploadPointer={format:'studyinchina.pending-bootstrap-upload';version:1;rawKey:string;rawSha256:string;scopeRegistrySha256:string;activation:Activation}
+type TickState='running'|'disabled'|'waiting_for_bootstrap'|'waiting_for_seed'|'waiting_for_activation'|'quota_wait'|'budget_wait'|'error'
+export type TickMode='full'|'dispatch_only'|'administrative_only'
+export type RuntimeTick={format:'studyinchina.cloud-maintenance-tick';version:1;tickId:string;observedAt:string;state:TickState;code:string;queued:number|null;seedComplete:boolean|null;targetsComplete:boolean|null;modelsEnabled:boolean|null;canarySchoolCount:number|null;retryAt:string|null;budgetQueueHoldDrain?:BudgetHoldDrain;mode?:TickMode}
+async function dispatchOrdinaryWork(env:MaintenanceEnv,now:number,mode:TickMode){
+  const cfg=continuousRefillEnabled(env)&&mode!=='administrative_only'?await control(env):null
+  if(env.MAINTENANCE_ENABLED==='true'&&cfg?.enabled&&cfg.seed_complete&&cfg.targets_complete){
+    if(!(await nativeReconciliationGate(env)).ready)return{enabled:false,queued:0,nativeHeadReconciliationRequired:true as const}
+    const result=await wakeRefill(env,{reason:'watchdog',planCaptures:true})
+    // This is a wake receipt, not a count of Queue.send or provider requests.
+    return{enabled:result.enabled===true,queued:null,continuousRefill:true as const}
+  }
+  return enqueueDue(env,now,mode)
+}
+type DailyHistory={date:string;ticks:RuntimeTick[];truncated:boolean}
+const jsonOptions={httpMetadata:{contentType:'application/json'}}
+async function readObject(env:MaintenanceEnv,key:string,max=512*1024):Promise<{object:BucketObject;text:string}|null>{const object=await env.SNAPSHOTS_BUCKET.get(key);if(!object)return null;if(object.size!==undefined&&object.size>max)throw new MaintenanceError('runtime_artifact_too_large');const text=await object.text();if(new TextEncoder().encode(text).byteLength>max)throw new MaintenanceError('runtime_artifact_too_large');return{object,text}}
+async function immutable(env:MaintenanceEnv,key:string,text:string):Promise<void>{const previous=await readObject(env,key,24*1024*1024);if(previous){if(previous.text!==text)throw new MaintenanceError('immutable_bootstrap_conflict');return}await env.SNAPSHOTS_BUCKET.put(key,text,{...jsonOptions,onlyIf:{etagDoesNotMatch:'*'}});const stored=await readObject(env,key,24*1024*1024);if(stored?.text!==text)throw new MaintenanceError('immutable_bootstrap_conflict')}
+async function updateJson(env:MaintenanceEnv,key:string,change:(value:unknown)=>unknown):Promise<void>{for(let attempt=0;attempt<4;attempt++){const previous=await readObject(env,key);const value=change(previous?JSON.parse(previous.text):null);const options=previous?.object.etag?{etagMatches:previous.object.etag}:{etagDoesNotMatch:'*'};if(previous&&!previous.object.etag)throw new MaintenanceError('runtime_etag_unavailable');const saved=await env.SNAPSHOTS_BUCKET.put(key,canonical(value),{...jsonOptions,onlyIf:options});if(saved!==null)return}throw new MaintenanceError('runtime_receipt_conflict')}
+
+/** HTTP uses only small metadata and a bounded native stream. Full JSON/schema
+ * validation runs in the Queue consumer, whose CPU budget is appropriate for it. */
+export async function registerBootstrapRequest(env:MaintenanceEnv,request:Request){
+  const hash=request.headers.get('x-maintenance-bootstrap-sha256')??'',scope=request.headers.get('x-maintenance-scope-sha256')??''
+  const canary=(request.headers.get('x-maintenance-canary-ids')??'').split(',').sort()
+  const declared=request.headers.get('content-length')??''
+  if(!HASH.test(hash)||scope!==env.SCOPE_REGISTRY_SHA256||!HASH.test(scope)||request.headers.get('x-maintenance-models-enabled')!=='true'||canary.length!==5||new Set(canary).size!==5||canary.some(id=>!/^[a-zA-Z0-9_.:-]{1,160}$/.test(id))||!request.headers.get('content-type')?.includes('application/json')||!request.body||!/^[1-9]\d*$/.test(declared)||Number(declared)>8*1024*1024)throw new MaintenanceError('bootstrap_upload_metadata_invalid')
+  const rawKey=`maintenance/bootstrap-pending/raw/${hash}.json`,activation:Activation={canaryUniversityIds:canary,modelsEnabled:true}
+  const pointer:UploadPointer={format:'studyinchina.pending-bootstrap-upload',version:1,rawKey,rawSha256:hash,scopeRegistrySha256:scope,activation}
+  const old=await readObject(env,UPLOAD_POINTER)
+  if(old&&old.text!==canonical(pointer))throw new MaintenanceError('immutable_bootstrap_conflict')
+  // Preserve Cloudflare's native known-length request stream. A generic
+  // TransformStream would lose that length and is rejected by R2 in production.
+  // Queue validation independently verifies the stored size and exact digest.
+  await env.SNAPSHOTS_BUCKET.put(rawKey,request.body,{...jsonOptions,onlyIf:{etagDoesNotMatch:'*'}})
+  await immutable(env,UPLOAD_POINTER,canonical(pointer))
+  await env.MAINTENANCE_QUEUE.send({version:1,jobId:hash,bootstrapUploadSha256:hash})
+  return{ok:true,bootstrapUploadSha256:hash,pending:true,validation:'pending-queue',activationStored:true,activationValidated:false,scopeRegistrySha256:scope,canaryUniversityIds:canary,d1Observed:false,modelCallsPerformed:false}
+}
+export async function preparePendingBootstrap(env:MaintenanceEnv,hash:string){
+  const saved=await readObject(env,UPLOAD_POINTER)
+  if(!saved)throw new MaintenanceError('bootstrap_upload_missing')
+  const pointer=JSON.parse(saved.text)as UploadPointer
+  if(pointer.rawSha256!==hash||pointer.rawKey!==`maintenance/bootstrap-pending/raw/${hash}.json`||pointer.scopeRegistrySha256!==env.SCOPE_REGISTRY_SHA256)throw new MaintenanceError('bootstrap_upload_binding_mismatch')
+  const object=await env.SNAPSHOTS_BUCKET.get(pointer.rawKey)
+  if(!object||object.size!==undefined&&object.size>8*1024*1024)throw new MaintenanceError('bootstrap_upload_unavailable')
+  const bytes=await object.arrayBuffer()
+  if(bytes.byteLength>8*1024*1024||await digest(bytes)!==hash)throw new MaintenanceError('bootstrap_upload_checksum_mismatch')
+  const value=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes))as Record<string,unknown>
+  const activation=record(value.activation)
+  if(!activation||activation.modelsEnabled!==true||!Array.isArray(activation.canaryUniversityIds)||canonical([...activation.canaryUniversityIds].sort())!==canonical(pointer.activation.canaryUniversityIds))throw new MaintenanceError('bootstrap_upload_activation_mismatch')
+  return registerBootstrap(env,value)
+}
+
+/** Durable initial intent lives in R2, so an exhausted shared D1 daily quota
+ * cannot erase it. Registration performs no D1 query and no model request. */
+export async function registerBootstrap(env:MaintenanceEnv,value:unknown){
+  const raw=record(value),activation=record(raw?.activation)
+  if(!raw||!activation||activation.modelsEnabled!==true||!Array.isArray(activation.canaryUniversityIds)||activation.canaryUniversityIds.length!==5||new Set(activation.canaryUniversityIds).size!==5||activation.canaryUniversityIds.some(id=>typeof id!=='string'))throw new MaintenanceError('bootstrap_requires_explicit_five_school_activation')
+  const input=validateSeed(raw.seed)
+  if(!env.SCOPE_REGISTRY_SHA256||env.SCOPE_REGISTRY_SHA256!==input.scopeRegistrySha256)throw new MaintenanceError('bootstrap_scope_pin_mismatch')
+  const canary=[...activation.canaryUniversityIds].sort()as string[]
+  if(canary.some(id=>!input.schools.some(s=>s.universityId===id)))throw new MaintenanceError('bootstrap_canary_outside_fixed_scope')
+  const approved:Activation={canaryUniversityIds:canary,modelsEnabled:true}
+  const envelope={format:'studyinchina.pending-bootstrap-envelope',version:1,seed:input,activation:approved},text=canonical(envelope),envelopeSha256=await digest(text)
+  const envelopeKey=`maintenance/bootstrap-pending/envelopes/${envelopeSha256}.json`
+  const pointer:BootstrapPointer={format:'studyinchina.pending-bootstrap',version:1,envelopeKey,envelopeSha256,seedSha256:await digest(canonical(input)),scopeRegistrySha256:input.scopeRegistrySha256,activation:approved}
+  await immutable(env,envelopeKey,text)
+  await immutable(env,POINTER,canonical(pointer))
+  await immutable(env,`maintenance/bootstrap-pending/receipts/${envelopeSha256}.json`,canonical({bootstrapSha256:envelopeSha256,registeredAt:nowIso()})).catch(error=>{if(!(error instanceof MaintenanceError&&error.code==='immutable_bootstrap_conflict'))throw error})
+  return{ok:true,bootstrapSha256:envelopeSha256,seedSha256:pointer.seedSha256,pending:true,activationStored:true,canaryUniversityIds:canary,modelsEnabledRequested:true,d1Observed:false,modelCallsPerformed:false}
+}
+async function bootstrapPointer(env:MaintenanceEnv,verifyScope=true):Promise<BootstrapPointer|null>{
+  const saved=await readObject(env,POINTER);if(!saved)return null
+  const pointer=JSON.parse(saved.text)as BootstrapPointer
+  if(pointer.format!=='studyinchina.pending-bootstrap'||pointer.version!==1||!HASH.test(pointer.envelopeSha256)||!HASH.test(pointer.seedSha256)||!HASH.test(pointer.scopeRegistrySha256)||pointer.envelopeKey!==`maintenance/bootstrap-pending/envelopes/${pointer.envelopeSha256}.json`)throw new MaintenanceError('pending_bootstrap_pointer_invalid')
+  if(verifyScope&&pointer.scopeRegistrySha256!==env.SCOPE_REGISTRY_SHA256&&!await scopeUpgradeLineage(env,pointer.scopeRegistrySha256,env.SCOPE_REGISTRY_SHA256??'')){
+    const cfg=await control(env)
+    // The pinned old cohort may settle exports before the additive CAS. This
+    // accepts only its original seed and fully verified native recovery proof.
+    if(!isPinnedScopeTransition(env,pointer.scopeRegistrySha256)||cfg?.scope_sha256!==pointer.scopeRegistrySha256||cfg.seed_sha256!==pointer.seedSha256||!(await nativeReconciliationGate(env)).ready)throw new MaintenanceError('pending_bootstrap_pointer_invalid')
+  }
+  return pointer
+}
+async function bootstrapEnvelope(env:MaintenanceEnv,pointer:BootstrapPointer):Promise<{seed:Seed;activation:Activation}>{const saved=await readObject(env,pointer.envelopeKey,8*1024*1024);if(!saved||await digest(saved.text)!==pointer.envelopeSha256)throw new MaintenanceError('pending_bootstrap_checksum_mismatch');const value=JSON.parse(saved.text)as {seed:Seed;activation:Activation};if(await digest(canonical(value.seed))!==pointer.seedSha256||canonical(value.activation)!==canonical(pointer.activation))throw new MaintenanceError('pending_bootstrap_binding_mismatch');return value}
+export async function resumeBootstrapSeed(env:MaintenanceEnv,hash:string){const pointer=await bootstrapPointer(env);if(!pointer||pointer.seedSha256!==hash)throw new MaintenanceError('bootstrap_seed_pointer_mismatch');const cfg=await control(env);if(cfg){if(cfg.seed_sha256!==hash)throw new MaintenanceError('bootstrap_existing_seed_conflict');return enqueueDue(env)}const envelope=await bootstrapEnvelope(env,pointer);return seed(env,envelope.seed,Date.now(),true)}
+export function nextD1Reset(now=Date.now()):string{const date=new Date(now);return new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate()+1)).toISOString()}
+type QuotaWait={format:'studyinchina.d1-quota-wait';version:1;observedAt:string;retryAt:string}
+/** A proven account-wide daily exhaustion needs no further D1 probes before
+ * UTC reset. R2 keeps this wait across isolate restarts and separate workflows. */
+export async function quotaWait(env:MaintenanceEnv,now=Date.now()):Promise<QuotaWait|null>{
+  const saved=await readObject(env,QUOTA_WAIT,4096)
+  if(!saved)return null
+  const value=record(JSON.parse(saved.text)),observed=Date.parse(String(value?.observedAt??'')),retry=Date.parse(String(value?.retryAt??''))
+  return value?.format==='studyinchina.d1-quota-wait'&&value.version===1&&Number.isFinite(observed)&&observed<=now&&retry>now&&value.retryAt===nextD1Reset(observed)?value as QuotaWait:null
+}
+export async function rememberQuotaWait(env:MaintenanceEnv,observedAt=nowIso()):Promise<QuotaWait>{
+  const value:QuotaWait={format:'studyinchina.d1-quota-wait',version:1,observedAt,retryAt:nextD1Reset(Date.parse(observedAt))}
+  await updateJson(env,QUOTA_WAIT,raw=>{const previous=record(raw);return typeof previous?.observedAt==='string'&&previous.observedAt>observedAt?previous:value})
+  return value
+}
+/** Explicit operator probe after a plan change. Cached exhaustion is lifted
+ * only after real binding reads, a durable write/readback, and an exact R2 CAS.
+ * This never enables a model lane or changes catalogue/control records. */
+export async function recheckBackend(env:MaintenanceEnv,value:unknown,now=Date.now()){
+  const input=record(value)
+  if(!input||Object.keys(input).length!==1||input.reason!=='account-plan-change')throw new MaintenanceError('backend_recheck_reason_invalid')
+  const previous=await readObject(env,QUOTA_WAIT,4096),observedAt=nowIso(now)
+  if(previous&&!previous.object.etag)throw new MaintenanceError('backend_recheck_etag_unavailable')
+  const previousWaitSha256=previous?await digest(previous.text):null,eventId=crypto.randomUUID()
+  let readVerified=false,writeVerified=false
+  const result={format:'studyinchina.backend-quota-recheck',version:1,observedAt,
+    modelCallsPerformed:false,operatorFlagsChanged:false,publicationPerformed:false}
+  try{
+    const row=await env.PIPELINE_DB.prepare('SELECT singleton FROM maintenance_control WHERE singleton=1').first<{singleton:number}>()
+    if(row?.singleton!==1)throw new MaintenanceError('backend_recheck_control_unavailable')
+    readVerified=true
+    const details=canonical({format:'studyinchina.backend-read-write-probe',version:1,eventId,observedAt,previousWaitSha256,reason:input.reason})
+    const written=await env.PIPELINE_DB.prepare('INSERT INTO maintenance_events(event_id,kind,observed_at,details_json) VALUES(?,?,?,?)')
+      .bind(eventId,'backend_quota_rechecked',observedAt,details).run()
+    if(written.meta?.changes!==1)throw new MaintenanceError('backend_recheck_write_unconfirmed')
+    const readback=await env.PIPELINE_DB.prepare('SELECT details_json FROM maintenance_events WHERE event_id=? AND kind=?')
+      .bind(eventId,'backend_quota_rechecked').first<{details_json:string}>()
+    if(readback?.details_json!==details)throw new MaintenanceError('backend_recheck_write_unconfirmed')
+    writeVerified=true
+    const receipt=canonical({...result,eventId,previousWaitSha256,readVerified,writeVerified})
+    const receiptSha256=await digest(receipt),receiptKey=`maintenance/runtime/backend-rechecks/${receiptSha256}.json`
+    if(previous)await immutable(env,`maintenance/runtime/quota-waits/${previousWaitSha256}.json`,previous.text)
+    await immutable(env,receiptKey,receipt)
+    const recovery={format:'studyinchina.d1-quota-recovery',version:1,observedAt,previousWaitSha256,receiptKey,receiptSha256}
+    const saved=await env.SNAPSHOTS_BUCKET.put(QUOTA_WAIT,canonical(recovery),{...jsonOptions,
+      onlyIf:previous?.object.etag?{etagMatches:previous.object.etag}:{etagDoesNotMatch:'*'}})
+    if(saved===null)return{...result,state:'cache_changed',readVerified,writeVerified,waitCleared:false,receiptKey,receiptSha256}
+    return{...result,state:'ready',readVerified,writeVerified,waitCleared:true,receiptKey,receiptSha256}
+  }catch(error){
+    const state=backendCode(error)
+    const waiting=state==='quota_wait'?await rememberQuotaWait(env,observedAt):null
+    return{...result,state,readVerified,writeVerified,waitCleared:false,retryAt:waiting?.retryAt??null,
+      code:error instanceof MaintenanceError?error.code:backendErrorKind(error)}
+  }
+}
+async function saveTick(env:MaintenanceEnv,tick:RuntimeTick){
+  const day=getTodayDate(new Date(tick.observedAt)),key=`maintenance/runtime/${tick.mode==='administrative_only'?'administrative-ticks':'ticks'}/${day}/${tick.tickId}.json`
+  await immutable(env,key,canonical(tick))
+  // Administrative continuity is auditable, but is not another scheduler
+  // sample and must not replace the latest ordinary tick or its soak history.
+  if(tick.mode==='administrative_only')return{...tick,receiptKey:key,receiptSha256:await digest(canonical(tick))}
+  await updateJson(env,`maintenance/runtime/days/${day}.json`,raw=>{const previous=record(raw),ticks=Array.isArray(previous?.ticks)?previous.ticks as RuntimeTick[]:[];const all=[...ticks.filter(t=>t.tickId!==tick.tickId),tick].sort((a,b)=>a.observedAt.localeCompare(b.observedAt));return{date:day,ticks:all.slice(-1024),truncated:previous?.truncated===true||all.length>1024}})
+  await updateJson(env,LATEST,raw=>{const previous=record(raw);return typeof previous?.observedAt==='string'&&previous.observedAt>tick.observedAt?previous:tick})
+  if(tick.state==='running'&&tick.seedComplete&&tick.targetsComplete&&tick.modelsEnabled&&tick.canarySchoolCount===0){const existing=await readObject(env,FIRST_ELIGIBLE);if(!existing)await immutable(env,FIRST_ELIGIBLE,canonical({tickId:tick.tickId,observedAt:tick.observedAt})).catch(()=>undefined)}
+  return{...tick,receiptKey:key,receiptSha256:await digest(canonical(tick))}
+}
+/** The only scheduler required is an authenticated GitHub cloud tick. Existing
+ * account crons and billing settings are not changed. */
+export async function runCloudTick(env:MaintenanceEnv,mode:TickMode='full'){
+  const tick:RuntimeTick={format:'studyinchina.cloud-maintenance-tick',version:1,tickId:crypto.randomUUID(),observedAt:nowIso(),state:'disabled',code:'not_observed',queued:null,seedComplete:null,targetsComplete:null,modelsEnabled:null,canarySchoolCount:null,retryAt:null,...(mode==='full'?{}:{mode})}
+  try{
+    const budget=await readBackgroundBudgetGate(env.SNAPSHOTS_BUCKET)
+    if(!budget.allowed){tick.state='budget_wait';tick.code=budget.code;return saveTick(env,tick)}
+    const waiting=await quotaWait(env)
+    if(waiting){tick.state='quota_wait';tick.code='daily_quota_wait_cached';tick.retryAt=waiting.retryAt;return saveTick(env,tick)}
+    if(mode==='dispatch_only'){
+      // This path never reads or resumes any administrative pointer, even if
+      // one appears after this control read. enqueueDue rechecks readiness and
+      // cannot take its seed/target continuation branches in this mode.
+      const cfg=await control(env)
+      tick.seedComplete=Boolean(cfg?.seed_complete);tick.targetsComplete=Boolean(cfg?.targets_complete);tick.modelsEnabled=Boolean(cfg?.models_enabled);tick.canarySchoolCount=cfg?(JSON.parse(cfg.canary_json)as string[]).length:null
+      const result=await dispatchOrdinaryWork(env,Date.now(),'dispatch_only')
+      if('administrativeContinuationRequired'in result){tick.seedComplete=result.seedComplete??null;tick.targetsComplete=result.targetsComplete??null}
+      tick.queued=result.queued;tick.state=result.enabled?'running':'administrativeContinuationRequired'in result?'waiting_for_seed':'disabled'
+      tick.code='continuousRefill'in result?'continuous_refill_wake_recorded':result.enabled?'bounded_scheduler_completed':'administrativeContinuationRequired'in result?'administrative_continuation_required':'existing_controls_preserved'
+      return saveTick(env,tick)
+    }
+    const held=await drainBudgetQueueHolds(env);tick.budgetQueueHoldDrain=held
+    if(held.sent||held.failed){tick.state=held.failed?'error':'running';tick.code=held.code;tick.queued=held.sent;return saveTick(env,tick)}
+    if(await resumePendingScopeUpgrade(env)){tick.state='waiting_for_seed';tick.code='scope_upgrade_pending';tick.queued=1;return saveTick(env,tick)}
+    const pointer=await bootstrapPointer(env)
+    let cfg=await control(env)
+    // A complete existing seed is owned by its current controls, not by a raw
+    // initial upload left behind without a validated bootstrap pointer. Retain
+    // that upload unchanged; do not add a validation message to normal dispatch.
+    // With no complete seed, validation is itself this tick's bounded work.
+    if(!pointer&&!cfg?.seed_complete){
+      const uploaded=await readObject(env,UPLOAD_POINTER)
+      if(uploaded){const pending=JSON.parse(uploaded.text)as UploadPointer;await env.MAINTENANCE_QUEUE.send({version:1,jobId:pending.rawSha256,bootstrapUploadSha256:pending.rawSha256});tick.state='waiting_for_seed';tick.code='pending_bootstrap_validation_queued';tick.queued=1;return saveTick(env,tick)}
+    }
+    if(!cfg&&pointer){await env.MAINTENANCE_QUEUE.send({version:1,jobId:pointer.seedSha256,bootstrapSeedSha256:pointer.seedSha256});tick.state='waiting_for_seed';tick.code='pending_bootstrap_seed_queued';tick.queued=1}
+    else if(!cfg){tick.state='waiting_for_bootstrap';tick.code='no_seed_or_pending_bootstrap'}
+    else{
+      if(pointer&&cfg.seed_sha256!==pointer.seedSha256)throw new MaintenanceError('pending_bootstrap_existing_seed_conflict')
+      tick.seedComplete=Boolean(cfg.seed_complete);tick.targetsComplete=Boolean(cfg.targets_complete);tick.modelsEnabled=Boolean(cfg.models_enabled);tick.canarySchoolCount=(JSON.parse(cfg.canary_json)as string[]).length
+      if(!cfg.seed_complete){const result=await enqueueDue(env,Date.now(),mode);tick.state='waiting_for_seed';tick.code='durable_seed_in_progress';tick.queued=result.queued}
+      else{
+        if(cfg.revision===0&&pointer&&env.MAINTENANCE_ENABLED==='true'){
+          cfg=await setControls(env,{expectedRevision:0,legacyGuardSha256:cfg.legacy_guard_sha256,enabled:true,modelsEnabled:pointer.activation.modelsEnabled,canaryUniversityIds:pointer.activation.canaryUniversityIds})
+          if(!cfg)throw new MaintenanceError('bootstrap_control_readback_unavailable')
+        }
+        // Revision >0 belongs to the existing control owner. A retrying initial
+        // bootstrap never overrides a manual pause or later canary decision.
+        const result=await dispatchOrdinaryWork(env,Date.now(),mode)
+        tick.queued=result.queued;tick.targetsComplete=Boolean(cfg.targets_complete);tick.modelsEnabled=Boolean(cfg.models_enabled);tick.canarySchoolCount=(JSON.parse(cfg.canary_json)as string[]).length
+        tick.state=result.enabled?'running':cfg.revision===0&&pointer?'waiting_for_activation':'disabled'
+        tick.code='continuousRefill'in result?'continuous_refill_wake_recorded':result.enabled?'bounded_scheduler_completed':mode==='administrative_only'&&cfg.targets_complete?'administrative_no_work':env.MAINTENANCE_ENABLED!=='true'?'deployment_activation_gate_disabled':'nativeHeadReconciliationRequired'in result?'native_head_reconciliation_required':cfg.targets_complete?'existing_controls_preserved':'target_refresh_in_progress'
+      }
+    }
+  }catch(error){const backend=backendCode(error);tick.state=backend==='quota_wait'?'quota_wait':'error';tick.code=error instanceof MaintenanceError?error.code:backend;tick.retryAt=backend==='quota_wait'?(await rememberQuotaWait(env)).retryAt:null}
+  return saveTick(env,tick)
+}
+export function buildSoakObservation(ticks:RuntimeTick[],firstEligibleAt:string|null,now=Date.now(),historyTruncated=false){
+  const windowStart=now-7*DAY,first=Date.parse(firstEligibleAt??''),valid=ticks.filter(t=>Number.isFinite(Date.parse(t.observedAt))&&Date.parse(t.observedAt)>=windowStart&&Date.parse(t.observedAt)<=now).sort((a,b)=>a.observedAt.localeCompare(b.observedAt))
+  const eligible=valid.filter(t=>t.state==='running'&&t.seedComplete&&t.targetsComplete&&t.modelsEnabled&&t.canarySchoolCount===0)
+  const times=eligible.map(t=>Date.parse(t.observedAt)),start=Number.isFinite(first)&&first<=now?Math.max(windowStart,first):now
+  const timeline=[start,...times,now].sort((a,b)=>a-b),maxGapMinutes=Math.max(0,...timeline.slice(1).map((time,index)=>(time-timeline[index])/60000))
+  const elapsedHours=Number.isFinite(first)&&first<=now?(now-first)/3600000:0
+  const failures=valid.filter(t=>Date.parse(t.observedAt)>=start&&['error','quota_wait','budget_wait'].includes(t.state)).length
+  const passed=elapsedHours>=168&&maxGapMinutes<=45&&failures===0&&!historyTruncated&&eligible.length>0
+  return{requiredHours:168,firstEligibleTickAt:Number.isFinite(first)?firstEligibleAt:null,observedHours:Math.round(elapsedHours*100)/100,recordedTicksLastSevenDays:valid.length,eligibleTicksLastSevenDays:eligible.length,latestEligibleTickAt:eligible.at(-1)?.observedAt??null,maxGapMinutes:Math.round(maxGapMinutes*100)/100,waitingOrFailedTicks:failures,historyTruncated,assessment:passed?'seven_days_observed':elapsedHours>=168?'attention_required':'collecting',passed}
+}
+async function soak(env:MaintenanceEnv,now=Date.now()){
+  const days=Array.from({length:8},(_,index)=>getTodayDate(new Date(now-index*DAY)))
+  const records=await Promise.all(days.map(day=>readObject(env,`maintenance/runtime/days/${day}.json`)))
+  const histories=records.filter((value):value is NonNullable<typeof value>=>Boolean(value)).map(value=>JSON.parse(value.text)as DailyHistory)
+  const first=await readObject(env,FIRST_ELIGIBLE),firstAt=first?record(JSON.parse(first.text))?.observedAt:null
+  return buildSoakObservation(histories.flatMap(history=>history.ticks),typeof firstAt==='string'?firstAt:null,now,histories.some(history=>history.truncated))
+}
+export async function runtimeStatus(env:MaintenanceEnv){
+  const [latest,observation,pointer,uploaded]=await Promise.all([readObject(env,LATEST),soak(env),bootstrapPointer(env,false),readObject(env,UPLOAD_POINTER)])
+  const refill=env.REFILL_COORDINATOR?await readRefillStatus(env).catch(()=>null):null
+  const runtime={refill,lastRuntimeTick:latest?JSON.parse(latest.text)as RuntimeTick:null,soak:observation,bootstrapUploadPending:uploaded?JSON.parse(uploaded.text)as UploadPointer:null,bootstrapPending:pointer?{bootstrapSha256:pointer.envelopeSha256,seedSha256:pointer.seedSha256,scopeRegistrySha256:pointer.scopeRegistrySha256,activation:pointer.activation}:null}
+  const budget=await readBackgroundBudgetGate(env.SNAPSHOTS_BUCKET)
+  if(!budget.allowed)return{format:'studyinchina.cloud-maintenance-status',version:1,observedAt:nowIso(),enabled:false,modelEnabled:false,scopeCount:null,control:null,jobs:null,proposals:null,sources:null,modelAttempts:null,coverage:null,websiteBackendChanged:false,...runtime,budget,
+    backend:{state:'budget_wait' as const,retryAt:null,errorKind:null,diagnosticKey:null,diagnosticSha256:null},productionRunningClaim:false}
+  const waiting=await quotaWait(env)
+  if(waiting)return{format:'studyinchina.cloud-maintenance-status',version:1,observedAt:nowIso(),enabled:false,modelEnabled:false,scopeCount:null,control:null,jobs:null,proposals:null,sources:null,modelAttempts:null,coverage:null,websiteBackendChanged:false,...runtime,backend:{state:'quota_wait' as const,retryAt:waiting.retryAt,errorKind:'daily_quota' as const,diagnosticKey:null,diagnosticSha256:null},productionRunningClaim:false}
+  try{
+    // The three cloud consumers often request status seconds apart. Aggregate
+    // counters may be sampled for 60s, but controls and the admission barrier
+    // are always read authoritatively. This cache never admits a model call.
+    const cfg=await control(env),cached=await readObject(env,STATUS_AGGREGATES,128*1024)
+    const value=cached?JSON.parse(cached.text) as Awaited<ReturnType<typeof status>>:null,observed=Date.parse(String(value?.observedAt??''))
+    if(value?.format==='studyinchina.cloud-maintenance-status'&&observed<=Date.now()&&Date.now()-observed<60000&&JSON.stringify(value.control)===JSON.stringify(cfg)){
+      const gate=await nativeReconciliationGate(env)
+      return{...value,observedAt:nowIso(),aggregatesObservedAt:value.observedAt,aggregatesCached:true,
+        enabled:env.MAINTENANCE_ENABLED==='true'&&Boolean(cfg?.enabled)&&gate.ready,modelEnabled:Boolean(cfg?.models_enabled)&&gate.ready,reconciliationGate:gate,
+        ...runtime,backend:{state:'ready' as const,retryAt:null,errorKind:null,diagnosticKey:null,diagnosticSha256:null}}
+    }
+    const current=await status(env)
+    // A status payload has optional display fields; unlike immutable evidence,
+    // it is ordinary JSON and must not fingerprint absent optional values.
+    await env.SNAPSHOTS_BUCKET.put(STATUS_AGGREGATES,JSON.stringify(current),jsonOptions)
+    return{...current,aggregatesObservedAt:current.observedAt,aggregatesCached:false,...runtime,backend:{state:'ready' as const,retryAt:null,errorKind:null,diagnosticKey:null,diagnosticSha256:null}}
+  }
+  catch(error){
+    const state=backendCode(error),errorKind=backendErrorKind(error),observedAt=nowIso()
+    const wait=state==='quota_wait'?await rememberQuotaWait(env,observedAt):null
+    // This catch covers only our fixed static status SQL, never model payloads
+    // or arbitrary client SQL. Keep raw failure text private and bounded.
+    let message=error instanceof Error?error.message:String(error)
+    for(const secret of [env.MAINTENANCE_ADMIN_TOKEN,env.MINIMAX_SUBSCRIPTION_KEY])if(secret)message=message.replaceAll(secret,'[redacted]')
+    message=message.replace(/Bearer\s+[^\s"']+/giu,'Bearer [redacted]').slice(0,1200)
+    let diagnosticKey:string|null=null,diagnosticSha256:string|null=null
+    try{const text=canonical({format:'studyinchina.private-status-diagnostic',version:1,observedAt,operation:'fixed-status-sql',errorKind,message});diagnosticSha256=await digest(text);const key=`maintenance/diagnostics/status/${diagnosticSha256}.json`;await env.SNAPSHOTS_BUCKET.put(key,text,{onlyIf:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});diagnosticKey=key}catch{diagnosticSha256=null}
+    return{format:'studyinchina.cloud-maintenance-status',version:1,observedAt,enabled:false,modelEnabled:false,scopeCount:null,control:null,jobs:null,proposals:null,sources:null,modelAttempts:null,coverage:null,websiteBackendChanged:false,...runtime,backend:{state,retryAt:wait?.retryAt??null,errorKind,diagnosticKey,diagnosticSha256},productionRunningClaim:false}
+  }
+}

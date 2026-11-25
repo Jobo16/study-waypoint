@@ -1,0 +1,367 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { describe, expect, it, vi } from 'vitest'
+import {
+  parsePkuCatalogIndexHtml,
+  parsePkuPdfCatalogText,
+  splitPkuOfficialProgramName,
+  type ParsePkuPdfCatalogOptions,
+} from '../../scripts/ingestion/pku-pdf-catalog-harvester'
+
+const fixtureDirectory = join(process.cwd(), 'tests', 'fixtures', 'pku-pdf-catalog')
+const indexHtml = readFileSync(join(fixtureDirectory, 'index.html'), 'utf8')
+const mathLayout = readFileSync(join(fixtureDirectory, 'math-layout.txt'), 'utf8')
+const languagesLayout = readFileSync(join(fixtureDirectory, 'languages-layout.txt'), 'utf8')
+  .replace('[[FORM_FEED]]', '\f')
+const indexUrl =
+  'https://admission.pku.edu.cn/zsxx/lxszs/lxszyml/2026/ss/zsml_ss_lxs_cn.html'
+
+const baseDocumentOptions: ParsePkuPdfCatalogOptions = {
+  document: {
+    department: '数学科学学院',
+    officialUrl:
+      'https://admission.pku.edu.cn/zsxx/lxszs/lxszyml/2026/ss/zsml_ss_lxs_cn_00001.pdf',
+    fileName: 'zsml_ss_lxs_cn_00001.pdf',
+    indexLocator: 'html:line=4;a[href="./zsml_ss_lxs_cn_00001.pdf"]',
+  },
+  institutionId: 'uni-peking-university',
+  checkedAt: '2026-07-24T08:00:00.000Z',
+  degreeLevel: 'master',
+  instructionLanguage: 'Chinese',
+}
+
+describe('PKU official PDF catalog harvester', () => {
+  it('reconciles official department PDF anchors and quarantines a catalog-prefix mismatch', () => {
+    const result = parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl,
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })
+
+    expect(result).toMatchObject({
+      anchorsFound: 3,
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })
+    expect(result.documents).toHaveLength(2)
+    expect(result.documents.map((document) => document.department)).toEqual([
+      '数学科学学院',
+      '外国语学院',
+    ])
+    expect(result.quarantined).toEqual([
+      expect.objectContaining({
+        scope: 'index',
+        department: '先进制造与机器人学院',
+        reasons: ['catalog_prefix_mismatch'],
+      }),
+    ])
+  })
+
+  it('publishes exactly one verified entity per official program code', () => {
+    const result = parsePkuPdfCatalogText(mathLayout, baseDocumentOptions)
+
+    expect(result.entities).toHaveLength(3)
+    expect(result.entities).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        entityType: 'program',
+        institutionId: 'uni-peking-university',
+        programType: 'degree',
+        degreeLevel: 'master',
+        instructionLanguage: 'Chinese',
+        programCode: '025100',
+        name: '金融(Finance)',
+        department: '数学科学学院',
+        officialUrl: baseDocumentOptions.document.officialUrl,
+        sourceCheckedAt: baseDocumentOptions.checkedAt,
+        verificationStatus: 'verified',
+      }),
+      expect.objectContaining({
+        programCode: '070102',
+        name: '计算数学(Computational Mathematics)',
+      }),
+    ]))
+    expect(result.entities[0]!.evidence).toMatchObject({
+      officialUrl: baseDocumentOptions.document.officialUrl,
+      checkedAt: baseDocumentOptions.checkedAt,
+    })
+    expect(result.entities[0]!.evidence.locator).toMatch(
+      /^pdf:page=1;lines=\d+-\d+;code=/u,
+    )
+    expect(result.entities[0]!.evidence.quote).toContain('数学科学学院')
+    expect(result.entities[0]!.entityKey).toMatch(/^pku:master:chinese:/u)
+    expect(result.quarantined).toEqual([])
+  })
+
+  it('preserves official Chinese and English names as separate localized facts', () => {
+    const result = parsePkuPdfCatalogText(mathLayout, baseDocumentOptions)
+    const finance = result.entities.find((entity) => entity.programCode === '025100')
+
+    expect(finance).toMatchObject({
+      nameZh: '\u91d1\u878d',
+      nameEn: 'Finance',
+      attendanceMode: 'full_time',
+      researchDirections: [
+        expect.objectContaining({
+          code: '00',
+          name: '\u4e0d\u533a\u5206\u7814\u7a76\u65b9\u5411',
+          attendanceMode: 'full_time',
+          instructionLanguage: 'Chinese',
+          evidence: expect.objectContaining({
+            officialUrl: baseDocumentOptions.document.officialUrl,
+          }),
+        }),
+      ],
+    })
+    const pureMathematics = result.entities.find(
+      (entity) => entity.programCode === '070101',
+    )
+    expect(pureMathematics?.researchDirections.map((direction) => direction.code))
+      .toEqual(['01', '02'])
+    expect(splitPkuOfficialProgramName(
+      '\u4e2d\u56fd\u5b66(\u7ecf\u6d4e\u4e0e\u7ba1\u7406)(China Studies (Economics and Management))',
+      'Chinese',
+    )).toEqual({
+      nameZh: '\u4e2d\u56fd\u5b66(\u7ecf\u6d4e\u4e0e\u7ba1\u7406)',
+      nameEn: 'China Studies (Economics and Management)',
+    })
+  })
+
+  it('derives mixed attendance per program and quarantines catalog language conflicts', () => {
+    const mixedLayout = [
+      '\u6570\u5b66\u79d1\u5b66\u5b66\u9662\u62db\u751f\u4e13\u4e1a\u53ca\u7814\u7a76\u65b9\u5411',
+      '',
+      '\u4e13\u4e1a\u540d\u79f0                          \u7814\u7a76\u65b9\u5411   \u5b66\u4e60\u65b9\u5f0f   \u6388\u8bfe\u8bed\u8a00',
+      'Program Alpha',
+      '                            01. Direction A        \u5168\u65e5\u5236     \u4e2d\u6587',
+      '(123456)',
+      '                            02. Direction B        \u975e\u5168\u65e5\u5236   \u4e2d\u6587',
+    ].join('\n')
+    const mixed = parsePkuPdfCatalogText(mixedLayout, baseDocumentOptions)
+    expect(mixed.entities).toEqual([
+      expect.objectContaining({
+        attendanceMode: 'hybrid',
+        researchDirections: [
+          expect.objectContaining({ code: '01', attendanceMode: 'full_time' }),
+          expect.objectContaining({ code: '02', attendanceMode: 'part_time' }),
+        ],
+      }),
+    ])
+
+    const conflict = parsePkuPdfCatalogText(
+      mixedLayout.replace(/\u4e2d\u6587/gu, '\u82f1\u6587'),
+      baseDocumentOptions,
+    )
+    expect(conflict.entities).toEqual([])
+    expect(conflict.quarantined).toEqual([
+      expect.objectContaining({ reasons: ['catalog_language_mismatch'] }),
+    ])
+  })
+
+  it('assigns directions that precede the next program name to that next program', () => {
+    const layout = [
+      '数学科学学院招生专业及研究方向',
+      '',
+      '专业名称                          研究方向   学习方式   授课语言',
+      '                            01. Alpha One         全日制     中文',
+      'Program Alpha               02. Alpha Two         全日制     中文',
+      '(123456)                    03. Alpha Three       全日制     中文',
+      '                            01. Beta One          全日制     中文',
+      'Program Beta                02. Beta Two          非全日制   中文',
+      '(234567)                    03. Beta Three        非全日制   中文',
+    ].join('\n')
+    const result = parsePkuPdfCatalogText(layout, baseDocumentOptions)
+    const alpha = result.entities.find((entity) => entity.programCode === '123456')
+    const beta = result.entities.find((entity) => entity.programCode === '234567')
+
+    expect(result.quarantined).toEqual([])
+    expect(alpha?.researchDirections.map((direction) => direction.name)).toEqual([
+      'Alpha One',
+      'Alpha Two',
+      'Alpha Three',
+    ])
+    expect(beta).toMatchObject({
+      attendanceMode: 'hybrid',
+      researchDirections: [
+        expect.objectContaining({ code: '01', name: 'Beta One' }),
+        expect.objectContaining({ code: '02', name: 'Beta Two' }),
+        expect.objectContaining({ code: '03', name: 'Beta Three' }),
+      ],
+    })
+    expect(new Set(beta?.researchDirections.map((direction) => direction.code)).size)
+      .toBe(beta?.researchDirections.length)
+  })
+
+  it('does not turn research directions into projects', () => {
+    const result = parsePkuPdfCatalogText(mathLayout, baseDocumentOptions)
+
+    expect(result.entities.map((entity) => entity.name)).not.toEqual(
+      expect.arrayContaining(['密码学与信息安全', '代数', '不区分研究方向']),
+    )
+    expect(result.reconciliation).toMatchObject({
+      programCandidates: 3,
+      verifiedRows: 3,
+      quarantinedRows: 0,
+      duplicateRows: 0,
+    })
+  })
+
+  it('ignores indented direction continuations and accepts an official index parenthetical alias', () => {
+    const department = `${baseDocumentOptions.document.department}(Alias)`
+    const result = parsePkuPdfCatalogText(mathLayout, {
+      ...baseDocumentOptions,
+      document: {
+        ...baseDocumentOptions.document,
+        department,
+      },
+    })
+
+    expect(result.entities).toHaveLength(3)
+    const program = result.entities.find((entity) => entity.programCode === '070101')
+    expect(program?.name).toContain('Pure Mathematics')
+    expect(program?.name).not.toContain('wrapped direction continuation')
+    expect(program?.department).toBe(department)
+    expect(result.quarantined).toEqual([])
+  })
+  it('joins wrapped names and carries the verified table boundary onto a continuation page', () => {
+    const result = parsePkuPdfCatalogText(languagesLayout, {
+      ...baseDocumentOptions,
+      document: {
+        department: '外国语学院',
+        officialUrl:
+          'https://admission.pku.edu.cn/zsxx/lxszs/lxszyml/2026/ss/zsml_ss_lxs_cn_00039.pdf',
+        fileName: 'zsml_ss_lxs_cn_00039.pdf',
+        indexLocator: 'html:line=5;a[href="./zsml_ss_lxs_cn_00039.pdf"]',
+      },
+    })
+
+    expect(result.entities).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        programCode: '050108',
+        name: '比较文学与世界文学(Comparative Literature and World Literature)',
+      }),
+      expect.objectContaining({
+        programCode: '050210',
+        name: '亚非语言文学(Languages and Literatures of Asia and Africa)',
+      }),
+      expect.objectContaining({
+        programCode: '055106',
+        name: '日语口译(Japanese Interpreting)',
+        evidence: expect.objectContaining({ page: 2 }),
+      }),
+    ]))
+    expect(result.reconciliation).toMatchObject({
+      pages: 2,
+      tableHeaderPages: 1,
+      programCandidates: 3,
+      verifiedRows: 3,
+    })
+  })
+
+  it('quarantines title mismatches and incomplete identities instead of guessing', () => {
+    const mismatch = parsePkuPdfCatalogText(mathLayout, {
+      ...baseDocumentOptions,
+      document: {
+        ...baseDocumentOptions.document,
+        department: '物理学院',
+      },
+    })
+    const incomplete = parsePkuPdfCatalogText(
+      `${mathLayout}\n未编码项目(Uncoded Program)\n`,
+      baseDocumentOptions,
+    )
+
+    expect(mismatch.entities).toEqual([])
+    expect(mismatch.quarantined).toEqual([
+      expect.objectContaining({
+        scope: 'document',
+        reasons: ['department_title_mismatch'],
+      }),
+    ])
+    expect(incomplete.quarantined).toEqual([
+      expect.objectContaining({
+        scope: 'row',
+        candidateName: '未编码项目(Uncoded Program)',
+        reasons: ['missing_program_code'],
+      }),
+    ])
+  })
+
+  it('permanently quarantines every row in an A/B/A program-code conflict', () => {
+    const conflictingLayout = [
+      '\u6570\u5b66\u79d1\u5b66\u5b66\u9662\u62db\u751f\u4e13\u4e1a\u53ca\u7814\u7a76\u65b9\u5411',
+      '',
+      '\u4e13\u4e1a\u540d\u79f0                          \u7814\u7a76\u65b9\u5411',
+      'Program Alpha',
+      '(123456)',
+      'Program Beta',
+      '(123456)',
+      'Program Alpha',
+      '(123456)',
+    ].join('\n')
+    const result = parsePkuPdfCatalogText(conflictingLayout, baseDocumentOptions)
+
+    expect(result.entities).toEqual([])
+    expect(result.quarantined).toHaveLength(3)
+    expect(result.quarantined.map((item) => item.candidateName)).toEqual([
+      'Program Alpha',
+      'Program Beta',
+      'Program Alpha',
+    ])
+    expect(result.quarantined.every((item) => (
+      item.reasons.includes('conflicting_duplicate_program_code')
+    ))).toBe(true)
+    expect(result.reconciliation).toMatchObject({
+      programCandidates: 3,
+      verifiedRows: 0,
+      quarantinedRows: 3,
+      duplicateRows: 2,
+    })
+  })
+
+  it('is deterministic and fixture-only, with no network in either parser', () => {
+    const fetchSpy = vi.fn(() => {
+      throw new Error('network must not be used by deterministic parsers')
+    })
+    vi.stubGlobal('fetch', fetchSpy)
+
+    const firstIndex = parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl,
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })
+    const secondIndex = parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl,
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })
+    const firstPdf = parsePkuPdfCatalogText(mathLayout, baseDocumentOptions)
+    const secondPdf = parsePkuPdfCatalogText(mathLayout, baseDocumentOptions)
+
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(secondIndex).toEqual(firstIndex)
+    expect(secondPdf).toEqual(firstPdf)
+    vi.unstubAllGlobals()
+  })
+
+  it('rejects non-official URLs and mismatched catalog dimensions', () => {
+    expect(() => parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl: 'https://example.com/catalog.html',
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })).toThrow('officialUrl must be an HTTPS admission.pku.edu.cn URL')
+    expect(() => parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl: indexUrl.replace('admission.pku.edu.cn', 'admission.pku.edu.cn:444'),
+      degreeLevel: 'master',
+      instructionLanguage: 'Chinese',
+    })).toThrow('officialUrl must be an HTTPS admission.pku.edu.cn URL')
+    expect(() => parsePkuCatalogIndexHtml(indexHtml, {
+      indexUrl,
+      degreeLevel: 'doctorate',
+      instructionLanguage: 'Chinese',
+    })).toThrow('indexUrl path does not match')
+    expect(() => parsePkuPdfCatalogText(mathLayout, {
+      ...baseDocumentOptions,
+      checkedAt: 'not-a-date',
+    })).toThrow('checkedAt must be an ISO timestamp')
+  })
+})

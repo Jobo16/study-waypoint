@@ -1,0 +1,2263 @@
+[
+  {
+    "sourceIds": [
+      "src-city-beijing"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-beijing",
+    "slug": "beijing",
+    "name": {
+      "en": "Beijing",
+      "zh": "北京",
+      "ru": "Пекин"
+    },
+    "province": {
+      "en": "Beijing",
+      "zh": "北京市",
+      "ru": "Пекин"
+    },
+    "region": "north",
+    "coordinates": {
+      "lat": 39.9042,
+      "lng": 116.4074
+    },
+    "overview": {
+      "en": "China's capital combines leading universities, national institutions and a large international community.",
+      "zh": "中国首都，汇聚众多顶尖高校、国家级机构和国际化社区。",
+      "ru": "Столица Китая объединяет ведущие университеты, государственные учреждения и большое международное сообщество."
+    },
+    "climate": {
+      "en": "A temperate monsoon climate with hot, humid summers and cold, dry winters.",
+      "zh": "温带季风气候，夏季炎热多雨，冬季寒冷干燥。",
+      "ru": "Умеренный муссонный климат: жаркое влажное лето и холодная сухая зима."
+    },
+    "foodHighlights": [
+      {
+        "en": "Peking duck",
+        "zh": "北京烤鸭",
+        "ru": "Утка по-пекински"
+      },
+      {
+        "en": "Zhajiang noodles",
+        "zh": "炸酱面",
+        "ru": "Лапша чжацзянмянь"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Forbidden City",
+        "zh": "故宫",
+        "ru": "Запретный город"
+      },
+      {
+        "en": "Summer Palace",
+        "zh": "颐和园",
+        "ru": "Летний дворец"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-shanghai"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-shanghai",
+    "slug": "shanghai",
+    "name": {
+      "en": "Shanghai",
+      "zh": "上海",
+      "ru": "Шанхай"
+    },
+    "province": {
+      "en": "Shanghai",
+      "zh": "上海市",
+      "ru": "Шанхай"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 31.2304,
+      "lng": 121.4737
+    },
+    "overview": {
+      "en": "A global coastal metropolis known for finance, research, design and extensive international services.",
+      "zh": "国际化沿海都市，以金融、科研、设计和完善的国际服务著称。",
+      "ru": "Глобальный приморский мегаполис, известный финансами, исследованиями, дизайном и международными сервисами."
+    },
+    "climate": {
+      "en": "A humid subtropical climate with hot summers, cool winters and a rainy early-summer season.",
+      "zh": "亚热带湿润气候，夏季炎热，冬季湿冷，初夏多雨。",
+      "ru": "Влажный субтропический климат с жарким летом, прохладной зимой и дождливым началом лета."
+    },
+    "foodHighlights": [
+      {
+        "en": "Soup dumplings",
+        "zh": "小笼包",
+        "ru": "Сяолунбао"
+      },
+      {
+        "en": "Scallion-oil noodles",
+        "zh": "葱油拌面",
+        "ru": "Лапша с ароматным маслом и зелёным луком"
+      }
+    ],
+    "sights": [
+      {
+        "en": "The Bund",
+        "zh": "外滩",
+        "ru": "Набережная Вайтань"
+      },
+      {
+        "en": "Yu Garden",
+        "zh": "豫园",
+        "ru": "Сад Юй"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-guangzhou"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-guangzhou",
+    "slug": "guangzhou",
+    "name": {
+      "en": "Guangzhou",
+      "zh": "广州",
+      "ru": "Гуанчжоу"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东省",
+      "ru": "Гуандун"
+    },
+    "region": "south",
+    "coordinates": {
+      "lat": 23.1291,
+      "lng": 113.2644
+    },
+    "overview": {
+      "en": "A major Pearl River Delta education and trade hub with long-standing links to the wider world.",
+      "zh": "珠三角重要教育与商贸中心，长期保持广泛的国际联系。",
+      "ru": "Крупный образовательный и торговый центр дельты Жемчужной реки с давними международными связями."
+    },
+    "climate": {
+      "en": "A humid subtropical climate with long hot summers, mild winters and frequent rainfall.",
+      "zh": "亚热带湿润气候，夏季漫长炎热，冬季温和，降雨充沛。",
+      "ru": "Влажный субтропический климат с долгим жарким летом, мягкой зимой и частыми дождями."
+    },
+    "foodHighlights": [
+      {
+        "en": "Dim sum",
+        "zh": "广式点心",
+        "ru": "Кантонский димсам"
+      },
+      {
+        "en": "Roast goose",
+        "zh": "烧鹅",
+        "ru": "Жареный гусь"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Canton Tower",
+        "zh": "广州塔",
+        "ru": "Кантонская башня"
+      },
+      {
+        "en": "Shamian Island",
+        "zh": "沙面岛",
+        "ru": "Остров Шамянь"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-shenzhen"
+    ],
+    "verifiedAt": "2026-07-19",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-shenzhen",
+    "slug": "shenzhen",
+    "name": {
+      "en": "Shenzhen",
+      "zh": "深圳",
+      "ru": "Шэньчжэнь"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东省",
+      "ru": "Гуандун"
+    },
+    "region": "south",
+    "coordinates": {
+      "lat": 22.5431,
+      "lng": 114.0579
+    },
+    "overview": {
+      "en": "A young technology-focused coastal city with strong links to Hong Kong and a growing university sector.",
+      "zh": "毗邻香港的年轻科技型滨海城市，高等教育发展迅速。",
+      "ru": "Молодой прибрежный технологический город рядом с Гонконгом и быстро растущим университетским сектором."
+    },
+    "climate": {
+      "en": "A subtropical monsoon climate with hot humid summers and short mild winters.",
+      "zh": "亚热带季风气候，夏季炎热湿润，冬季短而温和。",
+      "ru": "Субтропический муссонный климат с жарким влажным летом и короткой мягкой зимой."
+    },
+    "foodHighlights": [
+      {
+        "en": "Cantonese seafood",
+        "zh": "广式海鲜",
+        "ru": "Кантонские морепродукты"
+      },
+      {
+        "en": "Coconut chicken hotpot",
+        "zh": "椰子鸡火锅",
+        "ru": "Хотпот с кокосом и курицей"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Shenzhen Bay Park",
+        "zh": "深圳湾公园",
+        "ru": "Парк Шэньчжэньского залива"
+      },
+      {
+        "en": "Dapeng Fortress",
+        "zh": "大鹏所城",
+        "ru": "Крепость Дапэн"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-hangzhou"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-hangzhou",
+    "slug": "hangzhou",
+    "name": {
+      "en": "Hangzhou",
+      "zh": "杭州",
+      "ru": "Ханчжоу"
+    },
+    "province": {
+      "en": "Zhejiang",
+      "zh": "浙江省",
+      "ru": "Чжэцзян"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 30.2741,
+      "lng": 120.1551
+    },
+    "overview": {
+      "en": "A historic city around West Lake and a modern centre for digital business, research and entrepreneurship.",
+      "zh": "环西湖而建的历史名城，也是数字经济、科研与创业中心。",
+      "ru": "Исторический город у озера Сиху и современный центр цифрового бизнеса, исследований и предпринимательства."
+    },
+    "climate": {
+      "en": "A humid subtropical climate with hot summers, cool damp winters and distinct rainy periods.",
+      "zh": "亚热带季风气候，夏季炎热，冬季湿冷，梅雨季明显。",
+      "ru": "Влажный субтропический климат с жарким летом, прохладной сырой зимой и выраженными дождливыми периодами."
+    },
+    "foodHighlights": [
+      {
+        "en": "West Lake fish in vinegar gravy",
+        "zh": "西湖醋鱼",
+        "ru": "Рыба Сиху в уксусном соусе"
+      },
+      {
+        "en": "Longjing shrimp",
+        "zh": "龙井虾仁",
+        "ru": "Креветки с чаем Лунцзин"
+      }
+    ],
+    "sights": [
+      {
+        "en": "West Lake",
+        "zh": "西湖",
+        "ru": "Озеро Сиху"
+      },
+      {
+        "en": "Lingyin Temple",
+        "zh": "灵隐寺",
+        "ru": "Храм Линъинь"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-nanjing"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-nanjing",
+    "slug": "nanjing",
+    "name": {
+      "en": "Nanjing",
+      "zh": "南京",
+      "ru": "Нанкин"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "江苏省",
+      "ru": "Цзянсу"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 32.0603,
+      "lng": 118.7969
+    },
+    "overview": {
+      "en": "A historic capital on the Yangtze River with a dense cluster of comprehensive and specialist universities.",
+      "zh": "长江沿岸历史古都，综合性和专业型高校分布密集。",
+      "ru": "Историческая столица на Янцзы с высокой концентрацией многопрофильных и специализированных университетов."
+    },
+    "climate": {
+      "en": "A humid subtropical climate with hot summers, chilly damp winters and four distinct seasons.",
+      "zh": "亚热带季风气候，夏季炎热，冬季湿冷，四季分明。",
+      "ru": "Влажный субтропический климат с жарким летом, прохладной сырой зимой и четырьмя выраженными сезонами."
+    },
+    "foodHighlights": [
+      {
+        "en": "Salted duck",
+        "zh": "盐水鸭",
+        "ru": "Солёная утка"
+      },
+      {
+        "en": "Duck-blood vermicelli soup",
+        "zh": "鸭血粉丝汤",
+        "ru": "Суп с утиной кровью и фунчозой"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Ming City Wall",
+        "zh": "明城墙",
+        "ru": "Городская стена эпохи Мин"
+      },
+      {
+        "en": "Sun Yat-sen Mausoleum",
+        "zh": "中山陵",
+        "ru": "Мавзолей Сунь Ятсена"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-wuhan"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-wuhan",
+    "slug": "wuhan",
+    "name": {
+      "en": "Wuhan",
+      "zh": "武汉",
+      "ru": "Ухань"
+    },
+    "province": {
+      "en": "Hubei",
+      "zh": "湖北省",
+      "ru": "Хубэй"
+    },
+    "region": "central",
+    "coordinates": {
+      "lat": 30.5928,
+      "lng": 114.3055
+    },
+    "overview": {
+      "en": "A central-China transport, education and research hub formed around the Yangtze and Han rivers.",
+      "zh": "长江与汉江交汇处的华中交通、教育和科研中心。",
+      "ru": "Транспортный, образовательный и научный центр Центрального Китая у слияния Янцзы и Ханьшуй."
+    },
+    "climate": {
+      "en": "A humid subtropical climate with very hot summers, cool winters and abundant rainfall.",
+      "zh": "亚热带湿润气候，夏季炎热，冬季较冷，降水充沛。",
+      "ru": "Влажный субтропический климат с очень жарким летом, прохладной зимой и обильными осадками."
+    },
+    "foodHighlights": [
+      {
+        "en": "Hot dry noodles",
+        "zh": "热干面",
+        "ru": "Горячая сухая лапша"
+      },
+      {
+        "en": "Doupi",
+        "zh": "豆皮",
+        "ru": "Доупи"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Yellow Crane Tower",
+        "zh": "黄鹤楼",
+        "ru": "Башня Жёлтого журавля"
+      },
+      {
+        "en": "East Lake",
+        "zh": "东湖",
+        "ru": "Озеро Дунху"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-xian"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-xian",
+    "slug": "xian",
+    "name": {
+      "en": "Xi'an",
+      "zh": "西安",
+      "ru": "Сиань"
+    },
+    "province": {
+      "en": "Shaanxi",
+      "zh": "陕西省",
+      "ru": "Шэньси"
+    },
+    "region": "northwest",
+    "coordinates": {
+      "lat": 34.3416,
+      "lng": 108.9398
+    },
+    "overview": {
+      "en": "An ancient Silk Road capital and a major northwestern centre for engineering, aerospace and electronics.",
+      "zh": "古丝绸之路起点，也是西北地区工程、航空航天和电子信息重镇。",
+      "ru": "Древняя столица Шёлкового пути и важный северо-западный центр инженерии, аэрокосмической отрасли и электроники."
+    },
+    "climate": {
+      "en": "A temperate continental monsoon climate with hot summers, cold winters and relatively dry weather.",
+      "zh": "温带大陆性季风气候，夏季炎热，冬季寒冷，整体较干燥。",
+      "ru": "Умеренно-континентальный муссонный климат с жарким летом, холодной зимой и сравнительно сухой погодой."
+    },
+    "foodHighlights": [
+      {
+        "en": "Biangbiang noodles",
+        "zh": "油泼面",
+        "ru": "Лапша бянбян"
+      },
+      {
+        "en": "Roujiamo",
+        "zh": "肉夹馍",
+        "ru": "Жоуцзямо"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Terracotta Army",
+        "zh": "兵马俑",
+        "ru": "Терракотовая армия"
+      },
+      {
+        "en": "Xi'an City Wall",
+        "zh": "西安城墙",
+        "ru": "Городская стена Сианя"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-chengdu"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-chengdu",
+    "slug": "chengdu",
+    "name": {
+      "en": "Chengdu",
+      "zh": "成都",
+      "ru": "Чэнду"
+    },
+    "province": {
+      "en": "Sichuan",
+      "zh": "四川省",
+      "ru": "Сычуань"
+    },
+    "region": "southwest",
+    "coordinates": {
+      "lat": 30.5728,
+      "lng": 104.0668
+    },
+    "overview": {
+      "en": "A relaxed but fast-growing western hub for higher education, electronics, finance and creative industries.",
+      "zh": "兼具休闲生活与快速发展的西部中心，聚集高校、电子、金融和创意产业。",
+      "ru": "Динамично развивающийся западный центр высшего образования, электроники, финансов и творческих индустрий."
+    },
+    "climate": {
+      "en": "A humid subtropical basin climate with hot humid summers, mild cloudy winters and limited sunshine.",
+      "zh": "亚热带盆地气候，夏季湿热，冬季温和多云，日照偏少。",
+      "ru": "Влажный субтропический климат котловины с жарким влажным летом, мягкой облачной зимой и небольшим числом солнечных дней."
+    },
+    "foodHighlights": [
+      {
+        "en": "Sichuan hotpot",
+        "zh": "四川火锅",
+        "ru": "Сычуаньский хотпот"
+      },
+      {
+        "en": "Mapo tofu",
+        "zh": "麻婆豆腐",
+        "ru": "Мапо тофу"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Chengdu Research Base of Giant Panda Breeding",
+        "zh": "成都大熊猫繁育研究基地",
+        "ru": "Чэндуская база разведения больших панд"
+      },
+      {
+        "en": "Wuhou Shrine",
+        "zh": "武侯祠",
+        "ru": "Храм Ухоу"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-chongqing"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-chongqing",
+    "slug": "chongqing",
+    "name": {
+      "en": "Chongqing",
+      "zh": "重庆",
+      "ru": "Чунцин"
+    },
+    "province": {
+      "en": "Chongqing",
+      "zh": "重庆市",
+      "ru": "Чунцин"
+    },
+    "region": "southwest",
+    "coordinates": {
+      "lat": 29.563,
+      "lng": 106.5516
+    },
+    "overview": {
+      "en": "A mountainous Yangtze River municipality with major universities and strong engineering and manufacturing links.",
+      "zh": "山水相依的长江直辖市，拥有重要高校和深厚的工程制造产业基础。",
+      "ru": "Горный мегаполис на Янцзы с крупными университетами и сильными связями с инженерией и промышленностью."
+    },
+    "climate": {
+      "en": "A humid subtropical basin climate with very hot summers, mild winters and frequent fog.",
+      "zh": "亚热带湿润盆地气候，夏季酷热，冬季温和，多雾。",
+      "ru": "Влажный субтропический климат котловины с очень жарким летом, мягкой зимой и частыми туманами."
+    },
+    "foodHighlights": [
+      {
+        "en": "Chongqing hotpot",
+        "zh": "重庆火锅",
+        "ru": "Чунцинский хотпот"
+      },
+      {
+        "en": "Chongqing noodles",
+        "zh": "重庆小面",
+        "ru": "Чунцинская лапша"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Hongya Cave",
+        "zh": "洪崖洞",
+        "ru": "Хунъядун"
+      },
+      {
+        "en": "Three Gorges Museum",
+        "zh": "三峡博物馆",
+        "ru": "Музей Трёх ущелий"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-tianjin"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-tianjin",
+    "slug": "tianjin",
+    "name": {
+      "en": "Tianjin",
+      "zh": "天津",
+      "ru": "Тяньцзинь"
+    },
+    "province": {
+      "en": "Tianjin",
+      "zh": "天津市",
+      "ru": "Тяньцзинь"
+    },
+    "region": "north",
+    "coordinates": {
+      "lat": 39.0842,
+      "lng": 117.2009
+    },
+    "overview": {
+      "en": "A northern port municipality near Beijing with established engineering, business and language universities.",
+      "zh": "毗邻北京的北方港口直辖市，工程、商科和语言类高校基础扎实。",
+      "ru": "Северный портовый мегаполис рядом с Пекином с сильными инженерными, деловыми и языковыми университетами."
+    },
+    "climate": {
+      "en": "A temperate monsoon climate with hot humid summers and cold dry winters.",
+      "zh": "温带季风气候，夏季炎热湿润，冬季寒冷干燥。",
+      "ru": "Умеренный муссонный климат с жарким влажным летом и холодной сухой зимой."
+    },
+    "foodHighlights": [
+      {
+        "en": "Goubuli buns",
+        "zh": "狗不理包子",
+        "ru": "Баоцзы Гоубули"
+      },
+      {
+        "en": "Jianbing guozi",
+        "zh": "煎饼果子",
+        "ru": "Цзяньбин гоцзы"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Five Great Avenues",
+        "zh": "五大道",
+        "ru": "Пять великих авеню"
+      },
+      {
+        "en": "Haihe River",
+        "zh": "海河",
+        "ru": "Река Хайхэ"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-harbin"
+    ],
+    "verifiedAt": "2026-07-16",
+    "reviewAfter": "2027-07-16",
+    "status": "verified",
+    "id": "city-harbin",
+    "slug": "harbin",
+    "name": {
+      "en": "Harbin",
+      "zh": "哈尔滨",
+      "ru": "Харбин"
+    },
+    "province": {
+      "en": "Heilongjiang",
+      "zh": "黑龙江省",
+      "ru": "Хэйлунцзян"
+    },
+    "region": "northeast",
+    "coordinates": {
+      "lat": 45.8038,
+      "lng": 126.5349
+    },
+    "overview": {
+      "en": "A northeastern education and engineering centre shaped by cross-border history and a distinctive winter culture.",
+      "zh": "东北地区教育与工程中心，跨境历史和冰雪文化特色鲜明。",
+      "ru": "Северо-восточный центр образования и инженерии с трансграничной историей и яркой зимней культурой."
+    },
+    "climate": {
+      "en": "A continental monsoon climate with short warm summers and long, very cold, dry winters.",
+      "zh": "温带大陆性季风气候，夏季短而温暖，冬季漫长、严寒且干燥。",
+      "ru": "Континентальный муссонный климат с коротким тёплым летом и долгой очень холодной сухой зимой."
+    },
+    "foodHighlights": [
+      {
+        "en": "Harbin red sausage",
+        "zh": "哈尔滨红肠",
+        "ru": "Харбинская красная колбаса"
+      },
+      {
+        "en": "Guobaorou",
+        "zh": "锅包肉",
+        "ru": "Гобаожоу"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Saint Sophia Cathedral",
+        "zh": "圣索菲亚教堂",
+        "ru": "Софийский собор"
+      },
+      {
+        "en": "Harbin Ice and Snow World",
+        "zh": "哈尔滨冰雪大世界",
+        "ru": "Харбинский мир льда и снега"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-uni-shanxi-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-taiyuan",
+    "slug": "taiyuan",
+    "name": {
+      "en": "Taiyuan",
+      "zh": "太原市",
+      "ru": "Тайюань"
+    },
+    "province": {
+      "en": "Shanxi",
+      "zh": "Shanxi",
+      "ru": "Shanxi"
+    },
+    "region": "north",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-inner-mongolia-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-hohhot",
+    "slug": "hohhot",
+    "name": {
+      "en": "Hohhot",
+      "zh": "呼和浩特市",
+      "ru": "Хух-Хото"
+    },
+    "province": {
+      "en": "Inner Mongolia",
+      "zh": "Inner Mongolia",
+      "ru": "Inner Mongolia"
+    },
+    "region": "north",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-liaoning-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-shenyang",
+    "slug": "shenyang",
+    "name": {
+      "en": "Shenyang",
+      "zh": "沈阳市",
+      "ru": "Шэньян"
+    },
+    "province": {
+      "en": "Liaoning",
+      "zh": "Liaoning",
+      "ru": "Liaoning"
+    },
+    "region": "northeast",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-dalian-university-of-technology"
+    ],
+    "verifiedAt": "2026-07-26",
+    "reviewAfter": "2027-01-22",
+    "status": "verified",
+    "id": "city-dalian",
+    "slug": "dalian",
+    "name": {
+      "en": "Dalian",
+      "zh": "大连市",
+      "ru": "Далянь"
+    },
+    "province": {
+      "en": "Liaoning",
+      "zh": "Liaoning",
+      "ru": "Liaoning"
+    },
+    "region": "northeast",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-jilin-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-changchun",
+    "slug": "changchun",
+    "name": {
+      "en": "Changchun",
+      "zh": "长春市",
+      "ru": "Чанчунь"
+    },
+    "province": {
+      "en": "Jilin",
+      "zh": "Jilin",
+      "ru": "Jilin"
+    },
+    "region": "northeast",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-yanbian-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-yanji",
+    "slug": "yanji",
+    "name": {
+      "en": "Yanji",
+      "zh": "延吉市",
+      "ru": "Яньцзи"
+    },
+    "province": {
+      "en": "Jilin",
+      "zh": "Jilin",
+      "ru": "Jilin"
+    },
+    "region": "northeast",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-soochow-university"
+    ],
+    "verifiedAt": "2026-07-26",
+    "reviewAfter": "2027-01-22",
+    "status": "verified",
+    "id": "city-suzhou",
+    "slug": "suzhou",
+    "name": {
+      "en": "Suzhou",
+      "zh": "苏州",
+      "ru": "Сучжоу"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "Jiangsu",
+      "ru": "Jiangsu"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-china-university-of-mining-and-technology"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-xuzhou",
+    "slug": "xuzhou",
+    "name": {
+      "en": "Xuzhou",
+      "zh": "徐州",
+      "ru": "Сюйчжоу"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "Jiangsu",
+      "ru": "Jiangsu"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-jiangnan-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-wuxi",
+    "slug": "wuxi",
+    "name": {
+      "en": "Wuxi",
+      "zh": "无锡",
+      "ru": "Уси"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "Jiangsu",
+      "ru": "Jiangsu"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-anhui-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-hefei",
+    "slug": "hefei",
+    "name": {
+      "en": "Hefei",
+      "zh": "合肥",
+      "ru": "Хэфэй"
+    },
+    "province": {
+      "en": "Anhui",
+      "zh": "Anhui",
+      "ru": "Anhui"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-xiamen-university"
+    ],
+    "verifiedAt": "2026-07-26",
+    "reviewAfter": "2027-01-22",
+    "status": "verified",
+    "id": "city-xiamen",
+    "slug": "xiamen",
+    "name": {
+      "en": "Xiamen",
+      "zh": "厦门",
+      "ru": "Сямэнь"
+    },
+    "province": {
+      "en": "Fujian",
+      "zh": "Fujian",
+      "ru": "Fujian"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-fuzhou-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-fuzhou",
+    "slug": "fuzhou",
+    "name": {
+      "en": "Fuzhou",
+      "zh": "福州",
+      "ru": "Фучжоу"
+    },
+    "province": {
+      "en": "Fujian",
+      "zh": "Fujian",
+      "ru": "Fujian"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-nanchang-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-nanchang",
+    "slug": "nanchang",
+    "name": {
+      "en": "Nanchang",
+      "zh": "南昌",
+      "ru": "Наньчан"
+    },
+    "province": {
+      "en": "Jiangxi",
+      "zh": "Jiangxi",
+      "ru": "Jiangxi"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-shandong-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-jinan",
+    "slug": "jinan",
+    "name": {
+      "en": "Jinan",
+      "zh": "济南",
+      "ru": "Цзинань"
+    },
+    "province": {
+      "en": "Shandong",
+      "zh": "Shandong",
+      "ru": "Shandong"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-ocean-university-of-china"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-qingdao",
+    "slug": "qingdao",
+    "name": {
+      "en": "Qingdao",
+      "zh": "青岛",
+      "ru": "Циндао"
+    },
+    "province": {
+      "en": "Shandong",
+      "zh": "Shandong",
+      "ru": "Shandong"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-zhengzhou-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-zhengzhou",
+    "slug": "zhengzhou",
+    "name": {
+      "en": "Zhengzhou",
+      "zh": "郑州",
+      "ru": "Чжэнчжоу"
+    },
+    "province": {
+      "en": "Henan",
+      "zh": "Henan",
+      "ru": "Henan"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-henan-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-kaifeng",
+    "slug": "kaifeng",
+    "name": {
+      "en": "Kaifeng",
+      "zh": "开封",
+      "ru": "Кайфэн"
+    },
+    "province": {
+      "en": "Henan",
+      "zh": "Henan",
+      "ru": "Henan"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-xiangtan-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-xiangtan",
+    "slug": "xiangtan",
+    "name": {
+      "en": "Xiangtan",
+      "zh": "湘潭",
+      "ru": "Сянтань"
+    },
+    "province": {
+      "en": "Hunan",
+      "zh": "Hunan",
+      "ru": "Hunan"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-hunan-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-changsha",
+    "slug": "changsha",
+    "name": {
+      "en": "Changsha",
+      "zh": "长沙",
+      "ru": "Чанша"
+    },
+    "province": {
+      "en": "Hunan",
+      "zh": "Hunan",
+      "ru": "Hunan"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-hainan-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-haikou",
+    "slug": "haikou",
+    "name": {
+      "en": "Haikou",
+      "zh": "海口",
+      "ru": "Хайкоу"
+    },
+    "province": {
+      "en": "Hainan",
+      "zh": "Hainan",
+      "ru": "Hainan"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-guangxi-university"
+    ],
+    "verifiedAt": "2026-07-27",
+    "reviewAfter": "2027-01-23",
+    "status": "verified",
+    "id": "city-nanning",
+    "slug": "nanning",
+    "name": {
+      "en": "Nanning",
+      "zh": "南宁",
+      "ru": "Наньнин"
+    },
+    "province": {
+      "en": "Guangxi",
+      "zh": "Guangxi",
+      "ru": "Guangxi"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-northwest-a-and-f-university"
+    ],
+    "verifiedAt": "2026-07-26",
+    "reviewAfter": "2027-01-22",
+    "status": "verified",
+    "id": "city-yangling",
+    "slug": "yangling",
+    "name": {
+      "en": "Yangling",
+      "zh": "杨凌",
+      "ru": "Янлин"
+    },
+    "province": {
+      "en": "Shaanxi",
+      "zh": "Shaanxi",
+      "ru": "Shaanxi"
+    },
+    "region": "northwest",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-uni-lanzhou-university"
+    ],
+    "verifiedAt": "2026-07-26",
+    "reviewAfter": "2027-01-22",
+    "status": "verified",
+    "id": "city-lanzhou",
+    "slug": "lanzhou",
+    "name": {
+      "en": "Lanzhou",
+      "zh": "兰州",
+      "ru": "Ланьчжоу"
+    },
+    "province": {
+      "en": "Gansu",
+      "zh": "Gansu",
+      "ru": "Gansu"
+    },
+    "region": "northwest",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-wenzhou-official"
+    ],
+    "verifiedAt": "2026-07-28",
+    "reviewAfter": "2027-01-24",
+    "status": "verified",
+    "id": "city-wenzhou",
+    "slug": "wenzhou",
+    "name": {
+      "en": "Wenzhou",
+      "zh": "温州",
+      "ru": "Вэньчжоу"
+    },
+    "province": {
+      "en": "Zhejiang",
+      "zh": "浙江",
+      "ru": "Чжэцзян"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-urumqi-government"
+    ],
+    "verifiedAt": "2026-07-28",
+    "reviewAfter": "2027-01-24",
+    "status": "verified",
+    "id": "city-urumqi",
+    "slug": "urumqi",
+    "name": {
+      "en": "Urumqi",
+      "zh": "乌鲁木齐",
+      "ru": "Урумчи"
+    },
+    "province": {
+      "en": "Xinjiang Uyghur Autonomous Region",
+      "zh": "新疆维吾尔自治区",
+      "ru": "Синьцзян-Уйгурский автономный район"
+    },
+    "region": "northwest",
+    "coordinates": {
+      "lat": 43.8256,
+      "lng": 87.6168
+    },
+    "overview": {
+      "en": "The capital of Xinjiang and a major education, transport and trade centre connecting China with Central Asia.",
+      "zh": "新疆维吾尔自治区首府，是连接中国与中亚的重要教育、交通和商贸中心。",
+      "ru": "Столица Синьцзяна и важный образовательный, транспортный и торговый центр на направлении к Центральной Азии."
+    },
+    "climate": {
+      "en": "A dry continental climate with warm summers, cold winters and large seasonal temperature differences.",
+      "zh": "温带大陆性干旱气候，夏季温暖、冬季寒冷，季节温差较大。",
+      "ru": "Сухой континентальный климат с тёплым летом, холодной зимой и значительными сезонными перепадами температуры."
+    },
+    "foodHighlights": [
+      {
+        "en": "Xinjiang pilaf",
+        "zh": "新疆抓饭",
+        "ru": "Синьцзянский плов"
+      },
+      {
+        "en": "Lamb kebabs",
+        "zh": "羊肉串",
+        "ru": "Шашлык из баранины"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Xinjiang Regional Museum",
+        "zh": "新疆维吾尔自治区博物馆",
+        "ru": "Музей Синьцзян-Уйгурского автономного района"
+      },
+      {
+        "en": "Red Hill Park",
+        "zh": "红山公园",
+        "ru": "Парк Красная гора"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-guiyang"
+    ],
+    "verifiedAt": "2026-07-28",
+    "reviewAfter": "2027-07-28",
+    "status": "verified",
+    "id": "city-guiyang",
+    "slug": "guiyang",
+    "name": {
+      "en": "Guiyang",
+      "zh": "贵阳",
+      "ru": "Гуйян"
+    },
+    "province": {
+      "en": "Guizhou",
+      "zh": "贵州省",
+      "ru": "Гуйчжоу"
+    },
+    "region": "southwest",
+    "coordinates": {
+      "lat": 26.647,
+      "lng": 106.6302
+    },
+    "overview": {
+      "en": "The capital of Guizhou is a mountainous education and technology center known for a mild summer climate.",
+      "zh": "贵州省会，是一座山地教育与科技中心，以夏季凉爽著称。",
+      "ru": "Столица Гуйчжоу — горный образовательный и технологический центр с мягким летом."
+    },
+    "climate": {
+      "en": "A humid subtropical highland climate with mild summers and cool, damp winters.",
+      "zh": "湿润的亚热带高原气候，夏季温和，冬季湿冷。",
+      "ru": "Влажный субтропический высокогорный климат с мягким летом и прохладной влажной зимой."
+    },
+    "foodHighlights": [
+      {
+        "en": "Sour-soup fish",
+        "zh": "酸汤鱼",
+        "ru": "Рыба в кислом бульоне"
+      },
+      {
+        "en": "Silk dolls",
+        "zh": "丝娃娃",
+        "ru": "Овощные рулетики сывава"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Jiaxiu Tower",
+        "zh": "甲秀楼",
+        "ru": "Башня Цзясю"
+      },
+      {
+        "en": "Qianling Mountain Park",
+        "zh": "黔灵山公园",
+        "ru": "Парк горы Цяньлин"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-kunming"
+    ],
+    "verifiedAt": "2026-07-28",
+    "reviewAfter": "2027-07-28",
+    "status": "verified",
+    "id": "city-kunming",
+    "slug": "kunming",
+    "name": {
+      "en": "Kunming",
+      "zh": "昆明",
+      "ru": "Куньмин"
+    },
+    "province": {
+      "en": "Yunnan",
+      "zh": "云南省",
+      "ru": "Юньнань"
+    },
+    "region": "southwest",
+    "coordinates": {
+      "lat": 25.0389,
+      "lng": 102.7183
+    },
+    "overview": {
+      "en": "Yunnan provincial capital and a major gateway for study and exchange with South and Southeast Asia.",
+      "zh": "云南省会，也是面向南亚、东南亚开展学习与交流的重要门户。",
+      "ru": "Столица Юньнани и важный центр обучения и обменов с Южной и Юго-Восточной Азией."
+    },
+    "climate": {
+      "en": "A subtropical highland climate with mild temperatures through most of the year.",
+      "zh": "亚热带高原气候，全年大部分时间气温温和。",
+      "ru": "Субтропический высокогорный климат с мягкой температурой большую часть года."
+    },
+    "foodHighlights": [
+      {
+        "en": "Crossing-the-bridge rice noodles",
+        "zh": "过桥米线",
+        "ru": "Рисовая лапша «через мост»"
+      },
+      {
+        "en": "Wild-mushroom hotpot",
+        "zh": "野生菌火锅",
+        "ru": "Хот-пот с лесными грибами"
+      }
+    ],
+    "sights": [
+      {
+        "en": "Dianchi Lake",
+        "zh": "滇池",
+        "ru": "Озеро Дяньчи"
+      },
+      {
+        "en": "Yunnan Stone Forest",
+        "zh": "云南石林",
+        "ru": "Каменный лес Юньнани"
+      }
+    ]
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-quanzhou"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-quanzhou",
+    "slug": "quanzhou",
+    "name": {
+      "en": "Quanzhou",
+      "zh": "泉州",
+      "ru": "Цюаньчжоу"
+    },
+    "province": {
+      "en": "Fujian",
+      "zh": "福建省",
+      "ru": "Фуцзянь"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 24.8741,
+      "lng": 118.6757
+    },
+    "overview": {
+      "en": "Quanzhou is an established higher-education location in Fujian.",
+      "zh": "泉州是福建省的重要高等教育城市之一。",
+      "ru": "Quanzhou — один из центров высшего образования региона Фуцзянь."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-zhenjiang"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-zhenjiang",
+    "slug": "zhenjiang",
+    "name": {
+      "en": "Zhenjiang",
+      "zh": "镇江",
+      "ru": "Чжэньцзян"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "江苏省",
+      "ru": "Цзянсу"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 32.188,
+      "lng": 119.425
+    },
+    "overview": {
+      "en": "Zhenjiang is an established higher-education location in Jiangsu.",
+      "zh": "镇江是江苏省的重要高等教育城市之一。",
+      "ru": "Zhenjiang — один из центров высшего образования региона Цзянсу."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-ningbo"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-ningbo",
+    "slug": "ningbo",
+    "name": {
+      "en": "Ningbo",
+      "zh": "宁波",
+      "ru": "Нинбо"
+    },
+    "province": {
+      "en": "Zhejiang",
+      "zh": "浙江省",
+      "ru": "Чжэцзян"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 29.8683,
+      "lng": 121.544
+    },
+    "overview": {
+      "en": "Ningbo is an established higher-education location in Zhejiang.",
+      "zh": "宁波是浙江省的重要高等教育城市之一。",
+      "ru": "Ningbo — один из центров высшего образования региона Чжэцзян."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-yinchuan"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-yinchuan",
+    "slug": "yinchuan",
+    "name": {
+      "en": "Yinchuan",
+      "zh": "银川",
+      "ru": "Иньчуань"
+    },
+    "province": {
+      "en": "Ningxia Hui Autonomous Region",
+      "zh": "宁夏回族自治区",
+      "ru": "Нинся-Хуэйский автономный район"
+    },
+    "region": "northwest",
+    "coordinates": {
+      "lat": 38.4872,
+      "lng": 106.2309
+    },
+    "overview": {
+      "en": "Yinchuan is an established higher-education location in Ningxia Hui Autonomous Region.",
+      "zh": "银川是宁夏回族自治区的重要高等教育城市之一。",
+      "ru": "Yinchuan — один из центров высшего образования региона Нинся-Хуэйский автономный район."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-xining"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-xining",
+    "slug": "xining",
+    "name": {
+      "en": "Xining",
+      "zh": "西宁",
+      "ru": "Синин"
+    },
+    "province": {
+      "en": "Qinghai",
+      "zh": "青海省",
+      "ru": "Цинхай"
+    },
+    "region": "northwest",
+    "coordinates": {
+      "lat": 36.6171,
+      "lng": 101.7782
+    },
+    "overview": {
+      "en": "Xining is an established higher-education location in Qinghai.",
+      "zh": "西宁是青海省的重要高等教育城市之一。",
+      "ru": "Xining — один из центров высшего образования региона Цинхай."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-shantou"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-shantou",
+    "slug": "shantou",
+    "name": {
+      "en": "Shantou",
+      "zh": "汕头",
+      "ru": "Шаньтоу"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东省",
+      "ru": "Гуандун"
+    },
+    "region": "south",
+    "coordinates": {
+      "lat": 23.3541,
+      "lng": 116.682
+    },
+    "overview": {
+      "en": "Shantou is an established higher-education location in Guangdong.",
+      "zh": "汕头是广东省的重要高等教育城市之一。",
+      "ru": "Shantou — один из центров высшего образования региона Гуандун."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-shihezi"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-shihezi",
+    "slug": "shihezi",
+    "name": {
+      "en": "Shihezi",
+      "zh": "石河子",
+      "ru": "Шихэцзы"
+    },
+    "province": {
+      "en": "Xinjiang Uyghur Autonomous Region",
+      "zh": "新疆维吾尔自治区",
+      "ru": "Синьцзян-Уйгурский автономный район"
+    },
+    "region": "northwest",
+    "coordinates": {
+      "lat": 44.3059,
+      "lng": 86.0805
+    },
+    "overview": {
+      "en": "Shihezi is an established higher-education location in Xinjiang Uyghur Autonomous Region.",
+      "zh": "石河子是新疆维吾尔自治区的重要高等教育城市之一。",
+      "ru": "Shihezi — один из центров высшего образования региона Синьцзян-Уйгурский автономный район."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-lhasa"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-lhasa",
+    "slug": "lhasa",
+    "name": {
+      "en": "Lhasa",
+      "zh": "拉萨",
+      "ru": "Лхаса"
+    },
+    "province": {
+      "en": "Tibet Autonomous Region",
+      "zh": "西藏自治区",
+      "ru": "Тибетский автономный район"
+    },
+    "region": "southwest",
+    "coordinates": {
+      "lat": 29.652,
+      "lng": 91.1721
+    },
+    "overview": {
+      "en": "Lhasa is an established higher-education location in Tibet Autonomous Region.",
+      "zh": "拉萨是西藏自治区的重要高等教育城市之一。",
+      "ru": "Lhasa — один из центров высшего образования региона Тибетский автономный район."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-jinhua"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-jinhua",
+    "slug": "jinhua",
+    "name": {
+      "en": "Jinhua",
+      "zh": "金华",
+      "ru": "Цзиньхуа"
+    },
+    "province": {
+      "en": "Zhejiang",
+      "zh": "浙江省",
+      "ru": "Чжэцзян"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 29.0787,
+      "lng": 119.6474
+    },
+    "overview": {
+      "en": "Jinhua is an established higher-education location in Zhejiang.",
+      "zh": "金华是浙江省的重要高等教育城市之一。",
+      "ru": "Jinhua — один из центров высшего образования региона Чжэцзян."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-zhangzhou"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-zhangzhou",
+    "slug": "zhangzhou",
+    "name": {
+      "en": "Zhangzhou",
+      "zh": "漳州",
+      "ru": "Чжанчжоу"
+    },
+    "province": {
+      "en": "Fujian",
+      "zh": "福建省",
+      "ru": "Фуцзянь"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 24.513,
+      "lng": 117.6471
+    },
+    "overview": {
+      "en": "Zhangzhou is an established higher-education location in Fujian.",
+      "zh": "漳州是福建省的重要高等教育城市之一。",
+      "ru": "Zhangzhou — один из центров высшего образования региона Фуцзянь."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-yantai"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-yantai",
+    "slug": "yantai",
+    "name": {
+      "en": "Yantai",
+      "zh": "烟台",
+      "ru": "Яньтай"
+    },
+    "province": {
+      "en": "Shandong",
+      "zh": "山东省",
+      "ru": "Шаньдун"
+    },
+    "region": "east",
+    "coordinates": {
+      "lat": 37.4638,
+      "lng": 121.4479
+    },
+    "overview": {
+      "en": "Yantai is an established higher-education location in Shandong.",
+      "zh": "烟台是山东省的重要高等教育城市之一。",
+      "ru": "Yantai — один из центров высшего образования региона Шаньдун."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-city-profile-20260729-baoding"
+    ],
+    "verifiedAt": "2026-07-29",
+    "reviewAfter": "2027-07-29",
+    "status": "verified",
+    "id": "city-baoding",
+    "slug": "baoding",
+    "name": {
+      "en": "Baoding",
+      "zh": "保定",
+      "ru": "Баодин"
+    },
+    "province": {
+      "en": "Hebei",
+      "zh": "河北省",
+      "ru": "Хэбэй"
+    },
+    "region": "north",
+    "coordinates": {
+      "lat": 38.874,
+      "lng": 115.4646
+    },
+    "overview": {
+      "en": "Baoding is an established higher-education location in Hebei.",
+      "zh": "保定是河北省的重要高等教育城市之一。",
+      "ru": "Baoding — один из центров высшего образования региона Хэбэй."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-guilin"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-guilin",
+    "slug": "guilin",
+    "name": {
+      "en": "Guilin",
+      "zh": "桂林",
+      "ru": "Гуйлинь"
+    },
+    "province": {
+      "en": "Guangxi",
+      "zh": "广西壮族自治区",
+      "ru": "Гуанси-Чжуанский автономный район"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-jingzhou"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-jingzhou",
+    "slug": "jingzhou",
+    "name": {
+      "en": "Jingzhou",
+      "zh": "荆州",
+      "ru": "Цзинчжоу"
+    },
+    "province": {
+      "en": "Hubei",
+      "zh": "湖北省",
+      "ru": "Хубэй"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-jining"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-jining",
+    "slug": "jining",
+    "name": {
+      "en": "Jining",
+      "zh": "济宁",
+      "ru": "Цзинин"
+    },
+    "province": {
+      "en": "Shandong",
+      "zh": "山东省",
+      "ru": "Шаньдун"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-jinzhong"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-jinzhong",
+    "slug": "jinzhong",
+    "name": {
+      "en": "Jinzhong",
+      "zh": "晋中",
+      "ru": "Цзиньчжун"
+    },
+    "province": {
+      "en": "Shanxi",
+      "zh": "山西省",
+      "ru": "Шаньси"
+    },
+    "region": "north",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-nantong"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-nantong",
+    "slug": "nantong",
+    "name": {
+      "en": "Nantong",
+      "zh": "南通",
+      "ru": "Наньтун"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "江苏省",
+      "ru": "Цзянсу"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-gap-city-yangzhou"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-yangzhou",
+    "slug": "yangzhou",
+    "name": {
+      "en": "Yangzhou",
+      "zh": "扬州",
+      "ru": "Янчжоу"
+    },
+    "province": {
+      "en": "Jiangsu",
+      "zh": "江苏省",
+      "ru": "Цзянсу"
+    },
+    "region": "east",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-wave3-east-south-city-dongguan"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-dongguan",
+    "slug": "dongguan",
+    "name": {
+      "en": "Dongguan",
+      "zh": "东莞",
+      "ru": "Дунгуань"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东省",
+      "ru": "Гуандун"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-wave3-city-shijiazhuang"
+    ],
+    "verifiedAt": "2026-07-30",
+    "reviewAfter": "2027-07-30",
+    "status": "verified",
+    "id": "city-shijiazhuang",
+    "slug": "shijiazhuang",
+    "name": {
+      "en": "Shijiazhuang",
+      "zh": "石家庄",
+      "ru": "Шицзячжуан"
+    },
+    "province": {
+      "en": "Hebei",
+      "zh": "河北省",
+      "ru": "Хэбэй"
+    },
+    "region": "north",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-mew-scws-city-xinxiang"
+    ],
+    "verifiedAt": "2026-08-04",
+    "reviewAfter": "2027-08-04",
+    "status": "verified",
+    "id": "city-xinxiang",
+    "slug": "xinxiang",
+    "name": {
+      "en": "Xinxiang",
+      "zh": "新乡",
+      "ru": "Синьсян"
+    },
+    "province": {
+      "en": "Henan",
+      "zh": "河南省",
+      "ru": "Хэнань"
+    },
+    "region": "central",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-mew-nnw-city-jilin"
+    ],
+    "verifiedAt": "2026-08-05",
+    "reviewAfter": "2027-08-05",
+    "status": "verified",
+    "id": "city-jilin",
+    "slug": "jilin",
+    "name": {
+      "en": "Jilin",
+      "zh": "吉林",
+      "ru": "Цзилинь"
+    },
+    "province": {
+      "en": "Jilin Province",
+      "zh": "吉林省",
+      "ru": "провинция Цзилинь"
+    },
+    "region": "northeast",
+    "coordinates": null,
+    "overview": {
+      "en": "Jilin is a major higher-education and energy-industry city in northeast China.",
+      "zh": "吉林市是中国东北地区重要的高等教育与能源工业城市。",
+      "ru": "Цзилинь — важный центр высшего образования и энергетической промышленности Северо-Восточного Китая."
+    },
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-mew-0805-scw-city-zhanjiang"
+    ],
+    "verifiedAt": "2026-08-05",
+    "reviewAfter": "2027-08-05",
+    "status": "verified",
+    "id": "city-zhanjiang",
+    "slug": "zhanjiang",
+    "name": {
+      "en": "Zhanjiang",
+      "zh": "湛江",
+      "ru": "Чжаньцзян"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东省",
+      "ru": "Гуандун"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-vm-388004e9468858"
+    ],
+    "verifiedAt": "2026-11-17",
+    "reviewAfter": "2027-02-14",
+    "status": "verified",
+    "id": "city-hong-kong",
+    "slug": "hong-kong",
+    "name": {
+      "en": "Hong Kong",
+      "zh": "香港"
+    },
+    "province": null,
+    "region": null,
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-vm-ee27c9ae4981e1"
+    ],
+    "verifiedAt": "2026-11-17",
+    "reviewAfter": "2027-02-14",
+    "status": "verified",
+    "id": "city-macao",
+    "slug": "macao",
+    "name": {
+      "en": "Macao",
+      "zh": "澳门"
+    },
+    "province": null,
+    "region": null,
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  },
+  {
+    "sourceIds": [
+      "src-vm-16c987d1e4109f"
+    ],
+    "verifiedAt": "2026-11-17",
+    "reviewAfter": "2027-02-14",
+    "status": "verified",
+    "id": "city-zhuhai",
+    "slug": "zhuhai",
+    "name": {
+      "en": "Zhuhai",
+      "zh": "珠海"
+    },
+    "province": {
+      "en": "Guangdong",
+      "zh": "广东"
+    },
+    "region": "south",
+    "coordinates": null,
+    "overview": null,
+    "climate": null,
+    "foodHighlights": [],
+    "sights": []
+  }
+]

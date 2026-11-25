@@ -1,0 +1,146 @@
+{
+  "version": 2,
+  "institutionId": "uni-zhejiang-university",
+  "catalogStatus": "existing",
+  "manifestStatus": "in_progress",
+  "checkedAt": "2026-07-20",
+  "officialHosts": ["iczu.zju.edu.cn","intlstudent.zju.edu.cn"],
+  "sourceBindings": [
+    {"sourceId":"zju-intl-admissions-home","purpose":"discovery","resourceKey":"resource:7401c9501715ab530ef88823e0d96b86c2d54d7921b14c90af2eb7f0f245251b"},
+    {"sourceId":"zju-2026-undergraduate-catalog","purpose":"entity_index","resourceKey":"resource:c420ac4489fd9e2fba623ec9f3b923dcf5940a26913fb774f1ff1df0987152cd"},
+    {"sourceId":"zju-2026-masters-catalog","purpose":"entity_index","resourceKey":"resource:a1f91cd9373d52d491d0621f7a6adebda4d997a077e8ef3ef0975cba816cdf05"},
+    {"sourceId":"zju-2026-doctoral-catalog","purpose":"entity_index","resourceKey":"resource:2247fd8dcfa0f5b1064c859ef0e2e1cbf7ab7a714150c23313f6fcc6adc2a234"},
+    {"sourceId":"zju-2026-current-guide","purpose":"fact_sheet","resourceKey":"resource:a1f91cd9373d52d491d0621f7a6adebda4d997a077e8ef3ef0975cba816cdf05"},
+    {"sourceId":"zju-official-fees","purpose":"fact_sheet","resourceKey":"resource:805ee3189494db6af3082ab838f6ed396c243ce27150f7a180660a21654501b7"},
+    {"sourceId":"zju-application-portal","purpose":"application_endpoint","resourceKey":"resource:b055e14054d1a1542129f87c82eeb0b252494e7f43049a42bac6241846059ee1"},
+    {"sourceId":"zju-university-scholarship-index","purpose":"entity_index","resourceKey":"resource:e672f664fbd47088be1229a3d51c4f657dd642ed807d545a24597d73c17b7046"},
+    {"sourceId":"zju-2026-zhejiang-government-scholarship","purpose":"entity_detail","resourceKey":"resource:4736726a019d516a54899e0e106d9bc1a8922f6fe65934abe8bd930f7857fcc5"},
+    {"sourceId":"zju-admissions-contacts","purpose":"fact_sheet","resourceKey":"resource:2b1ee30104553c83679e227f698b4bfbace2a8a7b94c9dcd2de9eb1188614aac"},
+    {"sourceId":"zju-application-guide-anchor","purpose":"discovery","resourceKey":"resource:a784ace1e20d4fd6511022d449ec9bb285258cf8b8c0d43952caaae1b808a8df"}
+  ],
+  "sources": [
+    {
+      "version": 1, "id": "zju-intl-admissions-home", "institutionId": "uni-zhejiang-university", "entityType": "university", "sourceCategory": "international_admissions_home",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-admissions-home-v1", "fields": [{ "path": "admissionsSections", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-2026-undergraduate-catalog", "institutionId": "uni-zhejiang-university", "entityType": "program-cycle", "sourceCategory": "undergraduate_catalog",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-2026-masters-catalog", "institutionId": "uni-zhejiang-university", "entityType": "program-cycle", "sourceCategory": "masters_catalog",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68989a2981849/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-2026-doctoral-catalog", "institutionId": "uni-zhejiang-university", "entityType": "program-cycle", "sourceCategory": "doctoral_catalog",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68990a2981900/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-program-catalog-v1", "fields": [{ "path": "programs", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-2026-current-guide", "institutionId": "uni-zhejiang-university", "entityType": "program-cycle", "sourceCategory": "current_guide",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68989a2981849/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-current-guide-v1", "fields": [{ "path": "guide", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-official-fees", "institutionId": "uni-zhejiang-university", "entityType": "program-cycle", "sourceCategory": "fees",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/weeswwwwankwwccountwwnfo/list.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-fees-v1", "fields": [{ "path": "fees", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-application-portal", "institutionId": "uni-zhejiang-university", "entityType": "university", "sourceCategory": "application_portal",
+      "officialUrl": "https://intlstudent.zju.edu.cn/", "allowedHosts": ["intlstudent.zju.edu.cn"], "enabled": false,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "blocked" },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-application-portal-v1", "fields": [{ "path": "applicationUrl", "type": "string", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-university-scholarship-index", "institutionId": "uni-zhejiang-university", "entityType": "scholarship", "sourceCategory": "university_scholarship",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/wcholarships/list.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-2026-zhejiang-government-scholarship", "institutionId": "uni-zhejiang-university", "entityType": "scholarship-cycle", "sourceCategory": "government_scholarship",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2024/1101/c68996a2982709/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 168, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-government-scholarships-v1", "fields": [{ "path": "scholarships", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-admissions-contacts", "institutionId": "uni-zhejiang-university", "entityType": "university", "sourceCategory": "contacts",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/2022/0617/c69158a2595091/page.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-contacts-v1", "fields": [{ "path": "contacts", "type": "object", "required": true, "critical": true }] }
+    },
+    {
+      "version": 1, "id": "zju-application-guide-anchor", "institutionId": "uni-zhejiang-university", "entityType": "university", "sourceCategory": "catalog_anchor",
+      "officialUrl": "https://iczu.zju.edu.cn/admissionsen/wpplicationwwuide/list.htm", "allowedHosts": ["iczu.zju.edu.cn"], "enabled": true,
+      "schedule": { "intervalHours": 720, "jitterMinutes": 60 }, "fetch": { "timeoutMs": 15000, "maxBytes": 10485760 }, "robots": { "mode": "enforce" }, "canonicalization": { "collapseWhitespace": true },
+      "extraction": { "mode": "minimax", "schemaVersion": "pilot-catalog-anchor-v1", "fields": [{ "path": "catalogLinks", "type": "string-array", "required": true, "critical": true }] }
+    }
+  ],
+  "coverage": [
+    { "sourceCategory": "international_admissions_home", "status": "registered", "sourceIds": ["zju-intl-admissions-home"] },
+    { "sourceCategory": "undergraduate_catalog", "status": "registered", "sourceIds": ["zju-2026-undergraduate-catalog"] },
+    { "sourceCategory": "masters_catalog", "status": "registered", "sourceIds": ["zju-2026-masters-catalog"] },
+    { "sourceCategory": "doctoral_catalog", "status": "registered", "sourceIds": ["zju-2026-doctoral-catalog"] },
+    { "sourceCategory": "non_degree_catalog", "status": "discovery_pending", "note": "No distinct current official HTTPS non-degree catalog was confirmed." },
+    { "sourceCategory": "current_guide", "status": "registered", "sourceIds": ["zju-2026-current-guide"] },
+    { "sourceCategory": "dates_deadlines", "status": "discovery_pending", "note": "Deadlines are embedded in current guides; no distinct stable official dates page was confirmed." },
+    { "sourceCategory": "fees", "status": "registered", "sourceIds": ["zju-official-fees"] },
+    { "sourceCategory": "eligibility_language", "status": "discovery_pending", "note": "Eligibility and language rules are embedded in current guides; no distinct stable page was confirmed." },
+    { "sourceCategory": "application_portal", "status": "source_unavailable", "sourceIds": ["zju-application-portal"], "note": "The official application entrance is interactive and disabled because the worker has no browser-rendering or authenticated-session capability." },
+    { "sourceCategory": "university_scholarship", "status": "registered", "sourceIds": ["zju-university-scholarship-index"] },
+    { "sourceCategory": "faculty_scholarship", "status": "discovery_pending", "note": "No centralized current faculty-level scholarship page was confirmed." },
+    { "sourceCategory": "government_scholarship", "status": "registered", "sourceIds": ["zju-2026-zhejiang-government-scholarship"] },
+    { "sourceCategory": "program_detail", "status": "discovery_pending", "note": "Program-level pages will be discovered from the registered catalog anchors." },
+    { "sourceCategory": "contacts", "status": "registered", "sourceIds": ["zju-admissions-contacts"] },
+    { "sourceCategory": "catalog_anchor", "status": "registered", "sourceIds": ["zju-application-guide-anchor"] }
+  ],
+  "catalogReconciliation": {
+    "scope": "representative_international_programs",
+    "status": "in_progress",
+    "entries": [
+      {
+        "sourceId": "zju-intl-admissions-home",
+        "officialKey": "program-zhejiang-university-business-administration-master",
+        "officialName": "Business Administration",
+        "entityType": "program",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "zju-intl-admissions-home",
+        "officialKey": "program-zhejiang-university-computer-science-bachelor",
+        "officialName": "Computer Science and Technology",
+        "entityType": "program",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "zju-intl-admissions-home",
+        "officialKey": "scholarship-zhejiang-provincial-government",
+        "officialName": "Zhejiang Provincial Government Scholarship",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      },
+      {
+        "sourceId": "zju-intl-admissions-home",
+        "officialKey": "scholarship-zhejiang-university-international-student",
+        "officialName": "Zhejiang University Scholarship for International Students",
+        "entityType": "scholarship",
+        "status": "pending",
+        "note": "Current public catalog identity is linked to this exact official URL; entity-level evidence and catalog completeness remain pending."
+      }
+    ],
+    "note": "V2 migration preserves the 2026-07-20 source audit. 4 exact-URL or same-host/same-category catalog relationships are queued for evidence review; all other identities and full-directory reconciliation remain unresolved."
+  }
+}

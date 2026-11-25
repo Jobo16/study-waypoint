@@ -1,0 +1,97 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { connection } from 'next/server'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ReleaseAnnouncement } from '@/components/features/ReleaseAnnouncement'
+import { SiteFooter } from '@/components/layout'
+import { AppHeader } from '@/components/layout/AppHeader'
+import { CraftBrandMark } from '@/components/ui/CraftBrandMark'
+import { localeDirection, launchLocales } from '@/i18n/config'
+import { getMessages } from '@/i18n/messages'
+import { getReleaseAnnouncement } from '@/i18n/release-announcement'
+import { formatDate } from '@/lib/data/format'
+import { getCatalogData } from '@/lib/data/load'
+import { getDataReleaseDate } from '@/lib/data/release'
+import { requireLocale, siteUrl } from '@/lib/site'
+import '../globals.css'
+import '../feature-styles.css'
+import '../city-map.css'
+import '../themes.css'
+import '../craft.css'
+import { THEME_INIT_SCRIPT } from '@/lib/site-themes'
+
+export const metadata: Metadata = {
+  metadataBase: siteUrl,
+  applicationName: 'Study Waypoint',
+  formatDetection: { email: false, address: false, telephone: false },
+  icons: { icon: { url: '/atlas-icon.svg', type: 'image/svg+xml' }, apple: '/atlas-apple-icon.png' },
+}
+
+export const revalidate = 86_400
+
+export function generateStaticParams() {
+  return launchLocales.map((locale) => ({ locale }))
+}
+
+export default async function LocaleLayout({ children, params }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
+  // Publication reviews and application deadlines advance with China's calendar.
+  await connection()
+  const locale = requireLocale((await params).locale)
+  if (!locale) notFound()
+  const messages = getMessages(locale)
+  const catalog = await getCatalogData()
+  const releaseDate = formatDate(getDataReleaseDate(catalog), locale, '—')
+  const releaseLabel = `${messages.shell.dataRelease}: ${releaseDate}`
+  const announcement = getReleaseAnnouncement(locale)
+
+  return <html lang={locale} dir={localeDirection(locale)} data-theme="craft" data-design="craft" suppressHydrationWarning>
+    <head><script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} /></head>
+    <body className="atlas-public">
+      <AppHeader locale={locale} />
+      <ReleaseAnnouncement
+        locale={locale}
+        announcement={announcement}
+        dataReleaseDate={releaseDate}
+        stats={{
+          universities: catalog.universities.length,
+          programs: catalog.programs.length,
+          scholarships: catalog.scholarships.length,
+        }}
+      />
+      <main id="main-content" className="atlas-main" tabIndex={-1}>{children}</main>
+      <SiteFooter
+        locale={locale}
+        homeHref={`/${locale}`}
+        brandName={messages.brand}
+        brandMark={<CraftBrandMark />}
+        description={messages.footer.project}
+        columns={[
+          { title: messages.shell.footerExplore, links: [
+            { label: messages.nav.universities, href: `/${locale}/universities` },
+            { label: messages.nav.programs, href: `/${locale}/programs` },
+            { label: messages.nav.scholarships, href: `/${locale}/scholarships` },
+            { label: messages.nav.cities, href: `/${locale}/cities` },
+          ] },
+          { title: messages.shell.footerProject, links: [
+            { label: messages.nav.guides, href: `/${locale}/guides` },
+            { label: messages.nav.about, href: `/${locale}/about` },
+            { label: messages.nav.contact, href: `/${locale}/contact` },
+            { label: locale === 'zh' ? '管理员工作台' : 'Admin workspace', href: '/admin' },
+            { label: locale === 'zh' ? '主题实验室' : 'Theme studio', href: '/themes' },
+          ] },
+        ]}
+        legalLinks={[
+          { label: messages.footer.privacy, href: `/${locale}/privacy` },
+          { label: messages.footer.disclaimer, href: `/${locale}/disclaimer` },
+          { label: messages.footer.dataPolicy, href: `/${locale}/data-policy` },
+          { label: messages.footer.updates, href: `/${locale}/updates` },
+        ]}
+        disclaimer={messages.common.authoritativeNotice}
+        updatedLabel={releaseLabel}
+      />
+      <Analytics />
+      <SpeedInsights />
+    </body>
+  </html>
+}

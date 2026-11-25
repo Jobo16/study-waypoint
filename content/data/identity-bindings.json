@@ -1,0 +1,2738 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "canonicalKey": "uni-peking-university|master|degree|name:internationalmasterofpublicadministrationimpaprogram",
+      "recordId": "program-a712f73c46146d5027763d4e",
+      "aliases": [
+        "uni-peking-university|master|name:internationalmasterofpublicadministrationimpaprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-foreign-studies-university|bachelor|degree|name:computersciencetechnologylanguageintelligence",
+      "recordId": "program-9379b1e10ed4858d60995693",
+      "aliases": [
+        "uni-beijing-foreign-studies-university|bachelor|name:computersciencetechnologylanguageintelligence"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-gongshang-university|bachelor|degree|name:金融学院cfa项目",
+      "recordId": "program-f70026fc5f0580e3ce6489b2",
+      "aliases": [
+        "uni-zhejiang-gongshang-university|bachelor|name:金融学院cfa项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:图书馆学",
+      "recordId": "program-fd3dad66c87212f2bfdfb054",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:libraryscience",
+        "uni-northeast-normal-university|master|name:图书馆学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xian-international-studies-university|master|degree|name:masteroftranslationprogramforinternationalstudents",
+      "recordId": "program-0f774868ddfbe236af833a1c",
+      "aliases": [
+        "uni-xian-international-studies-university|master|name:masteroftranslationprogramforinternationalstudents"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-international-studies-university|bachelor|degree|name:汉语国际教育",
+      "recordId": "prog-gap-shisu-2026-bachelor-tcsol",
+      "aliases": [
+        "uni-shanghai-international-studies-university|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-university-of-aeronautics-and-astronautics|bachelor|degree|name:aeronauticalengineering",
+      "recordId": "program-6eb57c53415ec77b51da4a4b",
+      "aliases": [
+        "uni-nanjing-university-of-aeronautics-and-astronautics|bachelor|name:aeronauticalengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-huazhong-university-of-science-and-technology|language|language|name:longtermchineselanguageprogram",
+      "recordId": "program-2c6d0d9fd0fc763bdf2675c0",
+      "aliases": [
+        "uni-huazhong-university-of-science-and-technology|language|name:longtermchineselanguageprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shenyang-normal-university|bachelor|degree|name:汉语国际教育",
+      "recordId": "program-5f2686e481a2e184e86cb132",
+      "aliases": [
+        "uni-shenyang-normal-university|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-sci-tech-university|bachelor|degree|name:汉语言文学",
+      "recordId": "prog-gap-prog-zstu-chinese-language-literature-bachelor",
+      "aliases": [
+        "uni-zhejiang-sci-tech-university|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangxi-university|bachelor|degree|name:electricalengineeringandautomation",
+      "recordId": "program-guangxi-university-electrical-engineering-and-automation-bachelor",
+      "aliases": [
+        "uni-guangxi-university|bachelor|name:electricalengineeringandautomation"
+      ]
+    },
+    {
+      "canonicalKey": "uni-capital-university-of-economics-and-business|bachelor|degree|name:businessadministration",
+      "recordId": "prog-gap-remaining-cueb-b-business-administration-en",
+      "aliases": [
+        "uni-capital-university-of-economics-and-business|bachelor|name:businessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nankai-university|master|degree|name:internationalchineselanguageeducation",
+      "recordId": "program-3330f98efe05e1a4e020abeb",
+      "aliases": [
+        "uni-nankai-university|master|name:internationalchineselanguageeducation"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xinjiang-normal-university|bachelor|degree|name:国际经济与贸易",
+      "recordId": "program-ea28ae239a0270098836dc65",
+      "aliases": [
+        "uni-xinjiang-normal-university|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-university-of-chinese-medicine|bachelor|degree|name:中医骨伤科学",
+      "recordId": "program-beijing-university-of-chinese-medicine-traditional-chinese-orthopedics-a",
+      "aliases": [
+        "uni-beijing-university-of-chinese-medicine|bachelor|name:中医骨伤科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-forestry-university|bachelor|degree|name:木材科学与工程",
+      "recordId": "program-db9d2532d3585c910c1271c5",
+      "aliases": [
+        "uni-northeast-forestry-university|bachelor|name:木材科学与工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangdong-medical-university|bachelor|degree|name:biomedicalengineering",
+      "recordId": "prog-gap-wave3-gdmu-biomedical-engineering-bachelor",
+      "aliases": [
+        "uni-guangdong-medical-university|bachelor|name:biomedicalengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|bachelor|degree|name:护理学",
+      "recordId": "program-1feeacf967f07cde1fe1c777",
+      "aliases": [
+        "uni-ningxia-medical-university|bachelor|name:nursing",
+        "uni-ningxia-medical-university|bachelor|name:护理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-geosciences-wuhan|master|degree|name:groundwaterscienceandengineering",
+      "recordId": "program-65d7d7827d260a87283c240c",
+      "aliases": [
+        "uni-china-university-of-geosciences-wuhan|master|name:groundwaterscienceandengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-university|master|degree|name:国际中文教育",
+      "recordId": "program-5ebcaac2ec8e8379e1f2d01f",
+      "aliases": [
+        "uni-shandong-university|master|name:国际中文教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-university-of-technology|bachelor|degree|name:appliedchemistry",
+      "recordId": "program-e1eb28bb5ff565f906220562",
+      "aliases": [
+        "uni-zhejiang-university-of-technology|bachelor|name:appliedchemistry"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-normal-university|bachelor|degree|name:汉语言仅招留学生",
+      "recordId": "program-9aaa641b14e8b36e08d2f268",
+      "aliases": [
+        "uni-zhejiang-normal-university|bachelor|name:汉语言仅招留学生"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-university-of-electric-power|bachelor|degree|name:internationaleconomyandtrade",
+      "recordId": "prog-gap-wave8-2-suep-international-economy-trade-bachelor",
+      "aliases": [
+        "uni-shanghai-university-of-electric-power|bachelor|name:internationaleconomyandtrade"
+      ]
+    },
+    {
+      "canonicalKey": "uni-yunnan-university-of-finance-and-economics|bachelor|degree|name:internationalbusiness",
+      "recordId": "prog-gap-wave7-ynufe-international-business-bachelor",
+      "aliases": [
+        "uni-yunnan-university-of-finance-and-economics|bachelor|name:internationalbusiness"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangzhou-university|bachelor|degree|name:publicadministrationsmartgovernance",
+      "recordId": "program-guangzhou-university-public-administration-smart-governance-bachelor",
+      "aliases": [
+        "uni-guangzhou-university|bachelor|name:publicadministrationsmartgovernance"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangxi-minzu-university|bachelor|degree|name:汉语国际教育",
+      "recordId": "prog-gap-mew-0805-scw-gxmzu-iclt-bachelor",
+      "aliases": [
+        "uni-guangxi-minzu-university|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanxi-university-of-chinese-medicine|bachelor|degree|name:中医学",
+      "recordId": "prog-gap-local-strong-sxtcm-b-traditional-chinese-medicine-cn",
+      "aliases": [
+        "uni-shanxi-university-of-chinese-medicine|bachelor|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jiangsu-university-of-science-and-technology|bachelor|degree|name:businessadministration",
+      "recordId": "prog-gap-local-strong-just-b-business-administration-en",
+      "aliases": [
+        "uni-jiangsu-university-of-science-and-technology|bachelor|name:businessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-normal-university|bachelor|degree|name:internationaljournalismandcommunication",
+      "recordId": "prog-gap-mew-scws-hainnu-international-journalism-bachelor",
+      "aliases": [
+        "uni-hainan-normal-university|bachelor|name:internationaljournalismandcommunication"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanchang-university|language|language|name:chineselanguagetrainingclass",
+      "recordId": "prog-gap-mew-scws-ncu-chinese-language-training",
+      "aliases": [
+        "uni-nanchang-university|language|name:chineselanguagetrainingclass"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-shanghai-for-science-and-technology|foundation|foundation|name:chineselanguagepreparatoryprogram",
+      "recordId": "prog-gap-prog-usst-chinese-language-preparatory-2026",
+      "aliases": [
+        "uni-university-of-shanghai-for-science-and-technology|foundation|name:chineselanguagepreparatoryprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guizhou-medical-university|bachelor|degree|name:clinicalmedicine",
+      "recordId": "prog-gap-local-strong-gmu-b-clinical-medicine-cn",
+      "aliases": [
+        "uni-guizhou-medical-university|bachelor|name:clinicalmedicine"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangdong-university-of-finance-and-economics|master|degree|name:internationaltrade",
+      "recordId": "prog-gap-mew-csw-gdufe-international-trade-master",
+      "aliases": [
+        "uni-guangdong-university-of-finance-and-economics|master|name:internationaltrade"
+      ]
+    },
+    {
+      "canonicalKey": "uni-harbin-institute-of-technology|language|language|name:longtermchineselanguageprogram",
+      "recordId": "prog-gap-wave8-hit-long-term-chinese-language",
+      "aliases": [
+        "uni-harbin-institute-of-technology|language|name:longtermchineselanguageprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-liaoning-university|language|language|name:长期汉语进修",
+      "recordId": "program-liaoning-university-long-term-chinese-language-study-program-language",
+      "aliases": [
+        "uni-liaoning-university|language|name:长期汉语进修"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xinjiang-university|master|degree|name:国际中文教育",
+      "recordId": "program-15fcf46aeb21b358c1ee5f24",
+      "aliases": [
+        "uni-xinjiang-university|master|name:国际中文教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-yunnan-normal-university|bachelor|degree|name:工商管理",
+      "recordId": "prog-gap-local-ynnu-b-business-administration-cn",
+      "aliases": [
+        "uni-yunnan-normal-university|bachelor|name:工商管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-harbin-engineering-university|bachelor|degree|name:artificialintelligence",
+      "recordId": "program-harbin-engineering-university-artificial-intelligence-bachelor",
+      "aliases": [
+        "uni-harbin-engineering-university|bachelor|name:artificialintelligence"
+      ]
+    },
+    {
+      "canonicalKey": "uni-central-university-of-finance-and-economics|master|degree|name:internationallaw",
+      "recordId": "program-central-university-of-finance-and-economics-international-law-master",
+      "aliases": [
+        "uni-central-university-of-finance-and-economics|master|name:internationallaw"
+      ]
+    },
+    {
+      "canonicalKey": "uni-communication-university-of-china|bachelor|degree|name:chineselanguageandliterature",
+      "recordId": "program-f6fd0ebd4f1a50347cdbd210",
+      "aliases": [
+        "uni-communication-university-of-china|bachelor|name:chineselanguageandliterature"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-university-of-technology|bachelor|degree|name:roboticengineering",
+      "recordId": "program-81ab79132ee5eac6898002d7",
+      "aliases": [
+        "uni-beijing-university-of-technology|bachelor|name:roboticengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-technology-and-business-university|master|degree|name:industrialeconomics",
+      "recordId": "program-ca26b1f32f4988515580deab",
+      "aliases": [
+        "uni-beijing-technology-and-business-university|master|name:industrialeconomics"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-geosciences-beijing|master|degree|code:0403:department:",
+      "recordId": "program-c2158fa6c0b6b420d33ab134",
+      "aliases": [
+        "uni-china-university-of-geosciences-beijing|master|name:physicaleducation"
+      ]
+    },
+    {
+      "canonicalKey": "uni-south-china-normal-university|bachelor|degree|code:120206:department:",
+      "recordId": "program-south-china-normal-university-human-resource-management-bachelor",
+      "aliases": [
+        "uni-south-china-normal-university|bachelor|name:humanresourcemanagement"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-forestry-university|bachelor|degree|name:woodscienceandengineering",
+      "recordId": "prog-gap-mve-ecma-njfu-wood-science-bachelor",
+      "aliases": [
+        "uni-nanjing-forestry-university|bachelor|name:woodscienceandengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-jianzhu-university|bachelor|degree|name:工商管理",
+      "recordId": "prog-gap-prog-mew-ne-sdjzu-business-administration-bachelor-en",
+      "aliases": [
+        "uni-shandong-jianzhu-university|bachelor|name:工商管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beihang-university|bachelor|degree|name:computerscienceandtechnology",
+      "recordId": "program-beihang-university-computer-science-and-technology-bachelor",
+      "aliases": [
+        "uni-beihang-university|bachelor|name:computerscienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-changsha-university-of-science-and-technology|master|degree|name:architecture",
+      "recordId": "prog-gap-mew-scws-csust-architecture-master",
+      "aliases": [
+        "uni-changsha-university-of-science-and-technology|master|name:architecture"
+      ]
+    },
+    {
+      "canonicalKey": "uni-east-china-university-of-political-science-and-law|bachelor|degree|name:汉语言文学商务汉语方向",
+      "recordId": "prog-gap-mve-ecs-ecupl-business-chinese-bachelor",
+      "aliases": [
+        "uni-east-china-university-of-political-science-and-law|bachelor|name:汉语言文学商务汉语方向"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-university|master|degree|name:cropscience",
+      "recordId": "program-hainan-university-crop-science-master",
+      "aliases": [
+        "uni-hainan-university|master|name:cropscience"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shaanxi-normal-university|master|degree|name:chinesephilosophy",
+      "recordId": "program-b742f27d2b8c70beca402287",
+      "aliases": [
+        "uni-shaanxi-normal-university|master|name:chinesephilosophy"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-institute-of-technology|bachelor|degree|name:人工智能",
+      "recordId": "program-8d419ae2120ddc8d49436198",
+      "aliases": [
+        "uni-beijing-institute-of-technology|bachelor|name:人工智能"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-university-of-posts-and-telecommunications|bachelor|degree|name:communicationengineering",
+      "recordId": "program-56490bf3037059494e3ad83c",
+      "aliases": [
+        "uni-beijing-university-of-posts-and-telecommunications|bachelor|name:communicationengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-fujian-normal-university|bachelor|degree|name:汉语言",
+      "recordId": "program-6845b39c57caaa161d01afd7",
+      "aliases": [
+        "uni-fujian-normal-university|bachelor|name:汉语言"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-institute-of-petrochemical-technology|bachelor|degree|name:化学工程与工艺",
+      "recordId": "prog-gap-local-strong-bipt-b-chemical-engineering-cn",
+      "aliases": [
+        "uni-beijing-institute-of-petrochemical-technology|bachelor|name:chemicalengineeringandtechnology",
+        "uni-beijing-institute-of-petrochemical-technology|bachelor|name:化学工程与工艺"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-sport-university|master|degree|name:国际中文教育",
+      "recordId": "prog-gap-prog-mew-nss-bsu-international-chinese-education-master",
+      "aliases": [
+        "uni-beijing-sport-university|master|name:国际中文教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-university-of-chemical-technology|master|degree|name:chemicalengineeringandtechnology",
+      "recordId": "program-beijing-university-of-chemical-technology-chemical-engineering-and-techn",
+      "aliases": [
+        "uni-beijing-university-of-chemical-technology|master|name:chemicalengineeringandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-wuzi-university|bachelor|degree|name:supplychainmanagement",
+      "recordId": "prog-gap-prog-mew-nss-bwu-supply-chain-management-bachelor",
+      "aliases": [
+        "uni-beijing-wuzi-university|bachelor|name:supplychainmanagement"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-international-studies-university|bachelor|degree|name:汉语言",
+      "recordId": "prog-gap-prog-mew-ne-bisu-chinese-language-bachelor",
+      "aliases": [
+        "uni-beijing-international-studies-university|bachelor|name:汉语言"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-jiaotong-university|bachelor|degree|name:轨道交通信号与控制",
+      "recordId": "prog-gap-prog-mew-ne-bjtu-rail-transit-signal-bachelor-en",
+      "aliases": [
+        "uni-beijing-jiaotong-university|bachelor|name:轨道交通信号与控制"
+      ]
+    },
+    {
+      "canonicalKey": "uni-anhui-university|bachelor|degree|name:computerscienceandtechnology",
+      "recordId": "program-anhui-university-computer-science-and-technology-bachelor",
+      "aliases": [
+        "uni-anhui-university|bachelor|name:computerscienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-central-south-university|bachelor|degree|name:civilengineering",
+      "recordId": "program-central-south-university-civil-engineering-bachelor",
+      "aliases": [
+        "uni-central-south-university|bachelor|name:civilengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-chengdu-university-of-information-technology|master|degree|name:人工智能",
+      "recordId": "prog-gap-mew-scws-cuit-artificial-intelligence-master",
+      "aliases": [
+        "uni-chengdu-university-of-information-technology|master|name:人工智能"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-jinan|bachelor|degree|name:civilengineering",
+      "recordId": "prog-gap-wave4-ujn-b-civil-engineering",
+      "aliases": [
+        "uni-university-of-jinan|bachelor|name:civilengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jiangsu-university|master|degree|name:jurismaster",
+      "recordId": "program-jiangsu-university-juris-master-master",
+      "aliases": [
+        "uni-jiangsu-university|master|name:jurismaster"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-university-of-political-science-and-law|bachelor|degree|name:国际政治",
+      "recordId": "prog-gap-mve-ecma-shupl-international-politics-bachelor",
+      "aliases": [
+        "uni-shanghai-university-of-political-science-and-law|bachelor|name:国际政治"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-university-of-technology|bachelor|degree|name:chineselanguageinternationalchineselanguageeducationbachelorprogram",
+      "recordId": "program-dalian-university-of-technology-chinese-language-international-chinese-l",
+      "aliases": [
+        "uni-dalian-university-of-technology|bachelor|name:chineselanguageinternationalchineselanguageeducationbachelorprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-university-of-international-business-and-economics|bachelor|degree|name:国际经济与贸易",
+      "recordId": "prog-gap-confirmed-suibe-international-economics-trade-bachelor",
+      "aliases": [
+        "uni-shanghai-university-of-international-business-and-economics|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hebei-normal-university|language|language|name:长期汉语言进修项目",
+      "recordId": "program-fb06cabe28c900b5ffa2eca8",
+      "aliases": [
+        "uni-hebei-normal-university|language|name:长期汉语言进修项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northwest-university|doctorate|degree|code:070101:department:",
+      "recordId": "program-fc4bdff57732ae03fb2f638c",
+      "aliases": [
+        "uni-northwest-university|doctorate|name:basicmathematics",
+        "uni-northwest-university|doctorate|name:基础数学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-normal-university|language|language|name:汉语进修项目",
+      "recordId": "prog-gap-confirmed-sdnu-chinese-language",
+      "aliases": [
+        "uni-shandong-normal-university|language|name:汉语进修项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-tech-university|bachelor|degree|name:汉语国际教育",
+      "recordId": "prog-gap-mve-ecs-njtech-iclt-bachelor",
+      "aliases": [
+        "uni-nanjing-tech-university|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-east-china-university-of-science-and-technology|master|degree|name:inorganicchemistry",
+      "recordId": "program-east-china-university-of-science-and-technology-inorganic-chemistry-mast",
+      "aliases": [
+        "uni-east-china-university-of-science-and-technology|master|name:inorganicchemistry"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xuzhou-medical-university|bachelor|degree|name:bachelorprograminanesthesiologyenglishmedium",
+      "recordId": "program-4a71ebe13f5774ef8c0eeb12",
+      "aliases": [
+        "uni-xuzhou-medical-university|bachelor|name:bachelorprograminanesthesiologyenglishmedium"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-foreign-affairs-university|master|degree|name:internationalrelations",
+      "recordId": "program-china-foreign-affairs-university-international-relations-master",
+      "aliases": [
+        "uni-china-foreign-affairs-university|master|name:internationalrelations"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangdong-ocean-university|master|degree|name:marinebiology",
+      "recordId": "prog-gap-mew-0805-scw-gdou-marine-biology-master",
+      "aliases": [
+        "uni-guangdong-ocean-university|master|name:marinebiology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-mining-and-technology|bachelor|degree|name:mechanicalengineering",
+      "recordId": "program-china-university-of-mining-and-technology-mechanical-engineering-bachelo",
+      "aliases": [
+        "uni-china-university-of-mining-and-technology|bachelor|name:mechanicalengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-communication-university-of-zhejiang|bachelor|degree|name:digitalmediatechnology",
+      "recordId": "prog-gap-mve-jzh-cuz-digital-media-technology-bachelor",
+      "aliases": [
+        "uni-communication-university-of-zhejiang|bachelor|name:digitalmediatechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-tiangong-university|language|language|name:chineselanguagegeneralscholar",
+      "recordId": "prog-gap-prog-mew-nss-tgu-chinese-language-general-scholar",
+      "aliases": [
+        "uni-tiangong-university|language|name:chineselanguagegeneralscholar"
+      ]
+    },
+    {
+      "canonicalKey": "uni-tianjin-normal-university|bachelor|degree|name:汉语国际教育",
+      "recordId": "program-3fb4f397b6f029b58efa50e6",
+      "aliases": [
+        "uni-tianjin-normal-university|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-university-of-posts-and-telecommunications|bachelor|degree|name:businessadministration",
+      "recordId": "prog-gap-mve-jzh-njupt-bba-bachelor",
+      "aliases": [
+        "uni-nanjing-university-of-posts-and-telecommunications|bachelor|name:businessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-conservatory-of-music|bachelor|degree|name:musicology",
+      "recordId": "program-2fb56f4632234a40cd8bc5db",
+      "aliases": [
+        "uni-shanghai-conservatory-of-music|bachelor|name:musicology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-central-academy-of-drama|master|degree|name:戏曲与曲艺",
+      "recordId": "program-ec4d4ac17fe7a4be384f3bdf",
+      "aliases": [
+        "uni-central-academy-of-drama|master|name:戏曲与曲艺"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-pharmaceutical-university|master|degree|name:制药工程学",
+      "recordId": "prog-gap-mve-ecs-cpu-pharmaceutical-engineering-master",
+      "aliases": [
+        "uni-china-pharmaceutical-university|master|name:制药工程学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-taiyuan-university-of-technology|bachelor|degree|name:computerscienceandtechnology",
+      "recordId": "program-taiyuan-university-of-technology-computer-science-and-technology-bachelo",
+      "aliases": [
+        "uni-taiyuan-university-of-technology|bachelor|name:computerscienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-university-of-finance-and-economics|bachelor|degree|name:工商管理",
+      "recordId": "program-fa5683f3921d195c54e54d51",
+      "aliases": [
+        "uni-shandong-university-of-finance-and-economics|bachelor|name:工商管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-university-of-finance-and-economics|bachelor|degree|name:会计学",
+      "recordId": "prog-gap-mve-jzh-nufe-accounting-bachelor",
+      "aliases": [
+        "uni-nanjing-university-of-finance-and-economics|bachelor|name:会计学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northwest-university-of-political-science-and-law|master|degree|name:法学",
+      "recordId": "prog-gap-prog-mew-nnw-nwupl-law-master",
+      "aliases": [
+        "uni-northwest-university-of-political-science-and-law|master|name:法学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shenzhen-technology-university|bachelor|degree|name:datascienceandtechnology",
+      "recordId": "program-1f69f0134d5294e43131b7a0",
+      "aliases": [
+        "uni-shenzhen-technology-university|bachelor|name:datascienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wenzhou-university|bachelor|degree|name:businessadministration",
+      "recordId": "program-561f8b9a598ef5375478fe66",
+      "aliases": [
+        "uni-wenzhou-university|bachelor|name:businessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-yangtze-university|bachelor|degree|name:临床医学",
+      "recordId": "prog-gap-local-strong-yangtzeu-b-clinical-medicine-cn",
+      "aliases": [
+        "uni-yangtze-university|bachelor|name:clinicalmedicine",
+        "uni-yangtze-university|bachelor|name:临床医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jilin-university|bachelor|degree|name:外交学",
+      "recordId": "program-f225d5e41d39e1b5a781780e",
+      "aliases": [
+        "uni-jilin-university|bachelor|name:外交学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-tongji-university|bachelor|degree|name:architectureinternationalclass",
+      "recordId": "program-tongji-university-architecture-international-class-bachelor",
+      "aliases": [
+        "uni-tongji-university|bachelor|name:architectureinternationalclass"
+      ]
+    },
+    {
+      "canonicalKey": "uni-south-china-agricultural-university|master|degree|name:forestprotection",
+      "recordId": "program-273a3e84f68259f385fc8e1d",
+      "aliases": [
+        "uni-south-china-agricultural-university|master|name:forestprotection"
+      ]
+    },
+    {
+      "canonicalKey": "uni-tianjin-university-of-traditional-chinese-medicine|bachelor|degree|name:中医学",
+      "recordId": "program-tianjin-university-of-traditional-chinese-medicine-traditional-chinese-m",
+      "aliases": [
+        "uni-tianjin-university-of-traditional-chinese-medicine|bachelor|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanxi-university|bachelor|degree|name:国际经济与贸易",
+      "recordId": "program-shanxi-university-international-economics-and-trade-bachelor",
+      "aliases": [
+        "uni-shanxi-university|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-southwest-petroleum-university|bachelor|degree|name:石油工程",
+      "recordId": "prog-gap-confirmed-swpu-petroleum-engineering-bachelor",
+      "aliases": [
+        "uni-southwest-petroleum-university|bachelor|name:石油工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-af-university|bachelor|degree|name:林学",
+      "recordId": "prog-gap-wave7-zafu-forestry-bachelor",
+      "aliases": [
+        "uni-zhejiang-af-university|bachelor|name:林学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-north-china-electric-power-university|bachelor|degree|name:electricalengineeringanditsautomation",
+      "recordId": "program-north-china-electric-power-university-electrical-engineering-and-its-aut",
+      "aliases": [
+        "uni-north-china-electric-power-university|bachelor|name:electricalengineeringanditsautomation"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-agricultural-university|bachelor|degree|code:090101:department:",
+      "recordId": "program-nanjing-agricultural-university-agronomy-bachelor",
+      "aliases": [
+        "uni-nanjing-agricultural-university|bachelor|name:农学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hebei-university-of-technology|bachelor|degree|name:工商管理",
+      "recordId": "prog-gap-prog-mew-nss-hebut-business-administration-bachelor",
+      "aliases": [
+        "uni-hebei-university-of-technology|bachelor|name:工商管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-university-of-traditional-chinese-medicine|bachelor|degree|name:traditionalchinesemedicineacupuncture",
+      "recordId": "program-shanghai-university-of-traditional-chinese-medicine-traditional-chinese-",
+      "aliases": [
+        "uni-shanghai-university-of-traditional-chinese-medicine|bachelor|name:traditionalchinesemedicineacupuncture"
+      ]
+    },
+    {
+      "canonicalKey": "uni-minzu-university-of-china|bachelor|degree|name:汉语国际教育",
+      "recordId": "program-661a6354a0e7bfd3802ccb41",
+      "aliases": [
+        "uni-minzu-university-of-china|bachelor|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-fuzhou-university|master|degree|name:engineeringmechanics",
+      "recordId": "program-fuzhou-university-engineering-mechanics-master",
+      "aliases": [
+        "uni-fuzhou-university|master|name:engineeringmechanics"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-academy-of-art|doctorate|degree|name:artstudies",
+      "recordId": "prog-gap-mve-ecma-caa-art-studies-doctorate",
+      "aliases": [
+        "uni-china-academy-of-art|doctorate|name:artstudies"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-agricultural-university|master|degree|name:国际中文教育",
+      "recordId": "prog-gap-prog-mew-ne-neau-international-chinese-education-master",
+      "aliases": [
+        "uni-northeast-agricultural-university|master|name:国际中文教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-university|bachelor|degree|name:chineselanguageandliterature",
+      "recordId": "program-e31823587733d59b08c2efe2",
+      "aliases": [
+        "uni-ningxia-university|bachelor|name:chineselanguageandliterature"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-university-of-finance-and-economics|bachelor|degree|name:会计学",
+      "recordId": "program-f488ff77bbcb4bf10113428d",
+      "aliases": [
+        "uni-shanghai-university-of-finance-and-economics|bachelor|name:会计学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-university-of-finance-and-economics|bachelor|degree|name:finance",
+      "recordId": "prog-gap-remaining-zufe-b-finance",
+      "aliases": [
+        "uni-zhejiang-university-of-finance-and-economics|bachelor|name:finance"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-university-of-foreign-languages|bachelor|degree|name:chinesechineseculture",
+      "recordId": "prog-gap-local-dlufl-b-chinese-culture",
+      "aliases": [
+        "uni-dalian-university-of-foreign-languages|bachelor|name:chinesechineseculture"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wenzhou-medical-university|bachelor|degree|name:bachelorofmedicineandbachelorofsurgerymbbs",
+      "recordId": "program-wenzhou-medical-university-mbbs-bachelor",
+      "aliases": [
+        "uni-wenzhou-medical-university|bachelor|name:bachelorofmedicineandbachelorofsurgerymbbs"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangxi-medical-university|bachelor|degree|name:口腔医学",
+      "recordId": "prog-gap-local-gxmu-b-stomatology-cn",
+      "aliases": [
+        "uni-guangxi-medical-university|bachelor|name:口腔医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hunan-university|master|degree|name:businessadministration",
+      "recordId": "program-hunan-university-business-administration-master",
+      "aliases": [
+        "uni-hunan-university|master|name:businessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-audit-university|master|degree|name:masterofauditing",
+      "recordId": "program-nanjing-audit-university-master-of-auditing",
+      "aliases": [
+        "uni-nanjing-audit-university|master|name:masterofauditing"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dongbei-university-of-finance-and-economics|master|degree|name:财务管理",
+      "recordId": "prog-gap-local-dufe-m-financial-management-en",
+      "aliases": [
+        "uni-dongbei-university-of-finance-and-economics|master|name:财务管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-sichuan-normal-university|language|language|name:汉语进修课程",
+      "recordId": "prog-gap-wave8-sicnu-chinese-refresher-course",
+      "aliases": [
+        "uni-sichuan-normal-university|language|name:汉语进修课程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-normal-university|language|language|name:chineselanguageimprovementclass",
+      "recordId": "program-shanghai-normal-university-chinese-improvement-autumn-2026",
+      "aliases": [
+        "uni-shanghai-normal-university|language|name:chineselanguageimprovementclass"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guizhou-university|bachelor|degree|name:汉语言文学",
+      "recordId": "program-8e72d5b0fa676889e96155c9",
+      "aliases": [
+        "uni-guizhou-university|bachelor|name:chineselanguageandliterature",
+        "uni-guizhou-university|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hunan-normal-university|bachelor|degree|name:法学",
+      "recordId": "program-6e03c60aa81976524b1950cc",
+      "aliases": [
+        "uni-hunan-normal-university|bachelor|name:law",
+        "uni-hunan-normal-university|bachelor|name:法学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-maritime-university|bachelor|degree|name:物流管理",
+      "recordId": "prog-gap-prog-shmtu-logistics-management-bachelor-2026",
+      "aliases": [
+        "uni-shanghai-maritime-university|bachelor|name:物流管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dongguan-university-of-technology|master|degree|code:095500:department:",
+      "recordId": "prog-gap-mew-scws-dgut-food-and-nutrition-master",
+      "aliases": [
+        "uni-dongguan-university-of-technology|master|name:食品与营养"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guilin-medical-university|bachelor|degree|name:护理学",
+      "recordId": "prog-gap-mew-scws-glmu-nursing-bachelor",
+      "aliases": [
+        "uni-guilin-medical-university|bachelor|name:护理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-yantai-university|bachelor|degree|name:国际经济与贸易",
+      "recordId": "prog-gap-wave8-ytu-international-economics-trade-bachelor",
+      "aliases": [
+        "uni-yantai-university|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:数字媒体艺术",
+      "recordId": "prog-gap-mve-root-sta-digital-media-art-bachelor",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:数字媒体艺术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-south-china-university-of-technology|language|language|name:intensivechineseprogram",
+      "recordId": "program-south-china-university-of-technology-intensive-chinese-program-language",
+      "aliases": [
+        "uni-south-china-university-of-technology|language|name:intensivechineseprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hangzhou-dianzi-university|bachelor|degree|name:计算机科学与技术",
+      "recordId": "prog-gap-prog-hdu-computer-science-bachelor-2026",
+      "aliases": [
+        "uni-hangzhou-dianzi-university|bachelor|name:computerscienceandtechnology",
+        "uni-hangzhou-dianzi-university|bachelor|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jinan-university|foundation|foundation|name:collegeprepprogram",
+      "recordId": "program-7ec839583961ec500c2602a6",
+      "aliases": [
+        "uni-jinan-university|foundation|name:collegeprepprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-medical-university|bachelor|degree|name:clinicalmedicinembbs",
+      "recordId": "prog-gap-local-dmu-b-mbbs",
+      "aliases": [
+        "uni-dalian-medical-university|bachelor|name:clinicalmedicinembbs"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-university-of-traditional-chinese-medicine|bachelor|degree|name:中医学",
+      "recordId": "prog-gap-mve-ecma-sdutcm-tcm-bachelor",
+      "aliases": [
+        "uni-shandong-university-of-traditional-chinese-medicine|bachelor|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-qingdao-university-of-science-and-technology|bachelor|degree|name:汉语言文学",
+      "recordId": "prog-gap-prog-mew-ne-qust-chinese-language-literature-bachelor",
+      "aliases": [
+        "uni-qingdao-university-of-science-and-technology|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xinjiang-agricultural-university|bachelor|degree|name:动物医学",
+      "recordId": "prog-gap-local-strong-xjau-b-animal-medicine",
+      "aliases": [
+        "uni-xinjiang-agricultural-university|bachelor|name:animalmedicine",
+        "uni-xinjiang-agricultural-university|bachelor|name:动物医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guilin-university-of-electronic-technology|bachelor|degree|name:金融工程",
+      "recordId": "program-fd6bda0f1ed77037851f32a9",
+      "aliases": [
+        "uni-guilin-university-of-electronic-technology|bachelor|name:financialengineering",
+        "uni-guilin-university-of-electronic-technology|bachelor|name:金融工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northwest-normal-university|bachelor|degree|name:法学",
+      "recordId": "program-1b38f0660e12715192917b27",
+      "aliases": [
+        "uni-northwest-normal-university|bachelor|name:法学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-southern-university-of-science-and-technology|bachelor|degree|name:chemistry",
+      "recordId": "prog-gap-sparse-depth-0808-sustech-chemistry-bachelor",
+      "aliases": [
+        "uni-southern-university-of-science-and-technology|bachelor|name:chemistry"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wuhan-university-of-science-and-technology|bachelor|degree|name:internationalbusinessadministration",
+      "recordId": "prog-gap-sparse-depth-0808-wust-international-business-administration-bachelor",
+      "aliases": [
+        "uni-wuhan-university-of-science-and-technology|bachelor|name:internationalbusinessadministration"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-petroleum-beijing|bachelor|degree|name:chemicalengineeringandtechnics",
+      "recordId": "program-4d6ec83c4a843b21dd50c6de",
+      "aliases": [
+        "uni-china-university-of-petroleum-beijing|bachelor|name:chemicalengineeringandtechnics"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guizhou-normal-university|master|degree|name:旅游管理",
+      "recordId": "prog-gap-wave8-gznu-tourism-management-master",
+      "aliases": [
+        "uni-guizhou-normal-university|master|name:tourismmanagement",
+        "uni-guizhou-normal-university|master|name:旅游管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shihezi-university|master|degree|name:能源动力",
+      "recordId": "prog-gap-wave8-shzu-energy-power-master",
+      "aliases": [
+        "uni-shihezi-university|master|name:能源动力"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-university-of-science-and-technology|master|degree|name:计算机技术",
+      "recordId": "program-a42e3cce2900987e04f9895a",
+      "aliases": [
+        "uni-zhejiang-university-of-science-and-technology|master|name:computertechnology",
+        "uni-zhejiang-university-of-science-and-technology|master|name:计算机技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-sichuan-agricultural-university|bachelor|degree|name:internationaleconomicsandtrade",
+      "recordId": "program-911bd3747661524c81de6fba",
+      "aliases": [
+        "uni-sichuan-agricultural-university|bachelor|name:internationaleconomicsandtrade"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-petroleum-east-china|master|degree|name:化学工程与技术",
+      "recordId": "prog-gap-prog-mew-ne-upc-chemical-engineering-master-en",
+      "aliases": [
+        "uni-china-university-of-petroleum-east-china|master|name:化学工程与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhejiang-university|bachelor|degree|name:globalcommunicationandmanagementgcm",
+      "recordId": "program-51c49d1720cfa8890de38fa1",
+      "aliases": [
+        "uni-zhejiang-university|bachelor|name:globalcommunicationandmanagementgcm"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-international-business-and-economics|bachelor|degree|name:汉语言文学",
+      "recordId": "program-b105b1cd91164de046858a10",
+      "aliases": [
+        "uni-university-of-international-business-and-economics|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-chinese-academy-of-sciences|master|degree|name:innovationmanagement",
+      "recordId": "program-f4b7596dca626c646bf030fa",
+      "aliases": [
+        "uni-university-of-chinese-academy-of-sciences|master|name:innovationmanagement"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hohai-university|bachelor|degree|name:国际经济与贸易",
+      "recordId": "program-1ea3bc52c9e415e5ba86fa99",
+      "aliases": [
+        "uni-hohai-university|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-beijing|bachelor|degree|name:汉语言人工智能北科北语联合学士学位项目",
+      "recordId": "program-3005c11823218f5c89a7d1cc",
+      "aliases": [
+        "uni-university-of-science-and-technology-beijing|bachelor|name:汉语言人工智能北科北语联合学士学位项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-renmin-university-of-china|bachelor|degree|name:globalbbaprogram",
+      "recordId": "program-db2769189aaa7a7b1fb9241a",
+      "aliases": [
+        "uni-renmin-university-of-china|bachelor|name:globalbbaprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-southwestern-university-of-finance-and-economics|bachelor|degree|name:汉语言文学",
+      "recordId": "program-6d780959e44e5f02db08873f",
+      "aliases": [
+        "uni-southwestern-university-of-finance-and-economics|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-sichuan-university|bachelor|degree|name:businessmanagement",
+      "recordId": "program-fb7986a2f6e43e790ac2faf1",
+      "aliases": [
+        "uni-sichuan-university|bachelor|name:businessmanagement"
+      ]
+    },
+    {
+      "canonicalKey": "uni-southeast-university|bachelor|degree|name:电子商务",
+      "recordId": "program-325d3dfe4bc5612eaaddf9e4",
+      "aliases": [
+        "uni-southeast-university|bachelor|name:电子商务"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhengzhou-university|bachelor|degree|name:工商管理",
+      "recordId": "program-4a159101a87167c8c08532a8",
+      "aliases": [
+        "uni-zhengzhou-university|bachelor|name:工商管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangxi-normal-university|bachelor|degree|name:汉语言",
+      "recordId": "program-49e8ace69594913d754197a9",
+      "aliases": [
+        "uni-guangxi-normal-university|bachelor|name:汉语言"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-university-of-information-science-and-technology|bachelor|degree|code:080901:department:",
+      "recordId": "program-nanjing-university-of-information-science-and-technology-computer-scienc",
+      "aliases": [
+        "uni-nanjing-university-of-information-science-and-technology|bachelor|name:computerscienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wuhan-textile-university|master|degree|name:masteroftranslationandinterpreting",
+      "recordId": "program-48cc1ec484b222b5b7969be9",
+      "aliases": [
+        "uni-wuhan-textile-university|master|name:masteroftranslationandinterpreting"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-electronic-science-and-technology-of-china|master|degree|name:controlscienceandengineering",
+      "recordId": "program-university-of-electronic-science-and-technology-of-china-control-science",
+      "aliases": [
+        "uni-university-of-electronic-science-and-technology-of-china|master|name:controlscienceandengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-ocean-university|language|language|name:shorttermchineseprogram",
+      "recordId": "program-2d2959db5ee58c8a38ea1331",
+      "aliases": [
+        "uni-shanghai-ocean-university|language|name:shorttermchineseprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xiangtan-university|bachelor|degree|name:philosophy",
+      "recordId": "prog-gap-mew-csw-xtu-philosophy-bachelor",
+      "aliases": [
+        "uni-xiangtan-university|bachelor|name:philosophy"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-maritime-university|other|visiting|name:普通进修项目",
+      "recordId": "program-300de18cf6da2e474c707c6e",
+      "aliases": [
+        "uni-dalian-maritime-university|other|name:普通进修项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangzhou-university-of-chinese-medicine|bachelor|degree|name:中医学",
+      "recordId": "prog-gap-local-gzucm-b-tcm-cn",
+      "aliases": [
+        "uni-guangzhou-university-of-chinese-medicine|bachelor|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guilin-university-of-technology|doctorate|degree|name:环境科学与工程",
+      "recordId": "prog-gap-mew-0805-scw-glut-environmental-doctorate",
+      "aliases": [
+        "uni-guilin-university-of-technology|doctorate|name:环境科学与工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-qingdao-university|bachelor|degree|name:汉语言文学",
+      "recordId": "program-c9f566a4b9f2d090e4b18ea6",
+      "aliases": [
+        "uni-qingdao-university|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wuhan-university|master|degree|name:teachingchinesetospeakersofotherlanguages",
+      "recordId": "program-0d334a10cb7cba3a85fb2753",
+      "aliases": [
+        "uni-wuhan-university|master|name:teachingchinesetospeakersofotherlanguages"
+      ]
+    },
+    {
+      "canonicalKey": "uni-north-china-university-of-technology|bachelor|degree|name:国际经济与贸易",
+      "recordId": "program-4963b3a19620d86c1270cefe",
+      "aliases": [
+        "uni-north-china-university-of-technology|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-yunnan-university|bachelor|degree|code:080717t:department:",
+      "recordId": "program-54f7f47edcc07873d97aef08",
+      "aliases": [
+        "uni-yunnan-university|bachelor|name:人工智能"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shantou-university|bachelor|degree|name:computerscienceandtechnology",
+      "recordId": "program-shantou-university-computer-science-and-technology-bachelor",
+      "aliases": [
+        "uni-shantou-university|bachelor|name:computerscienceandtechnology"
+      ]
+    },
+    {
+      "canonicalKey": "uni-central-china-normal-university|master|degree|name:汉语国际教育",
+      "recordId": "prog-gap-mew-csw-ccnu-international-chinese-education-master",
+      "aliases": [
+        "uni-central-china-normal-university|master|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jining-medical-university|master|degree|name:药学",
+      "recordId": "prog-gap-breadth-jnmc-m-pharmacy",
+      "aliases": [
+        "uni-jining-medical-university|master|name:药学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hefei-university-of-technology|bachelor|degree|name:biomedicalengineering",
+      "recordId": "prog-gap-mve-ecs-hfut-biomedical-engineering-bachelor",
+      "aliases": [
+        "uni-hefei-university-of-technology|bachelor|name:biomedicalengineering"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shenyang-pharmaceutical-university|bachelor|degree|name:pharmacy",
+      "recordId": "prog-gap-remaining-syphu-b-pharmacy",
+      "aliases": [
+        "uni-shenyang-pharmaceutical-university|bachelor|name:pharmacy"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangzhou-medical-university|bachelor|degree|name:clinicalmedicinembbs",
+      "recordId": "program-guangzhou-medical-university-clinical-medicine-mbbs-bachelor",
+      "aliases": [
+        "uni-guangzhou-medical-university|bachelor|name:clinicalmedicinembbs"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-lixin-university-of-accounting-and-finance|bachelor|degree|name:汉语言文学",
+      "recordId": "prog-gap-mve-jzh-lixin-chinese-literature-bachelor",
+      "aliases": [
+        "uni-shanghai-lixin-university-of-accounting-and-finance|bachelor|name:汉语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-agricultural-university|master|degree|name:作物遗传育种",
+      "recordId": "program-china-agricultural-university-crop-genetics-and-breeding-master",
+      "aliases": [
+        "uni-china-agricultural-university|master|name:cropgeneticsandbreeding",
+        "uni-china-agricultural-university|master|name:作物遗传育种"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nantong-university|language|language|name:chineselanguageprogram",
+      "recordId": "prog-gap-mve-ecs-ntu-chinese-semester",
+      "aliases": [
+        "uni-nantong-university|language|name:chineselanguageprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ocean-university-of-china|language|language|name:长期汉语进修项目",
+      "recordId": "program-ocean-university-of-china-long-term-chinese-language-program-language",
+      "aliases": [
+        "uni-ocean-university-of-china|language|name:长期汉语进修项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-wenzhou-kean-university|master|degree|name:architecturemarch",
+      "recordId": "program-6c850ce8f63eed4c4d39992a",
+      "aliases": [
+        "uni-wenzhou-kean-university|master|name:architecturemarch"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hangzhou-normal-university|bachelor|degree|name:护理学",
+      "recordId": "program-6cfabff61fd2e731bccebd74",
+      "aliases": [
+        "uni-hangzhou-normal-university|bachelor|name:bachelornursing",
+        "uni-hangzhou-normal-university|bachelor|name:护理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-inner-mongolia-university|bachelor|degree|name:sportstraining",
+      "recordId": "program-9e7dec6a75f1a3c874afc996",
+      "aliases": [
+        "uni-inner-mongolia-university|bachelor|name:sportstraining"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangzhou-academy-of-fine-arts|bachelor|degree|name:中国画",
+      "recordId": "prog-gap-mve-ecma-gafa-chinese-painting-bachelor",
+      "aliases": [
+        "uni-guangzhou-academy-of-fine-arts|bachelor|name:中国画"
+      ]
+    },
+    {
+      "canonicalKey": "uni-minnan-normal-university|master|degree|name:analyticalchemistry",
+      "recordId": "program-e592ba97902cf4f568ad59a3",
+      "aliases": [
+        "uni-minnan-normal-university|master|name:analyticalchemistry"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningbo-university|bachelor|degree|name:临床医学",
+      "recordId": "program-166aeb612c9a90da6ab77789",
+      "aliases": [
+        "uni-ningbo-university|bachelor|name:临床医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-mining-and-technology-beijing|master|degree|name:安全科学与工程",
+      "recordId": "program-1b4e41132fe5c00e31a87e3f",
+      "aliases": [
+        "uni-china-university-of-mining-and-technology-beijing|master|name:safetyscienceandengineering",
+        "uni-china-university-of-mining-and-technology-beijing|master|name:安全科学与工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-zhongnan-university-of-economics-and-law|master|degree|name:intellectualpropertylaw",
+      "recordId": "program-b832771542da7f74dfe32c7c",
+      "aliases": [
+        "uni-zhongnan-university-of-economics-and-law|master|name:intellectualpropertylaw"
+      ]
+    },
+    {
+      "canonicalKey": "uni-henan-university|master|degree|name:汉语国际教育",
+      "recordId": "program-37461d61f81877bfa3975f71",
+      "aliases": [
+        "uni-henan-university|master|name:汉语国际教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-soochow-university|bachelor|degree|name:国际经济与贸易",
+      "recordId": "program-8a342ce898379154183eeb6a",
+      "aliases": [
+        "uni-soochow-university|bachelor|name:国际经济与贸易"
+      ]
+    },
+    {
+      "canonicalKey": "uni-soochow-university|bachelor|degree|name:金融学",
+      "recordId": "program-3c643f8b524ad061ff56fda5",
+      "aliases": [
+        "uni-soochow-university|bachelor|name:金融学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-soochow-university|bachelor|degree|name:计算机科学与技术",
+      "recordId": "program-e58a14f4b226411b2b3c1311",
+      "aliases": [
+        "uni-soochow-university|bachelor|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-soochow-university|bachelor|degree|name:网络工程",
+      "recordId": "program-9670592fe173bf98b2f6ec9c",
+      "aliases": [
+        "uni-soochow-university|bachelor|name:网络工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-soochow-university|bachelor|degree|name:软件工程",
+      "recordId": "program-664731bc026d3400e5a399b0",
+      "aliases": [
+        "uni-soochow-university|bachelor|name:软件工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-of-china|bachelor|degree|name:人工智能",
+      "recordId": "program-52d2329664353c77c6b8c421",
+      "aliases": [
+        "uni-university-of-science-and-technology-of-china|bachelor|name:artificialintelligence",
+        "uni-university-of-science-and-technology-of-china|bachelor|name:人工智能"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-of-china|bachelor|degree|name:计算机科学与技术",
+      "recordId": "program-3bfcf9de746cfa7c6bbf2f34",
+      "aliases": [
+        "uni-university-of-science-and-technology-of-china|bachelor|name:computerscienceandtechnology",
+        "uni-university-of-science-and-technology-of-china|bachelor|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-of-china|bachelor|degree|name:网络空间安全",
+      "recordId": "program-cbc47a9d8c0397b779823cb8",
+      "aliases": [
+        "uni-university-of-science-and-technology-of-china|bachelor|name:cybersecurity",
+        "uni-university-of-science-and-technology-of-china|bachelor|name:网络空间安全"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-of-china|bachelor|degree|name:数据科学与大数据技术",
+      "recordId": "program-c26d01de4e178d4c5e435e39",
+      "aliases": [
+        "uni-university-of-science-and-technology-of-china|bachelor|name:datascienceandbigdatatechnology",
+        "uni-university-of-science-and-technology-of-china|bachelor|name:数据科学与大数据技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-university-of-science-and-technology-of-china|bachelor|degree|name:电子信息工程",
+      "recordId": "program-3bd32496e540becd152bfe3b",
+      "aliases": [
+        "uni-university-of-science-and-technology-of-china|bachelor|name:electronicinformationengineering",
+        "uni-university-of-science-and-technology-of-china|bachelor|name:电子信息工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xidian-university|bachelor|degree|name:计算机科学与技术",
+      "recordId": "program-b3d2efae801018f71403054b",
+      "aliases": [
+        "uni-xidian-university|bachelor|name:computerscienceandtechnology",
+        "uni-xidian-university|bachelor|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xidian-university|bachelor|degree|name:软件工程",
+      "recordId": "program-99fa976c8d44932d64d3404c",
+      "aliases": [
+        "uni-xidian-university|bachelor|name:softwareengineering",
+        "uni-xidian-university|bachelor|name:软件工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xidian-university|bachelor|degree|name:信息与计算科学",
+      "recordId": "program-b399954508126e8b9dca31d7",
+      "aliases": [
+        "uni-xidian-university|bachelor|name:informationandcomputationalscience",
+        "uni-xidian-university|bachelor|name:信息与计算科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xidian-university|bachelor|degree|name:智能科学与技术",
+      "recordId": "program-5584fc2f995d3e7153af3da4",
+      "aliases": [
+        "uni-xidian-university|bachelor|name:intelligentscienceandtechnology",
+        "uni-xidian-university|bachelor|name:智能科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-xidian-university|bachelor|degree|name:应用物理学",
+      "recordId": "program-05cca8e52784b6d19edf5cf6",
+      "aliases": [
+        "uni-xidian-university|bachelor|name:appliedphysics",
+        "uni-xidian-university|bachelor|name:应用物理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:基础心理学",
+      "recordId": "program-727476e1ede65b3228d80363",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:basicpsychologicalstudies",
+        "uni-northeast-normal-university|master|name:基础心理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:基础心理学",
+      "recordId": "program-6de6e6e71fa9fc35eb118920",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:basicpsychologicalstudies",
+        "uni-northeast-normal-university|doctorate|name:基础心理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:小学教育",
+      "recordId": "program-e196fcb13e702a3cce43f43a",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:primaryschooleducation",
+        "uni-northeast-normal-university|master|name:小学教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:计算机科学与技术",
+      "recordId": "program-bca7a408c8ebd06dd980dd7d",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:教育技术学",
+      "recordId": "program-ff868a2ae73e960a35e9317c",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:educationaltechnology",
+        "uni-northeast-normal-university|master|name:教育技术学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:计算机科学与技术",
+      "recordId": "program-10c01d5c067d742b44ac6e4d",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:计算机科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:人工智能",
+      "recordId": "program-47575d6b48452ded3476da30",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:artificialintelligence",
+        "uni-northeast-normal-university|doctorate|name:人工智能"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:情报学",
+      "recordId": "program-52c65addd9324b73e593786d",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:informationscience",
+        "uni-northeast-normal-university|master|name:情报学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:艺术学",
+      "recordId": "program-95f8467c6a2d60400dd8bf9f",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:art",
+        "uni-northeast-normal-university|master|name:艺术学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:新闻学",
+      "recordId": "program-b17f3fdd7638d0e44ee41b6c",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:journalism",
+        "uni-northeast-normal-university|master|name:新闻学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:新闻与传播",
+      "recordId": "program-9570bc2a4e8ae0e613834ba6",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:journalismandcommunication",
+        "uni-northeast-normal-university|master|name:新闻与传播"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:教育学原理",
+      "recordId": "program-68b4597e94e25c7ab3694393",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:principlesofeducation",
+        "uni-northeast-normal-university|doctorate|name:教育学原理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:教育学原理",
+      "recordId": "program-2840e628bb2d69a3462d1d22",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:principlesofeducation",
+        "uni-northeast-normal-university|master|name:教育学原理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:教育史",
+      "recordId": "program-fbda026497abd7b78acd7ff3",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:historyofeducation",
+        "uni-northeast-normal-university|master|name:教育史"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:教育管理与政策",
+      "recordId": "program-a196481806d833da4f583833",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:教育管理与政策"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:教育史",
+      "recordId": "program-b0db06a4ed7168c0fc7c4880",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:historyofeducation",
+        "uni-northeast-normal-university|doctorate|name:教育史"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:英语语言文学",
+      "recordId": "program-c82c3a61296585cd2078edf6",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:englishlanguageandliterature",
+        "uni-northeast-normal-university|master|name:英语语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:英语语言文学",
+      "recordId": "program-e0242a4238cf8d73eaf845a9",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:englishlanguageandliterature",
+        "uni-northeast-normal-university|doctorate|name:英语语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:舞蹈",
+      "recordId": "program-8112a5030689d6d87d26087e",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:dance",
+        "uni-northeast-normal-university|master|name:舞蹈"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:俄语笔译",
+      "recordId": "program-324f3c267530bbddd3fcbfda",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:russiantranslation",
+        "uni-northeast-normal-university|master|name:俄语笔译"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:企业管理",
+      "recordId": "program-360aec3d2fca1ba08b02baaf",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:enterprisemanagement",
+        "uni-northeast-normal-university|master|name:企业管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:金融",
+      "recordId": "program-5e7652d0ed5cc5e80c4abd93",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:finance",
+        "uni-northeast-normal-university|master|name:金融"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:行政管理",
+      "recordId": "program-8173737fd0c15ac8327bb28e",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:publicadministration",
+        "uni-northeast-normal-university|master|name:行政管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:国际政治",
+      "recordId": "program-4a51f3fa70e9cdb2aaf06fbe",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:internationalpolitics",
+        "uni-northeast-normal-university|master|name:国际政治"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:法学",
+      "recordId": "program-73989733ee5f119b1762276a",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:law",
+        "uni-northeast-normal-university|master|name:法学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:汉语言文字学",
+      "recordId": "program-dca07d4697cf01237af19944",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:chinesephilology",
+        "uni-northeast-normal-university|master|name:汉语言文字学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:中国现当代文学",
+      "recordId": "program-bf5d65becaebda402fbcf685",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:中国现当代文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:中国古代文学",
+      "recordId": "program-03bbce4acec56a0e665a2129",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:ancientchinesetext",
+        "uni-northeast-normal-university|master|name:中国古代文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:文艺学",
+      "recordId": "program-45e7a45bd963a15ad3b74765",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:theoryofliteratureandart",
+        "uni-northeast-normal-university|master|name:文艺学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:中国古典文献学",
+      "recordId": "program-d3c60363ae8e95db6c0c34a9",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:studyofchineseclassicaltext",
+        "uni-northeast-normal-university|master|name:中国古典文献学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:世界史",
+      "recordId": "program-a4f052c17bf22ad8a399433c",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:worldhistory",
+        "uni-northeast-normal-university|doctorate|name:世界史"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:戏剧与影视",
+      "recordId": "program-9d257346d2c53e919dcebdb1",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:dramaandfilmstudies",
+        "uni-northeast-normal-university|master|name:戏剧与影视"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:生态学",
+      "recordId": "program-e6c9a0810cbf928bf085589d",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:ecology",
+        "uni-northeast-normal-university|master|name:生态学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:运动训练",
+      "recordId": "program-9e9853aa5afec0accc117ab5",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:sportstraining",
+        "uni-northeast-normal-university|master|name:运动训练"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:运动人体科学",
+      "recordId": "program-ec310bd4f622d7eca3dc9ffd",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:humankinesiologyandscience",
+        "uni-northeast-normal-university|master|name:运动人体科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:体育教育训练学",
+      "recordId": "program-b79173a983479ffd9c439aaf",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:体育教育训练学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:传播学",
+      "recordId": "program-a92959c7799393d745c18eb0",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:communication",
+        "uni-northeast-normal-university|master|name:传播学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:环境工程",
+      "recordId": "program-aaf81e80104a52931c5e1439",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:environmentalengineering",
+        "uni-northeast-normal-university|doctorate|name:环境工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:自然地理学",
+      "recordId": "program-00095977975da8de6300bfb8",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:physicalgeography",
+        "uni-northeast-normal-university|doctorate|name:自然地理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:环境科学",
+      "recordId": "program-fa441a2e231cd00f289ed5c4",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:environmentalscience",
+        "uni-northeast-normal-university|doctorate|name:环境科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:环境工程",
+      "recordId": "program-48e56318dadecd034cd124d9",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:environmentalengineering",
+        "uni-northeast-normal-university|master|name:环境工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:自然地理学",
+      "recordId": "program-1a6cebfef420554384d95172",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:physicalgeography",
+        "uni-northeast-normal-university|master|name:自然地理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:运筹学与控制论",
+      "recordId": "program-756984a852365c236def75da",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:运筹学与控制论"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:高分子化学与物理",
+      "recordId": "program-719516e07a60f0a35f7c476d",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:高分子化学与物理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:无机化学",
+      "recordId": "program-e341eb8a8723e6188c2cc5ca",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:inorganicchemistry",
+        "uni-northeast-normal-university|master|name:无机化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:无机化学",
+      "recordId": "program-510b637ff7beb9ab45148805",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:inorganicchemistry",
+        "uni-northeast-normal-university|doctorate|name:无机化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:物理化学",
+      "recordId": "program-b2ea4a2e40f8b23145182c80",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:physicalchemistry",
+        "uni-northeast-normal-university|doctorate|name:物理化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:有机化学",
+      "recordId": "program-380eb55d442900df1e89b006",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:organicchemistry",
+        "uni-northeast-normal-university|master|name:有机化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:物理化学",
+      "recordId": "program-29f628f1e5168d21cfdc8eef",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:physicalchemistry",
+        "uni-northeast-normal-university|master|name:物理化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:有机化学",
+      "recordId": "program-d20578fe3644cfa7eb398d2a",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:organicchemistry",
+        "uni-northeast-normal-university|doctorate|name:有机化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:人文地理学",
+      "recordId": "program-a29d68b891651f4d51124354",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:humangeography",
+        "uni-northeast-normal-university|master|name:人文地理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:人文地理学",
+      "recordId": "program-93383a77fb042f5982d10a41",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:humangeography",
+        "uni-northeast-normal-university|doctorate|name:人文地理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:湿地科学",
+      "recordId": "program-6cb6acff57f162d92c184c08",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:wetlandscience",
+        "uni-northeast-normal-university|doctorate|name:湿地科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:湿地科学",
+      "recordId": "program-f1823dc76f0c53550429e316",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:wetlandscience",
+        "uni-northeast-normal-university|master|name:湿地科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:日语语言文学",
+      "recordId": "program-b4301fd3e2a61f02a63cd5f9",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:日语语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:日语语言文学",
+      "recordId": "program-2eaad78f1ee8d8fe1bc07c23",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:日语语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:俄语语言文学",
+      "recordId": "program-992380b21c2a8693fb898a43",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:俄语语言文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:数学教育",
+      "recordId": "program-e962dabe4740cdc87dfdaac1",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:mathematicseducation",
+        "uni-northeast-normal-university|doctorate|name:数学教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:数学教育",
+      "recordId": "program-aa4de0283f4e2c8e65bed111",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:mathematicseducation",
+        "uni-northeast-normal-university|master|name:数学教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:基础数学",
+      "recordId": "program-9c3a964c1eb1fad93921e4d9",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:fundamentalmathematics",
+        "uni-northeast-normal-university|master|name:基础数学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:计算数学",
+      "recordId": "program-fe430571908e22d2762c0735",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:computingmathematics",
+        "uni-northeast-normal-university|master|name:计算数学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:分析化学",
+      "recordId": "program-a3e95ebbb79e5b7a1ed91ad7",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:analyticalchemistry",
+        "uni-northeast-normal-university|master|name:分析化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:分析化学",
+      "recordId": "program-8465f5c478fec5bcc88f5eb3",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:analyticalchemistry",
+        "uni-northeast-normal-university|doctorate|name:分析化学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:智能科学与技术",
+      "recordId": "program-32c8af530b18fe25f1deba24",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:智能科学与技术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:农村教育",
+      "recordId": "program-bf50c1dffdf8b3ce334adc59",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:ruraleducation",
+        "uni-northeast-normal-university|doctorate|name:农村教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|master|degree|name:学前教育学",
+      "recordId": "program-c276e167ad1f8337d32797e2",
+      "aliases": [
+        "uni-northeast-normal-university|master|name:studiesofpreschooleducation",
+        "uni-northeast-normal-university|master|name:学前教育学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|doctorate|degree|name:学前教育学",
+      "recordId": "program-9a1a2227ba4c858123e0c12b",
+      "aliases": [
+        "uni-northeast-normal-university|doctorate|name:studiesofpreschooleducation",
+        "uni-northeast-normal-university|doctorate|name:学前教育学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:图书馆学",
+      "recordId": "program-34153178d614b446eae8be53",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:libraryscience",
+        "uni-northeast-normal-university|bachelor|name:图书馆学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:国际政治",
+      "recordId": "program-662309571cf32d4c86482051",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:internationalpolitics",
+        "uni-northeast-normal-university|bachelor|name:国际政治"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:市场营销",
+      "recordId": "program-a1e0ac1be32e41e1261e2235",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:marketing",
+        "uni-northeast-normal-university|bachelor|name:市场营销"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:学前教育",
+      "recordId": "program-b8d2c6a07173dc416ca21966",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:preschooleducation",
+        "uni-northeast-normal-university|bachelor|name:学前教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:教育学",
+      "recordId": "program-ae1c7cbdcdb2dbb5419f5b95",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:education",
+        "uni-northeast-normal-university|bachelor|name:教育学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:音乐学",
+      "recordId": "program-0894c95994b049fc8cc8fc17",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:musicology",
+        "uni-northeast-normal-university|bachelor|name:音乐学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:行政管理",
+      "recordId": "program-a8c09c097977ceb32f763d91",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:publicadministration",
+        "uni-northeast-normal-university|bachelor|name:行政管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:地理科学",
+      "recordId": "program-9223cbc8b913db36c81a6c29",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:geographicalscience",
+        "uni-northeast-normal-university|bachelor|name:地理科学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:汉语言",
+      "recordId": "program-5d89d40370167679e83d0351",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:chineselanguage",
+        "uni-northeast-normal-university|bachelor|name:汉语言"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:环境设计",
+      "recordId": "program-57bb48b1bf5c93e2647ba188",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:environmentaldesign",
+        "uni-northeast-normal-university|bachelor|name:环境设计"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:雕塑",
+      "recordId": "program-4f55aad7fd9236ebdeccc205",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:sculpture",
+        "uni-northeast-normal-university|bachelor|name:雕塑"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:法学",
+      "recordId": "program-6c5f2df917f6314287e33f9e",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:law",
+        "uni-northeast-normal-university|bachelor|name:法学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:广告学",
+      "recordId": "program-6d2d1957af9f9ba2da4aded3",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:advertising",
+        "uni-northeast-normal-university|bachelor|name:广告学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:美术学",
+      "recordId": "program-d80dce5cbd9ef5807e5aafe7",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:finearts",
+        "uni-northeast-normal-university|bachelor|name:美术学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:新闻学",
+      "recordId": "program-972fbafa282956d30d8e7b7d",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:journalism",
+        "uni-northeast-normal-university|bachelor|name:新闻学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:舞蹈编导",
+      "recordId": "program-d40f2fe92ea79bef2c5cbb75",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:choreography",
+        "uni-northeast-normal-university|bachelor|name:舞蹈编导"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:金融学",
+      "recordId": "program-e0d7482c143025e169d5d7f4",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:finance",
+        "uni-northeast-normal-university|bachelor|name:金融学"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-beijing-institute-of-petrochemical-technology|university|name:北京石油化工学院秋季和春季学期外国留学生奖学金",
+      "recordId": "scholarship-f06adf4b8d75c57af778074b",
+      "aliases": [
+        "scholarship|uni-beijing-institute-of-petrochemical-technology|university|name:北京石油化工学院秋季和春季学期外国留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-university|master|degree|name:masterofinternationalbusiness",
+      "recordId": "program-82ff27d28ed6741b8439ec52",
+      "aliases": [
+        "uni-hainan-university|master|name:masterofinternationalbusiness"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangxi-minzu-university|language|language|name:2026guangximinzuuniversityinternationalstudentadmissionbrochurenondegreechineselanguageprogram",
+      "recordId": "program-de9a3b3a53654538515a97b5",
+      "aliases": [
+        "uni-guangxi-minzu-university|language|name:2026guangximinzuuniversityinternationalstudentadmissionbrochurenondegreechineselanguageprogram"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-nanchang-university|university|name:ncupresidentscholarshipforinternationalstudents",
+      "recordId": "sch-gap-mew-scws-ncu-president-scholarship",
+      "aliases": [
+        "scholarship|uni-nanchang-university|university|name:ncupresidentscholarshipforinternationalstudents"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-hunan-university-of-technology-and-business|province|name:湖南省来华留学生奖学金",
+      "recordId": "scholarship-8bf7dfde22372babd085b84f",
+      "aliases": [
+        "scholarship|uni-hunan-university-of-technology-and-business|province|name:scholarshipforinternationalstudentsstudyinginhunanprovince",
+        "scholarship|uni-hunan-university-of-technology-and-business|province|name:湖南省来华留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-hunan-university-of-technology-and-business|university|name:湖南工商大学来华留学生奖学金",
+      "recordId": "scholarship-hutb-international-students-inclusive",
+      "aliases": [
+        "scholarship|uni-hunan-university-of-technology-and-business|university|name:hutbinternationalstudentsinclusivescholarship",
+        "scholarship|uni-hunan-university-of-technology-and-business|university|name:湖南工商大学来华留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-shanghai-maritime-university|city|name:上海市外国留学生政府奖学金",
+      "recordId": "scholarship-4c8ab3a8708fd0fa041956d0",
+      "aliases": [
+        "scholarship|uni-shanghai-maritime-university|city|name:shanghaigovernmentscholarshipforinternationalstudents",
+        "scholarship|uni-shanghai-maritime-university|city|name:上海市外国留学生政府奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanjing-medical-university|bachelor|degree|name:临床医学中文授课专业",
+      "recordId": "program-dadea218a8094e1038b5330a",
+      "aliases": [
+        "uni-nanjing-medical-university|bachelor|name:bachelorprograminclinicalmedicine",
+        "uni-nanjing-medical-university|bachelor|name:临床医学中文授课专业"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-shantou-university|csc|name:中国政府奖学金",
+      "recordId": "scholarship-1b608264f2af9414d1450467",
+      "aliases": [
+        "scholarship|uni-shantou-university|csc|name:中国政府奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-henan-university-of-technology|university|name:2026年秋季国际学生入学奖学金",
+      "recordId": "scholarship-2d7f9d8de38c3ec71f8c3dae",
+      "aliases": [
+        "scholarship|uni-henan-university-of-technology|university|name:2026autumninternationalstudentfreshmanscholarship",
+        "scholarship|uni-henan-university-of-technology|university|name:2026年秋季国际学生入学奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-hainan-medical-university|province|name:海南省政府国际学生奖学金",
+      "recordId": "scholarship-dc2f306297e409964e389192",
+      "aliases": [
+        "scholarship|uni-hainan-medical-university|province|name:hainanprovincialgovernmentscholarshipforinternationalstudents",
+        "scholarship|uni-hainan-medical-university|province|name:海南省政府国际学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-minnan-normal-university|province|name:福建省政府奖学金",
+      "recordId": "scholarship-9ae83db11b58ad8d745d1a0e",
+      "aliases": [
+        "scholarship|uni-minnan-normal-university|province|name:fujianprovincialgovernmentscholarship",
+        "scholarship|uni-minnan-normal-university|province|name:福建省政府奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-minnan-normal-university|other|name:国际中文教师奖学金",
+      "recordId": "scholarship-9073f4c76b3443d182e00dfd",
+      "aliases": [
+        "scholarship|uni-minnan-normal-university|other|name:internationalchineselanguageteachersscholarship",
+        "scholarship|uni-minnan-normal-university|other|name:国际中文教师奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-sichuan-fine-arts-institute|university|name:四川美术学院国际学生校长奖学金",
+      "recordId": "sch-gap-mew-0805-scw-scfai-president-scholarship",
+      "aliases": [
+        "scholarship|uni-sichuan-fine-arts-institute|university|name:presidentsscholarship",
+        "scholarship|uni-sichuan-fine-arts-institute|university|name:四川美术学院国际学生校长奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shantou-university|language|language|name:chineselanguagecourse",
+      "recordId": "program-7236172926f91972d433ad57",
+      "aliases": [
+        "uni-shantou-university|language|name:chineselanguagecourse"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-sichuan-fine-arts-institute|city|name:重庆市人民政府外国留学生市长奖学金",
+      "recordId": "sch-gap-mew-0805-scw-scfai-chongqing-mayor-scholarship",
+      "aliases": [
+        "scholarship|uni-sichuan-fine-arts-institute|city|name:mayorsscholarshipforinternationalstudentsfromthechongqingmunicipalpeoplesgovernment",
+        "scholarship|uni-sichuan-fine-arts-institute|city|name:重庆市人民政府外国留学生市长奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-ningxia-university|csc|name:中国政府奖学金高校自主招生项目",
+      "recordId": "scholarship-f0a40bd51c2c0b6fa89c3f7d",
+      "aliases": [
+        "scholarship|uni-ningxia-university|csc|name:中国政府奖学金高校自主招生项目"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-ningxia-university|university|name:宁夏大学来华留学奖学金",
+      "recordId": "sch-gap-wave8-nxu-international-student-scholarship",
+      "aliases": [
+        "scholarship|uni-ningxia-university|university|name:宁夏大学来华留学奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-sichuan-international-studies-university|university|name:四川外国语大学校长奖学金",
+      "recordId": "scholarship-c5da32fa9fbe397752bc4689",
+      "aliases": [
+        "scholarship|uni-sichuan-international-studies-university|university|name:sisupresidentscholarship",
+        "scholarship|uni-sichuan-international-studies-university|university|name:四川外国语大学校长奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-guangzhou-university|bachelor|degree|name:行政管理智慧治理方向",
+      "recordId": "program-guangzhou-university-public-administration-smart-governance-bachelor",
+      "aliases": [
+        "uni-guangzhou-university|bachelor|name:publicadministrationsmartgovernance",
+        "uni-guangzhou-university|bachelor|name:行政管理智慧治理方向"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-medical-university|bachelor|degree|name:临床医学",
+      "recordId": "prog-gap-local-strong-muhn-b-clinical-medicine-cn",
+      "aliases": [
+        "uni-hainan-medical-university|bachelor|name:clinicalmedicine",
+        "uni-hainan-medical-university|bachelor|name:临床医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-medical-university|bachelor|degree|name:护理学",
+      "recordId": "program-befcda9b5fbf8e687adb8bc0",
+      "aliases": [
+        "uni-hainan-medical-university|bachelor|name:nursing",
+        "uni-hainan-medical-university|bachelor|name:护理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-medical-university|master|degree|name:公共卫生专硕",
+      "recordId": "program-085ebae5642cd84e53539db8",
+      "aliases": [
+        "uni-hainan-medical-university|master|name:masterofpublichealthprofessionalmaster",
+        "uni-hainan-medical-university|master|name:公共卫生专硕"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-medical-university|bachelor|degree|name:中医学含针灸推拿中西医结合专业",
+      "recordId": "program-66ab45a75eec3be43e6a2ff1",
+      "aliases": [
+        "uni-hainan-medical-university|bachelor|name:traditionalchinesemedicineincludingacupuncturetuinaandintegratedtraditionalchineseandwesternmedicineprograms",
+        "uni-hainan-medical-university|bachelor|name:中医学含针灸推拿中西医结合专业"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hainan-medical-university|bachelor|degree|name:社会医学与卫生事业管理",
+      "recordId": "program-08c518ac40f075eafa8f013f",
+      "aliases": [
+        "uni-hainan-medical-university|bachelor|name:socialmedicineandhealthmanagement",
+        "uni-hainan-medical-university|bachelor|name:社会医学与卫生事业管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dongguan-university-of-technology|master|degree|name:085405软件工程专业介绍仅面向2026年国际硕士",
+      "recordId": "program-0f3cfb07a2f5b62735383ecf",
+      "aliases": [
+        "uni-dongguan-university-of-technology|master|name:introductiontosoftwareengineering",
+        "uni-dongguan-university-of-technology|master|name:085405软件工程专业介绍仅面向2026年国际硕士"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|master|degree|name:公共卫生学",
+      "recordId": "program-ca4c3fbab768e6c78b242f6a",
+      "aliases": [
+        "uni-ningxia-medical-university|master|name:publichealth",
+        "uni-ningxia-medical-university|master|name:公共卫生学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|doctorate|degree|name:公共卫生学",
+      "recordId": "program-97133ecd015aecef0c4c87f9",
+      "aliases": [
+        "uni-ningxia-medical-university|doctorate|name:publichealth",
+        "uni-ningxia-medical-university|doctorate|name:公共卫生学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|bachelor|degree|name:公共卫生学",
+      "recordId": "program-b087f4c557285bb1dad31595",
+      "aliases": [
+        "uni-ningxia-medical-university|bachelor|name:publichealth",
+        "uni-ningxia-medical-university|bachelor|name:公共卫生学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|bachelor|degree|name:药学",
+      "recordId": "program-736cf56bcf14a9c248a94dd6",
+      "aliases": [
+        "uni-ningxia-medical-university|bachelor|name:pharmacy",
+        "uni-ningxia-medical-university|bachelor|name:药学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|bachelor|degree|name:中医学",
+      "recordId": "program-ba08216c31916846547443f5",
+      "aliases": [
+        "uni-ningxia-medical-university|bachelor|name:chinesemedicine",
+        "uni-ningxia-medical-university|bachelor|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|master|degree|name:药学",
+      "recordId": "program-cc2544b124dd8308c0ad79d2",
+      "aliases": [
+        "uni-ningxia-medical-university|master|name:pharmacy",
+        "uni-ningxia-medical-university|master|name:药学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|master|degree|name:护理学",
+      "recordId": "program-55b6be0b2b0405c7cf646fee",
+      "aliases": [
+        "uni-ningxia-medical-university|master|name:nursing",
+        "uni-ningxia-medical-university|master|name:护理学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-ningxia-medical-university|master|degree|name:中医学",
+      "recordId": "program-999bef456e7c311b14249a56",
+      "aliases": [
+        "uni-ningxia-medical-university|master|name:chinesemedicine",
+        "uni-ningxia-medical-university|master|name:中医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-kunming-medical-university|bachelor|degree|name:临床医学",
+      "recordId": "program-c3feb2499d83e8404d898525",
+      "aliases": [
+        "uni-kunming-medical-university|bachelor|name:clinicalmedicine",
+        "uni-kunming-medical-university|bachelor|name:临床医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-kunming-medical-university|bachelor|degree|name:法医学",
+      "recordId": "program-4990532d778c01e10fe07259",
+      "aliases": [
+        "uni-kunming-medical-university|bachelor|name:forensicmedicine",
+        "uni-kunming-medical-university|bachelor|name:法医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-kunming-medical-university|bachelor|degree|name:口腔医学",
+      "recordId": "program-864dac84bca0b8220c2bd9aa",
+      "aliases": [
+        "uni-kunming-medical-university|bachelor|name:stomatology",
+        "uni-kunming-medical-university|bachelor|name:口腔医学"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-guangzhou-university-of-chinese-medicine|csc|name:2026年中国政府奖学金高水平研究生项目",
+      "recordId": "scholarship-a5394af67aa1bbee5e0f2169",
+      "aliases": [
+        "scholarship|uni-guangzhou-university-of-chinese-medicine|csc|name:2026年中国政府奖学金高水平研究生项目"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-shenzhen-university|university|name:荔园奖学金",
+      "recordId": "scholarship-79b5f8ef985e96fdf6c94b47",
+      "aliases": [
+        "scholarship|uni-shenzhen-university|university|name:liyuaninternationalscholarship",
+        "scholarship|uni-shenzhen-university|university|name:荔园奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-mining-and-technology|bachelor|degree|name:机械工程",
+      "recordId": "program-china-university-of-mining-and-technology-mechanical-engineering-bachelo",
+      "aliases": [
+        "uni-china-university-of-mining-and-technology|bachelor|name:机械工程"
+      ]
+    },
+    {
+      "canonicalKey": "uni-sichuan-agricultural-university|language|language|name:chineselanguagelearningprogram2026",
+      "recordId": "program-81cc016a30650614aafce573",
+      "aliases": [
+        "uni-sichuan-agricultural-university|language|name:chineselanguagelearningprogram2026"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jining-medical-university|master|degree|name:公共卫生",
+      "recordId": "program-9273f0b509fd63a89ece9f3c",
+      "aliases": [
+        "uni-jining-medical-university|master|name:公共卫生"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jining-medical-university|master|degree|name:临床医学",
+      "recordId": "program-6e75d4e1e94614d8721b9c07",
+      "aliases": [
+        "uni-jining-medical-university|master|name:临床医学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:数字演艺设计",
+      "recordId": "program-e7ca415175b694ad733d1be9",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:数字演艺设计"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧学",
+      "recordId": "program-8c36eba82a44ffba774ad150",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧影视导演",
+      "recordId": "prog-gap-mve-root-sta-directing-bachelor",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧影视导演"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:表演戏曲音乐",
+      "recordId": "program-65c186cc03f318246921f438",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:表演戏曲音乐"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:绘画",
+      "recordId": "program-e58860157872c75f92c0f1f9",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:绘画"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:表演戏剧影视",
+      "recordId": "prog-gap-mve-root-sta-acting-bachelor",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:表演戏剧影视"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:作曲与作曲技术理论",
+      "recordId": "program-931623e7fc22db1f0de2583a",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:作曲与作曲技术理论"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:舞蹈编导",
+      "recordId": "program-22ec9555d5dc4c246c28223f",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:舞蹈编导"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧影视美术设计",
+      "recordId": "program-f9ccdeb5154d7a32761cf9fe",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧影视美术设计"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:舞蹈表演芭蕾舞",
+      "recordId": "program-c9c3c6050190eaf8c81c3ffb",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:舞蹈表演芭蕾舞"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:舞蹈表演中国舞",
+      "recordId": "prog-gap-mve-root-sta-dance-chinese-bachelor",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:舞蹈表演中国舞"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:艺术管理",
+      "recordId": "program-73cf736bbd59b975cf4d084c",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:艺术管理"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:舞蹈表演国标舞",
+      "recordId": "program-e56b6b3a1a95c36d43ec3556",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:舞蹈表演国标舞"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:广播电视编导",
+      "recordId": "program-e663407805511d65a8c42554",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:广播电视编导"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧影视文学",
+      "recordId": "program-f5cdb26bb8c4d2464851ed7a",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧影视文学"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:影视摄影与制作",
+      "recordId": "program-c195349828f997939b15e4d5",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:影视摄影与制作"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧影视导演戏曲",
+      "recordId": "program-b46ac88413d146a56208e558",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧影视导演戏曲"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:戏剧教育",
+      "recordId": "program-788e07f25159cbaa13c923a1",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:戏剧教育"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:播音与主持艺术",
+      "recordId": "program-f31bcdd50a655249055d9b45",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:播音与主持艺术"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:表演木偶",
+      "recordId": "program-0ce74aba58d30af70e483eca",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:表演木偶"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shanghai-theatre-academy|bachelor|degree|name:音乐剧",
+      "recordId": "program-9086335b2f7757f2c7ab4b17",
+      "aliases": [
+        "uni-shanghai-theatre-academy|bachelor|name:音乐剧"
+      ]
+    },
+    {
+      "canonicalKey": "uni-nanchang-university|language|short_term|name:programonchineselanguageandcultureforforeignyouthatnanchanguniversity",
+      "recordId": "program-65d6122b8e1b251f40aae64e",
+      "aliases": [
+        "uni-nanchang-university|language|name:programonchineselanguageandcultureforforeignyouthatnanchanguniversity"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-harbin-engineering-university|csc|name:国际中文教师奖学金",
+      "recordId": "scholarship-29611584ba500501bd55d87d",
+      "aliases": [
+        "scholarship|uni-harbin-engineering-university|csc|name:国际中文教师奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-henan-university|csc|name:中国政府奖学金高水平研究生项目",
+      "recordId": "scholarship-1be3a89630ea5a02fe4d0207",
+      "aliases": [
+        "scholarship|uni-henan-university|csc|name:中国政府奖学金高水平研究生项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-china-university-of-geosciences-wuhan|foundation|foundation|name:2027cscapreuniversityprogram",
+      "recordId": "program-346d8c7d32dca64bbe078230",
+      "aliases": [
+        "uni-china-university-of-geosciences-wuhan|foundation|name:2027cscapreuniversityprogram"
+      ]
+    },
+    {
+      "canonicalKey": "uni-hohai-university|bachelor|degree|name:河海大学全英文留学本科生培养方案",
+      "recordId": "program-cb076b3b3112fa91463651bc",
+      "aliases": [
+        "uni-hohai-university|bachelor|name:bachelorprogramtaughtinenglish",
+        "uni-hohai-university|bachelor|name:河海大学全英文留学本科生培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-medical-university|bachelor|degree|name:大连医科大学来华留学生口腔医学专业bds五年制培养方案",
+      "recordId": "program-7a18f7e74d1846445339925a",
+      "aliases": [
+        "uni-dalian-medical-university|bachelor|name:大连医科大学来华留学生口腔医学专业bds五年制培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-medical-university|bachelor|degree|name:大连医科大学来华留学生临床医学专业mbbs六年制培养方案",
+      "recordId": "program-e4c5de152b14a7a980fb15ea",
+      "aliases": [
+        "uni-dalian-medical-university|bachelor|name:大连医科大学来华留学生临床医学专业mbbs六年制培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-medical-university|bachelor|degree|name:大连医科大学留学生药学培养方案",
+      "recordId": "program-ba540359a1f36e4c66febec0",
+      "aliases": [
+        "uni-dalian-medical-university|bachelor|name:大连医科大学留学生药学培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dalian-medical-university|bachelor|degree|name:大连医科大学留学生临床医学专业五年制人才培养方案",
+      "recordId": "program-fb902c46f2f682046cba5241",
+      "aliases": [
+        "uni-dalian-medical-university|bachelor|name:大连医科大学留学生临床医学专业五年制人才培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-communication-university-of-zhejiang|bachelor|degree|name:浙江传媒学院2026国际新闻与传播专业全英授课国际生招生简章",
+      "recordId": "program-855016ac1ed074235dcf3f27",
+      "aliases": [
+        "uni-communication-university-of-zhejiang|bachelor|name:internationaljournalismandcommunicationprogramenglishtaughtforinternationalstudents",
+        "uni-communication-university-of-zhejiang|bachelor|name:浙江传媒学院2026国际新闻与传播专业全英授课国际生招生简章"
+      ]
+    },
+    {
+      "canonicalKey": "uni-northeast-normal-university|bachelor|degree|name:金融学本科专业",
+      "recordId": "program-ac31d14cf60c817c9d1875c4",
+      "aliases": [
+        "uni-northeast-normal-university|bachelor|name:金融学本科专业"
+      ]
+    },
+    {
+      "canonicalKey": "uni-beijing-sport-university|master|degree|name:传播学",
+      "recordId": "program-38ea00e056e2ac8be4832433",
+      "aliases": [
+        "uni-beijing-sport-university|master|name:communication",
+        "uni-beijing-sport-university|master|name:传播学"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-shanxi-university|csc|name:中国政府奖学金项目",
+      "recordId": "scholarship-751dc2fa332cdcbb842f2c10",
+      "aliases": [
+        "scholarship|uni-shanxi-university|csc|name:chinesegovernmentscholarshipprogram",
+        "scholarship|uni-shanxi-university|csc|name:中国政府奖学金项目"
+      ]
+    },
+    {
+      "canonicalKey": "uni-dongguan-university-of-technology|master|degree|name:085801电气工程专业介绍仅面向2026年国际硕士",
+      "recordId": "program-29540cb563eab8ebc6e4c10e",
+      "aliases": [
+        "uni-dongguan-university-of-technology|master|name:introductiontoelectricalengineering",
+        "uni-dongguan-university-of-technology|master|name:085801电气工程专业介绍仅面向2026年国际硕士"
+      ]
+    },
+    {
+      "canonicalKey": "uni-shandong-university|foundation|foundation|name:本科预科生项目",
+      "recordId": "program-719104faee4ebe8434ae8ab1",
+      "aliases": [
+        "uni-shandong-university|foundation|name:本科预科生项目"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-guangxi-university|university|name:gxutopdisciplinescholarship",
+      "recordId": "scholarship-9fb1d7cee3d940c50988190f",
+      "aliases": [
+        "scholarship|uni-guangxi-university|university|name:gxutopdisciplinescholarship"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-guilin-medical-university|university|name:桂林医科大学优秀来华留学生奖学金",
+      "recordId": "scholarship-d25479c4d111ccf99a0b7d84",
+      "aliases": [
+        "scholarship|uni-guilin-medical-university|university|name:桂林医科大学优秀来华留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-guizhou-normal-university|province|name:贵州省外国留学生奖学金",
+      "recordId": "scholarship-969a3b77ef33a5841a662f91",
+      "aliases": [
+        "scholarship|uni-guizhou-normal-university|province|name:guizhouprovinceforeignstudentscholarship",
+        "scholarship|uni-guizhou-normal-university|province|name:贵州省外国留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "uni-jiangsu-university-of-science-and-technology|doctorate|degree|name:畜牧学学科全日制学术型博士留学生研究生培养方案",
+      "recordId": "program-ae5c49e50fe3a348c6ac76ad",
+      "aliases": [
+        "uni-jiangsu-university-of-science-and-technology|doctorate|name:trainingprogramforoverseasdoctoralstudentsinthedisciplineofanimalscience",
+        "uni-jiangsu-university-of-science-and-technology|doctorate|name:畜牧学学科全日制学术型博士留学生研究生培养方案"
+      ]
+    },
+    {
+      "canonicalKey": "uni-moe-4131010262|bachelor|degree|name:公共事业管理专业",
+      "recordId": "program-927ad314f9f6afab27115d12",
+      "aliases": [
+        "uni-moe-4131010262|bachelor|name:公共事业管理专业"
+      ]
+    },
+    {
+      "canonicalKey": "uni-moe-4131010262|bachelor|degree|name:数据科学与大数据技术专业",
+      "recordId": "program-08daf24f3608f69841a7fd32",
+      "aliases": [
+        "uni-moe-4131010262|bachelor|name:数据科学与大数据技术专业"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-fujian-normal-university|province|name:福建省政府外国留学生奖学金",
+      "recordId": "scholarship-5d61075522af1c895106267d",
+      "aliases": [
+        "scholarship|uni-fujian-normal-university|province|name:福建省政府外国留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-guangzhou-academy-of-fine-arts|province|name:广东省政府来粤留学生奖学金",
+      "recordId": "scholarship-75c22daa61184f42e5d1cb15",
+      "aliases": [
+        "scholarship|uni-guangzhou-academy-of-fine-arts|province|name:广东省政府来粤留学生奖学金"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-nanjing-university-of-information-science-and-technology|university|name:longshanscholarshipaclassnuistexcellentfreshmenscholarship",
+      "recordId": "scholarship-f4cec24e3274126533c72bb6",
+      "aliases": [
+        "scholarship|uni-nanjing-university-of-information-science-and-technology|university|name:longshanscholarshipaclassnuistexcellentfreshmenscholarship"
+      ]
+    },
+    {
+      "canonicalKey": "scholarship|uni-sichuan-international-studies-university|city|name:重庆市人民政府外国留学生市长奖学金",
+      "recordId": "scholarship-1627642170955c546fe2d5db",
+      "aliases": [
+        "scholarship|uni-sichuan-international-studies-university|city|name:chongqingmunicipalgovernmentmayorscholarship",
+        "scholarship|uni-sichuan-international-studies-university|city|name:重庆市人民政府外国留学生市长奖学金"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+import { NextResponse } from 'next/server'
+import { CatalogRepositoryError } from '@/lib/catalog'
+import { InvalidCursorError } from './cursor'
+import { InvalidSearchQueryError } from './service'
+import { catalogCacheControl } from './cache-policy'
+import { rankingFilterKeys, rankingFilterValues, type RankingFilters, type RankingFilterValue } from '@/lib/data/rankings'
+
+const responseHeaders = {
+  'X-Content-Type-Options': 'nosniff',
+  'Content-Type': 'application/json; charset=utf-8',
+}
+
+export class InvalidQueryError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'InvalidQueryError'
+  }
+}
+
+export function stringParam(
+  params: URLSearchParams,
+  name: string,
+  options: { maxLength?: number } = {},
+): string | undefined {
+  const value = params.get(name)?.trim()
+  if (value && value.length > (options.maxLength ?? 200)) {
+    throw new InvalidQueryError(`${name} is too long.`)
+  }
+  return value || undefined
+}
+
+export function integerParam(
+  params: URLSearchParams,
+  name: string,
+  options: { min?: number; max?: number } = {},
+): number | undefined {
+  const raw = stringParam(params, name)
+  if (raw === undefined) return undefined
+  if (!/^\d+$/.test(raw)) throw new InvalidQueryError(`${name} must be an integer.`)
+  const value = Number(raw)
+  if (options.min !== undefined && value < options.min) throw new InvalidQueryError(`${name} is below the minimum.`)
+  if (options.max !== undefined && value > options.max) throw new InvalidQueryError(`${name} exceeds the maximum.`)
+  return value
+}
+
+export function numberParam(
+  params: URLSearchParams,
+  name: string,
+  options: { min?: number } = {},
+): number | undefined {
+  const raw = stringParam(params, name)
+  if (raw === undefined) return undefined
+  const value = Number(raw)
+  if (!Number.isFinite(value)) throw new InvalidQueryError(`${name} must be a number.`)
+  if (options.min !== undefined && value < options.min) throw new InvalidQueryError(`${name} is below the minimum.`)
+  return value
+}
+
+function evaluationDate(payload: unknown): string | undefined {
+  const meta = payload && typeof payload === 'object' && 'meta' in payload ? payload.meta : null
+  const release = meta && typeof meta === 'object' && 'release' in meta ? meta.release : null
+  return release && typeof release === 'object' && 'evaluatedForDate' in release
+    && typeof release.evaluatedForDate === 'string' ? release.evaluatedForDate : undefined
+}
+
+export function ok<T>(payload: T) {
+  const evaluatedForDate = evaluationDate(payload)
+  return NextResponse.json(payload, {
+    status: 200,
+    // Repository comparison adapters may return unknown. Cache only a response
+    // carrying an explicit, current evaluation date, regardless of its TS type.
+    headers: { ...responseHeaders, 'Cache-Control': evaluatedForDate === undefined
+      ? 'no-store' : catalogCacheControl(new Date(), evaluatedForDate) },
+  })
+}
+
+export function notFound(resource: string) {
+  return NextResponse.json(
+    { error: { code: 'not_found', message: `${resource} was not found.` } },
+    { status: 404, headers: { ...responseHeaders, 'Cache-Control': 'no-store' } },
+  )
+}
+
+export async function handleCatalogRequest(operation: () => Promise<NextResponse> | NextResponse) {
+  try {
+    return await operation()
+  } catch (error) {
+    if (
+      error instanceof InvalidCursorError
+      || error instanceof InvalidQueryError
+      || error instanceof InvalidSearchQueryError
+    ) {
+      return NextResponse.json(
+        { error: { code: 'invalid_request', message: error.message } },
+        { status: 400, headers: { ...responseHeaders, 'Cache-Control': 'no-store' } },
+      )
+    }
+    if (error instanceof CatalogRepositoryError) {
+      if (error.code === 'UNSUPPORTED_RANKING_FILTERS') return NextResponse.json(
+        { error: { code: 'ranking_filters_unavailable', message: error.message } },
+        { status: 501, headers: { ...responseHeaders, 'Cache-Control': 'no-store' } },
+      )
+      return NextResponse.json(
+        { error: { code: 'catalog_unavailable', message: 'The catalog is temporarily unavailable.' } },
+        { status: 503, headers: { ...responseHeaders, 'Cache-Control': 'no-store', 'Retry-After': '60' } },
+      )
+    }
+    return NextResponse.json(
+      { error: { code: 'internal_error', message: 'The request could not be completed.' } },
+      { status: 500, headers: { ...responseHeaders, 'Cache-Control': 'no-store' } },
+    )
+  }
+}
+export function rankingParams(params: URLSearchParams): RankingFilters {
+  const result: RankingFilters = {}
+  for (const key of rankingFilterKeys) {
+    const value = stringParam(params, key)
+    if (value === undefined) continue
+    if (!rankingFilterValues.has(value)) throw new InvalidQueryError(`${key} is invalid.`)
+    result[key] = value as RankingFilterValue
+  }
+  return result
+}

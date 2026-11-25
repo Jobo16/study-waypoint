@@ -1,0 +1,193 @@
+.summary {
+  position: relative;
+  display: grid;
+  gap: 1.15rem;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--atlas-jade-pale) 42%, transparent), transparent 48%),
+    var(--atlas-paper-bright);
+}
+
+.summary::after {
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 5.5rem;
+  aspect-ratio: 1;
+  content: '';
+  pointer-events: none;
+  opacity: .4;
+  background-image:
+    linear-gradient(90deg, var(--atlas-line) 1px, transparent 1px),
+    linear-gradient(var(--atlas-line) 1px, transparent 1px);
+  background-size: 1.1rem 1.1rem;
+  mask-image: linear-gradient(225deg, #000, transparent 72%);
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .8rem;
+}
+
+.eyebrow {
+  margin: 0 0 .35rem;
+  color: var(--atlas-vermilion-dark);
+  font-size: .69rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--atlas-ink);
+  font-family: var(--atlas-font-display);
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.08;
+}
+
+.facts {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  margin: 0;
+  overflow: hidden;
+  background: var(--atlas-line);
+  border: 1px solid var(--atlas-line);
+  border-radius: .75rem;
+}
+
+.fact {
+  min-width: 0;
+  padding: .85rem;
+  background: color-mix(in srgb, var(--atlas-paper-bright) 94%, transparent);
+}
+
+.fact:first-child {
+  grid-column: 1 / -1;
+  background: color-mix(in srgb, var(--atlas-jade-pale) 58%, var(--atlas-paper-bright));
+}
+
+.fact dt {
+  color: var(--atlas-muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.fact dd {
+  margin: .28rem 0 0;
+  overflow-wrap: anywhere;
+  color: var(--atlas-ink);
+  font-size: .92rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.fact:first-child dd {
+  font-family: var(--atlas-font-display);
+  font-size: 1.15rem;
+}
+
+.notice {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--atlas-muted);
+  font-size: .76rem;
+  line-height: 1.55;
+}
+
+.actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  padding-top: .1rem;
+}
+
+:global(.atlas-public) .summary { gap: 1.3rem; background: var(--atlas-paper-bright); border-top: 3px solid var(--atlas-jade); }
+:global(.atlas-public) .summary::after { display: none; }
+:global(.atlas-public) .eyebrow { font-size: .65rem; font-weight: 650; color: var(--atlas-jade-dark); }
+:global(.atlas-public) .title { max-width: 18ch; font-size: 1.7rem; font-weight: 500; line-height: 1.17; }
+:global(.atlas-public) .facts { padding: 0; gap: 0; border: 0; border-radius: 0; background: transparent; }
+:global(.atlas-public) .fact { padding: 1rem .8rem; background: transparent; border-bottom: 1px solid var(--atlas-line); }
+:global(.atlas-public) .fact:first-child { background: var(--atlas-jade-pale); border-radius: .3rem; }
+:global(.atlas-public) .fact dt { font-size: .64rem; font-weight: 650; letter-spacing: .06em; }
+:global(.atlas-public) .fact dd { line-height: 1.6; font-weight: 650; }
+:global(.atlas-public) .fact:first-child dd { font-size: 1.25rem; font-weight: 500; }
+:global(.atlas-public) .actions > * { flex: 1 1 auto; }
+
+/* Craft uses the same facts and actions in a quieter paper surface. */
+:global(html[data-design='craft'] .atlas-public) .summary {
+  gap: 1.5rem;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  background: var(--atlas-paper-bright);
+  border: 1px solid var(--atlas-line);
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 36px rgb(3 3 2 / 3%);
+}
+
+:global(html[data-design='craft'] .atlas-public) .title {
+  max-width: 21ch;
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 2.6vw, 2rem);
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.16;
+}
+
+:global(html[data-design='craft'] .atlas-public) .eyebrow,
+:global(html[data-design='craft'] .atlas-public) .fact dt {
+  color: var(--atlas-muted);
+  font-family: var(--font-body);
+  font-size: .8rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:global(html[data-design='craft'] .atlas-public) .facts { gap: 0; }
+:global(html[data-design='craft'] .atlas-public) .fact { padding: 1rem .85rem; }
+:global(html[data-design='craft'] .atlas-public) .fact:first-child {
+  background: color-mix(in srgb, var(--atlas-jade-pale) 65%, var(--atlas-paper-bright));
+  border: 0;
+  border-radius: 1rem;
+}
+
+:global(html[data-design='craft'] .atlas-public) .fact dd {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+:global(html[data-design='craft'] .atlas-public) .fact:first-child dd {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -.02em;
+}
+
+:global(html[data-design='craft'] .atlas-public) .notice { font-size: .85rem; line-height: 1.6; }
+
+:global(html[data-design='craft'][lang='zh'] .atlas-public) .title { letter-spacing: -.02em; }
+
+@media (max-width: 560px) {
+  :global(html[data-design='craft'] .atlas-public) .summary { padding: 1.25rem; border-radius: 1.25rem; }
+}
+
+@media (max-width: 560px) {
+  .facts { grid-template-columns: 1fr; }
+  .fact:first-child { grid-column: auto; }
+  .actions > * { width: 100%; justify-content: center; }
+}

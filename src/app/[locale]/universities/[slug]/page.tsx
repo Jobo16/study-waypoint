@@ -1,0 +1,127 @@
+import { LocalizedProgramCard } from '@/components/features/LocalizedProgramCard'
+import { notFound } from 'next/navigation'
+import { connection } from 'next/server'
+import { Badge, Card, LinkButton, PageHero, SectionHeading, VerificationBadge } from '@/components/ui'
+import { UniversityRankingLinks } from '@/components/features/RankingFilterFields'
+import { DataFreshnessPanel } from '@/components/features/DataFreshnessPanel'
+import { SourceTransparency } from '@/components/features/SourceTransparency'
+import { FollowUpdates } from '@/components/features/FollowUpdates'
+import { UniversityProgramsPending } from '@/components/features/UniversityProgramsPending'
+import { CollectedProgramCard } from '@/components/features/CollectedProgram'
+import { queryUnifiedPrograms } from '@/lib/unified-programs'
+import { parseProgramCatalogFilters } from '@/lib/program-catalog'
+import { indexedLocales } from '@/i18n/config'
+import { getMessages } from '@/i18n/messages'
+import { getApplicationState, selectAdmissionCycle } from '@/lib/data/admission'
+import { selectUniversityPrebuildSlugs } from '@/lib/data/detail-prebuild'
+import { formatDate, localize } from '@/lib/data/format'
+import { getTodayDate } from '@/lib/data/freshness'
+import { disciplineLabels, regionLabels } from '@/lib/data/labels'
+import { getCatalogData, getData } from '@/lib/data/load'
+import { providerLabel } from '@/lib/data/scholarship'
+import { canonicalUniversitySlug } from '@/lib/data/slug-aliases'
+import { serializeJsonLd } from '@/lib/seo/json-ld'
+import { pageMetadata, requireLocale } from '@/lib/site'
+
+export const dynamicParams = true
+export const dynamic = 'force-dynamic'
+
+export function generateStaticParams() {
+  const slugs = selectUniversityPrebuildSlugs(getData())
+  return indexedLocales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })))
+}
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  // Evaluate publication and admission dates for this request, not a cached build day.
+  await connection()
+  const { locale: raw, slug } = await params
+  const locale = requireLocale(raw) || 'en'
+  const data = await getCatalogData()
+  const university = data.universities.find((item) => item.slug === canonicalUniversitySlug(slug))
+  if (!university) return {}
+  return pageMetadata(locale, localize(university.name, locale), localize(university.summary, locale), `universities/${university.slug}`)
+}
+
+export default async function UniversityDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  // Evaluate publication and admission dates for this request, not a cached build day.
+  await connection()
+  const { locale: raw, slug } = await params
+  const locale = requireLocale(raw)
+  if (!locale) notFound()
+  const data = await getCatalogData()
+  const university = data.universities.find((item) => item.slug === canonicalUniversitySlug(slug))
+  if (!university) notFound()
+  const messages = getMessages(locale)
+  const city = data.cities.find((item) => item.id === university.cityId)
+  const programs = data.programs.filter((item) => item.universityId === university.id)
+  const fields = [...new Set(programs.map((item) => item.discipline))]
+  const scholarships = data.scholarships.filter((item) => item.universityIds.includes(university.id))
+  const today = getTodayDate()
+  const unifiedPrograms = await queryUnifiedPrograms(parseProgramCatalogFilters({ institution: university.slug }), today, data)
+  const stateScores = { open: 7, rolling: 6, upcoming: 5, 'dates-published': 4, 'not-announced': 3, closed: 2, 'previous-cycle': 1 } as const
+  const programEntries = programs
+    .map((program) => {
+      const cycle = selectAdmissionCycle(data.admissionCycles, program.id, today)
+      return { program, cycle, score: stateScores[getApplicationState(cycle, today)] + (program.details ? 4 : 0) }
+    })
+    .sort((left, right) => right.score - left.score || left.program.slug.localeCompare(right.program.slug))
+  const visibleProgramEntries = programEntries.slice(0, 8)
+  const visibleScholarships = scholarships.slice(0, 6)
+  const visibleProgramIds = new Set(visibleProgramEntries.map(({ program }) => program.id))
+  const sources = data.sources.filter((source) => (
+    university.sourceIds.includes(source.id)
+    || programs.some((program) => visibleProgramIds.has(program.id) && program.sourceIds.includes(source.id))
+  ))
+  const copy = messages.universities
+  const jsonLd = { '@context': 'https://schema.org', '@type': 'CollegeOrUniversity', name: localize(university.name, locale), url: university.officialUrl, address: city ? { '@type': 'PostalAddress', addressLocality: localize(city.name, locale), addressCountry: 'CN' } : undefined }
+
+  return <>
+    <script type="application/ld+json" data-program-revision={unifiedPrograms.revision} data-public-program-count={unifiedPrograms.total} dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
+    <PageHero variant="compact" eyebrow={city ? `${localize(city.name, locale)} · ${university.region ? regionLabels(locale)[university.region] : messages.common.unknown}` : university.region ? regionLabels(locale)[university.region] : messages.common.unknown} title={localize(university.name, locale)} description={localize(university.summary, locale)} actions={<><a className="atlas-button atlas-button--primary atlas-button--medium" href={university.admissionsUrl || university.officialUrl} target="_blank" rel="noreferrer">{university.admissionsUrl ? copy.admission : messages.common.officialSource} ↗</a><a className="atlas-button atlas-button--ghost atlas-button--medium" href={university.officialUrl} target="_blank" rel="noreferrer">{copy.official} ↗</a></>} meta={<VerificationBadge collection="universities" recordId={university.id} status={university.status} verifiedAt={university.verifiedAt} locale={locale} verifiedDateLabel={messages.common.lastVerified} labels={{ verified: messages.common.verified, stale: messages.common.stale, draft: messages.common.draft, archived: messages.common.archived }} />} />
+    <div className="atlas-container">
+      <DataFreshnessPanel record={university} locale={locale} today={today} />
+      <UniversityRankingLinks university={university} locale={locale} />
+    </div>
+    <section className="atlas-container atlas-section">
+      <div className="stat-strip">
+        <div className="stat"><strong>{unifiedPrograms.total}</strong><span>{copy.programs}</span></div>
+        <div className="stat"><strong>{scholarships.length}</strong><span>{copy.funding}</span></div>
+        <div className="stat"><strong>{fields.length}</strong><span>{messages.programs.discipline}</span></div>
+        <div className="stat"><strong>{city ? localize(city.name, locale) : '—'}</strong><span>{messages.common.city}</span></div>
+      </div>
+    </section>
+    <section className="atlas-container section-block--tight detail-layout">
+      <div className="detail-main">
+        <div className="prose-panel"><h2>{copy.facts}</h2><p>{localize(university.summary, locale)}</p><div className="tag-list">{fields.map((field) => <Badge key={field} tone="neutral">{disciplineLabels(locale)[field]}</Badge>)}</div></div>
+        <div>
+          <SectionHeading title={copy.programs} level={2} />
+          {unifiedPrograms.items.length ? <div className="content-grid content-grid--two">
+            {unifiedPrograms.items.slice(0, 8).map(item => 'collected' in item
+              ? <CollectedProgramCard key={item.collected.id} item={item} locale={locale} messages={messages} />
+              : <LocalizedProgramCard key={item.program.id} program={item.program} university={item.university} cycle={item.cycle} locale={locale} messages={messages} today={today} />)}
+          </div> : <UniversityProgramsPending locale={locale} universityName={localize(university.name, locale)} officialUrl={university.admissionsUrl || university.officialUrl} />}
+          {unifiedPrograms.total > 8 ? <div className="atlas-card__footer"><LinkButton href={`/${locale}/programs?institution=${encodeURIComponent(university.slug)}`} variant="secondary">{messages.common.explore} ({unifiedPrograms.total}) →</LinkButton></div> : null}
+        </div>
+        {visibleScholarships.length ? <div><SectionHeading title={copy.funding} level={2} /><div className="content-grid content-grid--two">{visibleScholarships.map((scholarship) => <Card key={scholarship.id}><Badge tone="gold">{providerLabel(scholarship.providerType, locale)}</Badge><h3 className="atlas-card__title">{localize(scholarship.name, locale)}</h3><p className="atlas-card__description">{localize(scholarship.summary, locale)}</p><div className="atlas-card__footer"><LinkButton href={`/${locale}/scholarships/${scholarship.slug}`} variant="quiet">{messages.common.viewDetails} →</LinkButton></div></Card>)}</div>{scholarships.length > visibleScholarships.length ? <div className="atlas-card__footer"><LinkButton href={`/${locale}/scholarships?institution=${encodeURIComponent(university.slug)}`} variant="secondary">{messages.common.explore} ({scholarships.length}) →</LinkButton></div> : null}</div> : null}
+      </div>
+      <aside className="detail-aside">
+        <FollowUpdates locale={locale} targets={[{ kind: 'university', id: university.id, label: localize(university.name, locale) }]} />
+        <Card accent="jade" id="official-evidence">
+          <h2 className="atlas-card__title">{copy.sources}</h2>
+          <ul className="source-list">{sources.map((source) => <li key={source.id}>
+            <a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>
+            <small>{source.publisher} · <time dateTime={source.accessedAt}>{formatDate(source.accessedAt, locale, '—')}</time></small>
+          </li>)}</ul>
+          <SourceTransparency
+            locale={locale}
+            lastCheckedAt={sources.map((source) => source.accessedAt).sort().at(-1) ?? university.verifiedAt}
+            lastCheckedLabel={messages.common.sourcesLastChecked}
+            notice={messages.common.automatedCollectionNotice}
+            reportErrorLabel={messages.common.reportInformationError}
+            officialLink={{ href: university.officialUrl, label: messages.common.officialSource }}
+          />
+        </Card>
+        <div className="notice">{messages.common.authoritativeNotice}</div>
+      </aside>
+    </section>
+  </>
+}

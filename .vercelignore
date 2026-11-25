@@ -1,0 +1,43 @@
+.agents/
+.benchmark/
+.catalog-build/
+.git/
+.next/
+.npm-cache/
+.official-harvest/
+.pipeline-build/
+.restore-drill/
+.tmp/
+.vercel/
+.wrangler/
+coverage/
+node_modules/
+outputs/
+playwright-report/
+test-results/
+*.tsbuildinfo
+# Only immutable identity receipts are server runtime inputs. Keep all source
+# captures, model outputs, exports and other audit artifacts out of deployments.
+/quality/*
+!/quality/minimum-one
+/quality/minimum-one/*
+!/quality/minimum-one/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+/quality/minimum-one/*/*
+!/quality/minimum-one/*/batch[0-9]*
+/quality/minimum-one/*/*/*
+!/quality/minimum-one/*/*/identity-import-receipt.json
+!/quality/maintenance
+/quality/maintenance/*
+!/quality/maintenance/batches
+/quality/maintenance/batches/*
+!/quality/maintenance/batches/*
+/quality/maintenance/batches/*/*
+!/quality/maintenance/batches/*/identity-receipt.json
+!/quality/reviewed-nenu-2027-20261116
+/quality/reviewed-nenu-2027-20261116/*
+!/quality/reviewed-nenu-2027-20261116/identity-receipt.json
+tests/
+MINIMAX_CLAUDE_CODE_STRICT_QUARANTINE_PROMPT.md
+
+# Local actuator validation only; not part of the website.
+/scripts/operations/admin-deployment-actuator.ts
